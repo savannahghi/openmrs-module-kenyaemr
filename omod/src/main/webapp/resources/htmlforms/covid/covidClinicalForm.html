@@ -1,0 +1,284 @@
+<!--
+  ~ The contents of this file are subject to the OpenMRS Public License
+  ~ Version 1.0 (the "License"); you may not use this file except in
+  ~ compliance with the License. You may obtain a copy of the License at
+  ~ http://license.openmrs.org
+  ~
+  ~ Software distributed under the License is distributed on an "AS IS"
+  ~ basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+  ~ License for the specific language governing rights and limitations
+  ~ under the License.
+  ~
+  ~ Copyright (C) OpenMRS, LLC.  All Rights Reserved.
+  -->
+<htmlform>
+    <script type="text/javascript" src="../moduleResources/kenyaemr/scripts/moment.js"></script>
+    <script type="text/javascript">
+        jQuery(function ($) {
+            beforeSubmit.push(function () {
+            });
+
+        });
+    </script>
+    <style>
+        .simple-table {
+            border: solid 1px #DDEEEE;
+            border-collapse: collapse;
+            border-spacing: 0;
+            font: normal 13px Arial, sans-serif;
+        }
+
+        .simple-table thead th {
+            background-color: #DDEFEF;
+            border: solid 1px #DDEEEE;
+            color: #336B6B;
+            padding: 10px;
+            text-align: left;
+            text-shadow: 1px 1px 1px #fff;
+        }
+
+        .simple-table td {
+            border: solid 1px #DDEEEE;
+            color: #333;
+            padding: 10px;
+            text-shadow: 1px 1px 1px #fff;
+        }
+    </style>
+
+    <div class="ke-form-header">
+        <table width="100%">
+            <tr>
+                <td>Date:
+                    <encounterDate id="encounter-date" showTime="true"/>
+                </td>
+                <td>Location:
+                    <encounterLocation default="GlobalProperty:kenyaemr.defaultLocation" type="autocomplete"/>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="ke-form-content">
+        <!--Pregnancy Details-->
+        <fieldset>
+            <legend>Pregnancy Details</legend>
+            <table>
+                <tr>
+                    <td>Patient pregnant?</td>
+                    <td>
+                        <obs conceptId="1434AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "
+                             style="yes_no" />
+                    </td>
+                </tr>
+                <tr></tr>
+                <tr>
+                    <td>Pregnancy gestation (weeks)</td>
+                    <td></td>
+                </tr>
+               <tr></tr>
+                <tr>
+                    <td>Pregnancy trimester</td>
+                    <td>
+                        <obs conceptId="160665" style="radio"/>
+                    </td>
+                </tr>
+                  <tr></tr>
+                 <tr>
+                     <td>Post partum (&lt; 6 weeks)</td>
+                     <td>
+                         <obs conceptId="1048AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" style="yes_no"/>
+                     </td>
+                 </tr>
+            </table>
+        </fieldset>
+        <fieldset>
+            <legend>Underlying conditions/comorbidity</legend>
+            <table>
+                <tr>
+                    <td>Any underlying conditions?
+                    </td>
+                    <td>
+                        <obs conceptId="162747AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "
+                             answerConceptIds="1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                             style="radio" answerLabels="Yes,No"/>
+                    </td>
+                </tr>
+                <tr></tr>
+                <tr>
+                    <td>Cardiovascular disease including hypertension
+                    </td>
+                    <td>
+                        <obs conceptId="162747AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "
+                             answerConceptIds="119270AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                             style="radio" answerLabels="Yes,No"/>
+                    </td>
+                </tr>
+                <tr></tr>
+                <tr>
+                    <td>Diabetes
+                    </td>
+                    <td>
+                        <obs conceptId="162747AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "
+                             answerConceptIds="119481AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                             style="radio" answerLabels="Yes,No"/>
+                    </td>
+                </tr>
+                <tr></tr>
+                <tr>
+                    <td>Liver disease
+                    </td>
+                    <td>
+                        <obs conceptId="162747AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "
+                             answerConceptIds="6032AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                             style="radio" answerLabels="Yes,No"/>
+                    </td>
+                </tr>
+                <tr></tr>
+                <tr>
+                    <td>Chronic neurological or neuromascular disease</td>
+                    <td>
+                        <obs conceptId="162747AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "
+                             answerConceptIds="6032AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                             style="radio" answerLabels="Yes,No"/>
+                    </td>
+                </tr>
+                <tr></tr>
+                <tr>
+                    <td>Immunodeficiency</td>
+                    <td>
+                        <obs conceptId="162747AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "
+                             answerConceptIds="162695AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                             style="radio" answerLabels="Yes,No"/>
+                    </td>
+                </tr>
+                <tr></tr>
+                <tr>
+                    <td>Renal disease</td>
+                    <td>
+                        <obs conceptId="162747AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "
+                             answerConceptIds="6033AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                             style="radio" answerLabels="Yes,No"/>
+                    </td>
+                </tr>
+                <tr></tr>
+                <tr>
+                    <td>Chronic lung disease</td>
+                    <td>
+                        <obs conceptId="162747AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "
+                             answerConceptIds="155569AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                             style="radio" answerLabels="Yes,No"/>
+                    </td>
+                </tr>
+                <tr></tr>
+                <tr>
+                    <td>Malignancy</td>
+                    <td>
+                        <obs conceptId="162747AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "
+                             answerConceptIds="116031AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                             style="radio" answerLabels="Yes,No"/>
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+        <fieldset>
+            <legend>Health factor symptoms</legend>
+            <table>
+                <tr>
+                    <td>Smoking status</td>
+                    <td>
+                        <obs conceptId="163201AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "
+                             answerConceptIds="152722AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,152807AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                             style="radio" answerLabels="Current smoker,Former smoker"
+                              />
+                    </td>
+                </tr>
+                <tr></tr>
+            </table>
+        </fieldset>
+        <fieldset>
+            <legend>PE Section</legend>
+            <table>
+                <tr>
+                    <td>Pharyngeal exsudate</td>
+                    <td>
+                        <obs conceptId="162737AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "
+                             answerConceptIds="130305AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                             style="radio" answerLabels="Yes,No"
+                        />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Conjunctival injection</td>
+                    <td>
+                        <obs conceptId="162737AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "
+                             answerConceptIds="517AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                             style="radio" answerLabels="Yes,No"
+                        />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Dyspnea, tachypnea</td>
+                    <td>
+                        <obs conceptId="162737AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "
+                             answerConceptIds="125061AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                             style="radio" answerLabels="Yes,No"
+                        />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Abnormal lung auscultation </td>
+                    <td>
+                        <obs conceptId="162737AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "
+                             answerConceptIds="150876AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                             style="radio" answerLabels="Yes,No"
+                        />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Abnormal lung x-ray findings</td>
+                    <td>
+                        <obs conceptId="162737AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "
+                             answerConceptIds="154435AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                             style="radio" answerLabels="Yes,No"
+                        />
+                    </td>
+                </tr>
+                <tr></tr>
+                <tr>
+                    <td>Seizures</td>
+                    <td>
+                        <obs conceptId="162737AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "
+                             answerConceptIds="206AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                             style="radio" answerLabels="Yes,No"
+                        />
+                    </td>
+                </tr>
+                <tr></tr>
+                <tr>
+                    <td>Coma</td>
+                    <td>
+                        <obs conceptId="162737AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "
+                             answerConceptIds="144576AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                             style="radio" answerLabels="Yes,No"
+                        />
+                    </td>
+                </tr>
+                <tr></tr>
+                <tr>
+                    <td>Other (specify)</td>
+                    <td>
+                        <obs conceptId="162737AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "
+                             answerConceptIds="5622AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                             style="radio" answerLabels="Other"
+                        />
+                        <obs conceptId="1391AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"/>
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+    </div>
+    <div class="ke-form-footer">
+        <submit/>
+    </div>
+
+</htmlform>

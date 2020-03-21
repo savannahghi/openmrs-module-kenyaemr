@@ -38,6 +38,7 @@
 				<!--<ref bean="kenyaemr.common.form.referralAndLinkage"/>-->
 				<ref bean="prep.prep.form.behaviorRiskAssessment"/>
 				<ref bean="kenyaemr_hiv_testing.common.form.htsScreeningForm"/>
+				<ref bean="kenyaemr.common.form.covid-19-clinical-form"/>
 			</set>
 		</property>
 	</bean>
@@ -384,6 +385,21 @@
 		<property name="icon" value="kenyaui:forms/generic.png" />
 		<property name="htmlform" value="kenyaemr:hts/htsReferral.html" />
 		<property name="order" value="201004" />
+	</bean>
+
+	<!-- COVID-19 clinical form -->
+	<bean id="kenyaemr.common.form.covid-19-clinical-form" class="org.openmrs.module.kenyacore.form.FormDescriptor">
+		<property name="targetUuid" value="0fe60b26-8648-438b-afea-8841dcd993c6" />
+		<property name="apps">
+			<set>
+				<ref bean="kenyaemr.app.registration" />
+				<ref bean="kenyaemr.app.clinician" />
+				<ref bean="kenyaemr.app.chart" />
+			</set>
+		</property>
+		<property name="icon" value="kenyaui:forms/generic.png" />
+		<property name="htmlform" value="kenyaemr:covid/covidClinicalForm.html" />
+		<property name="order" value="201005" />
 	</bean>
 
 	<!-- ===================== Reports ===================== -->
