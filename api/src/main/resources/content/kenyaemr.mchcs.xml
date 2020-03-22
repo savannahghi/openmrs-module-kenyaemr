@@ -16,7 +16,7 @@
 
 	<!-- ===================== Program ===================== -->
 
-	<bean id="kenyaemr.mchcs.program" class="org.openmrs.module.kenyacore.program.ProgramDescriptor">
+	<!--<bean id="kenyaemr.mchcs.program" class="org.openmrs.module.kenyacore.program.ProgramDescriptor">
 		<property name="targetUuid" value="${metadata.program.MCH_CS}" />
 		<property name="eligibilityCalculation" value="org.openmrs.module.kenyaemr.calculation.library.mchcs.EligibleForMchcsProgramCalculation" />
 		<property name="defaultEnrollmentForm" ref="kenyaemr.form.mchcsEnrollment" />
@@ -45,10 +45,10 @@
 				<ref bean="kenyaemr.mchcs.report.heiRegister" />
 				<ref bean="kenyaemr.mchcs.report.moh510" />
 				<ref bean="kenyaemr.mchcs.report.moh710" />
-				<!--<ref bean="kenyaemr.mchcs.report.moh510" />
+				&lt;!&ndash;<ref bean="kenyaemr.mchcs.report.moh510" />
 				<ref bean="kenyaemr.mchcs.report.moh511" />
 				<ref bean="kenyaemr.mchcs.report.vaccinationAppointments" />
-				<ref bean="kenyaemr.mchcs.report.defaulter" />-->
+				<ref bean="kenyaemr.mchcs.report.defaulter" />&ndash;&gt;
 			</set>
 		</property>
 		<property name="fragments">
@@ -60,7 +60,7 @@
 		</property>
 		<property name="order" value="400" />
 	</bean>
-
+-->
 	<!-- ===================== Identifiers ===================== -->
 
 	<!-- HEI unique Number -->

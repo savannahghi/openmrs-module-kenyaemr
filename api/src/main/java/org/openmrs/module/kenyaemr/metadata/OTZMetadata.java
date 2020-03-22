@@ -50,7 +50,7 @@ public class OTZMetadata extends AbstractMetadataBundle {
 	 */
 	@Override
 	public void install() {
-		install(encounterType("OTZ Enrollment", "Enrollment onto OTZ program", _EncounterType.OTZ_ENROLLMENT));
+		/*install(encounterType("OTZ Enrollment", "Enrollment onto OTZ program", _EncounterType.OTZ_ENROLLMENT));
 		install(encounterType("OTZ Discontinuation", "Discontinuation from OTZ program", _EncounterType.OTZ_DISCONTINUATION));
 		install(encounterType("OTZ Activity", "Consultation in OTZ Program", _EncounterType.OTZ_ACTIVITY));
 
@@ -59,7 +59,7 @@ public class OTZMetadata extends AbstractMetadataBundle {
 		install(form("OTZ Activity Form" ,null, _EncounterType.OTZ_ACTIVITY, "1", _Form.OTZ_ACTIVITY_FORM));
 
 
-		install(program("OTZ", "OTZ program", _Concept.OTZ, _Program.OTZ));
+		install(program("OTZ", "OTZ program", _Concept.OTZ, _Program.OTZ));*/
 
 
 	}

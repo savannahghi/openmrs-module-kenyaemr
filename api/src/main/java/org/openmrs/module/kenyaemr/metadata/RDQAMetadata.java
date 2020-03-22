@@ -28,8 +28,8 @@ public class RDQAMetadata extends AbstractMetadataBundle {
 
 	@Override
 	public void install() throws Exception {
-		install(globalProperty(RDQA_DEFAULT_SAMPLE_CONFIGURATION, "RDQA Sample size calculation configuration", defaultConfig));
-        install(globalProperty(RDQA_DEFAULT_NO_OF_MONTHS, "RDQA No of previous months to consider in the report", "3"));
+		/*install(globalProperty(RDQA_DEFAULT_SAMPLE_CONFIGURATION, "RDQA Sample size calculation configuration", defaultConfig));
+        install(globalProperty(RDQA_DEFAULT_NO_OF_MONTHS, "RDQA No of previous months to consider in the report", "3"));*/
 
 	}
 }

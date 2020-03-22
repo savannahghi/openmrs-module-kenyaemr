@@ -54,7 +54,7 @@ public class ReportsHomePageController {
 			cohortAnalysis.add(ui.simplifyObject(report));
 		}
 		reportsByProgram.put("Common", common);
-		reportsByProgram.put("Cohort Analysis", cohortAnalysis);
+		//reportsByProgram.put("Cohort Analysis", cohortAnalysis);
 
 		for (ProgramDescriptor programDescriptor : programManager.getAllProgramDescriptors()) {
 			Program program = programDescriptor.getTarget();

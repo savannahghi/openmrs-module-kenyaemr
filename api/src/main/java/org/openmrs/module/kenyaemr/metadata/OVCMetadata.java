@@ -63,7 +63,7 @@ public class OVCMetadata extends AbstractMetadataBundle {
 	 */
 	@Override
 	public void install() {
-		install(encounterType("OVC Enrollment", "Enrollment onto OVC program", _EncounterType.OVC_ENROLLMENT));
+		/*install(encounterType("OVC Enrollment", "Enrollment onto OVC program", _EncounterType.OVC_ENROLLMENT));
 		install(encounterType("OVC Discontinuation", "Discontinuation from OVC program", _EncounterType.OVC_DISCONTINUATION));
 
 		install(form("OVC Enrollment Form", null, _EncounterType.OVC_ENROLLMENT, "1", _Form.OVC_ENROLLMENT_FORM));
@@ -78,7 +78,7 @@ public class OVCMetadata extends AbstractMetadataBundle {
 		//Installing relationship
 		install(relationshipType("Care-giver", "Care-giver", "One that gives care, watches over, or protects", _RelationshipType.CAREGIVER));
 
-		install(program("OVC", "OVC program", _Concept.OVC, _Program.OVC));
+		install(program("OVC", "OVC program", _Concept.OVC, _Program.OVC));*/
 
 
 	}

@@ -34,9 +34,6 @@
 				<ref bean="kenyaemr.common.form.htsinitialtest"/>
 				<ref bean="kenyaemr.common.form.htsconfirmatorytest"/>
 				<ref bean="kenyaemr.common.form.htsLinkage"/>
-				<!--<ref bean="prep.prep.form.behaviorRiskAssessment"/>-->
-				<!--<ref bean="kenyaemr.common.form.referralAndLinkage"/>-->
-				<ref bean="prep.prep.form.behaviorRiskAssessment"/>
 				<ref bean="kenyaemr_hiv_testing.common.form.htsScreeningForm"/>
 				<ref bean="kenyaemr.common.form.covid-19-clinical-form"/>
 			</set>
@@ -46,29 +43,9 @@
 	<bean id="kenyaemr.config.report" class="org.openmrs.module.kenyacore.report.ReportConfiguration">
 		<property name="commonReports">
 			<set>
-				<ref bean="kenyaemr.common.report.artDrug" />
-				<ref bean="kenyaemr.common.report.etlMissedAppointments" />
-				<ref bean="kenyaemr.common.report.etllostToFollowup" />
-				<ref bean="kenyaemr.etl.common.report.moh731"/>
-				<ref bean="kenyaemr.etl.common.report.datim"/>
-				<ref bean="kenyaemr.hiv.report.htsRegister"/>
-				<ref bean="kenyaemr.hiv.report.htsConfirmationRegister"/>
-				<ref bean="kenyaemr.hiv.report.htsLinkageRegister"/>
+
 				<ref bean="kenyaemr.common.report.recordedDeceased" />
 				<ref bean="kenyaemr.common.report.allPatients" />
-				<ref bean="kenyaemr.etl.common.report.diffcarestability" />
-				<ref bean="kenyaemr.common.report.activePatientsLinelist" />
-                <ref bean="kenyaemr.common.report.rdqaReport" />
-				<ref bean="kenyaemr.common.report.clients.died" />
-				<ref bean="kenyaemr.common.report.clients.transferred.in" />
-				<ref bean="kenyaemr.common.report.clients.transferred.out" />
-				<ref bean="kenyaemr.hiv.report.htsPositiveCLientsNotLinkedToCare"/>
-				<ref bean="kenyaemr.common.report.currentInCareNotStartedOnART" />
-				<ref bean="kenyaemr.etl.common.report.viralSuppression" />
-				<ref bean="kenyaemr.hiv.report.tx_curr_linelist_monthly" />
-				<ref bean="kenyaemr.hiv.report.tx_curr_linelist_quarterly" />
-				<ref bean="kenyaemr.hiv.report.pendingVLAndCD4Report"/>
-				<ref bean="kenyaemr.hiv.report.cccDefaulterTracingRegister"/>
 
 			</set>
 		</property>
@@ -156,8 +133,6 @@
 				<ref bean="kenyaemr.app.clinician" />
 				<ref bean="kenyaemr.app.chart" />
 				<ref bean="kenyaemr.app.hts" />
-				<ref bean="kenyaemr.app.prep" />
-				<ref bean="kenyakeypop.app.keypopulation.provider" />
 			</set>
 		</property>
 		<property name="icon" value="kenyaui:forms/generic.png" />

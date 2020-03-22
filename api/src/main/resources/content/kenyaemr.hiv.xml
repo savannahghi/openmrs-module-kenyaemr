@@ -29,33 +29,14 @@
 		</property>
 		<property name="visitForms">
 			<set>
-				<ref bean="kenyaemr.hiv.form.hivGreenCard" />
-				<ref bean="kenyaemr.hiv.form.genderBasedViolenceScreening" />
-				<ref bean="kenyaemr.hiv.form.alcoholAndDrugAbuseScreening" />
-				<ref bean="kenyaemr.hiv.form.enhancedAdherenceScreening" />
+
 				<!--<ref bean="kenyaemr.hiv.form.clinicalEncounterAddendum" />-->
-				<ref bean="kenyaemr.common.form.tbScreening" />
-				<ref bean="kenyaemr.hiv.form.artFastTrackForm"/>
-				<ref bean="kenyaemr.hiv.form.cccDefaulterTracing"/>
+
 			</set>
 		</property>
 		<property name="reports">
 			<set>
-				<ref bean="kenyaemr.common.report.cccDar" />
-				<ref bean="kenyaemr.hiv.report.qi.adult.c.tx" />
-				<ref bean="kenyaemr.hiv.report.qi.peds.c.tx" />
-				<!--<ref bean="kenyaemr.hiv.report.qi.adult.emtct" />-->
-				<ref bean="kenyaemr.hiv.report.lostToFollowUp" />
-				<ref bean="kenyaemr.hiv.report.neverScreenedForTb" />
-				<ref bean="kenyaemr.hiv.report.eligibleForArt" />
-				<ref bean="kenyaemr.hiv.report.onSecondLineArt" />
-				<ref bean="kenyaemr.hiv.report.neverTakenCtxOrDapsone" />
-				<ref bean="kenyaemr.hiv.report.needsViralLoad" />
-				<ref bean="kenyaemr.hiv.report.artPrepRegister" />
-				<ref bean="kenyaemr.hiv.report.enhancedAdherenceRegister" />
-				<ref bean="kenyaemr.common.report.enrollmentTracker" />
-				<ref bean="kenyaemr.hiv.report.artRegister" />
-				<ref bean="kenyaemr.hiv.report.scheduledDrugRefills"/>
+
 			</set>
 		</property>
 		<property name="fragments">

@@ -16,7 +16,7 @@
 
 	<!-- ===================== Program ===================== -->
 
-	<bean id="kenyaemr.tb.program" class="org.openmrs.module.kenyacore.program.ProgramDescriptor">
+	<!--<bean id="kenyaemr.tb.program" class="org.openmrs.module.kenyacore.program.ProgramDescriptor">
 		<property name="targetUuid" value="${metadata.program.TB}" />
 		<property name="eligibilityCalculation" value="org.openmrs.module.kenyaemr.calculation.library.tb.EligibleForTbProgramCalculation" />
 		<property name="defaultEnrollmentForm" ref="kenyaemr.tb.form.enrollment" />
@@ -28,8 +28,8 @@
 		</property>
 		<property name="reports">
 			<set>
-				<!--<ref bean="kenyaemr.tb.report.smear.not.done.ptb.2.8.8.12" />
-				<ref bean="kenyaemr.tb.report.new.smear.negative.ptb.2.8.12.15" />-->
+				&lt;!&ndash;<ref bean="kenyaemr.tb.report.smear.not.done.ptb.2.8.8.12" />
+				<ref bean="kenyaemr.tb.report.new.smear.negative.ptb.2.8.12.15" />&ndash;&gt;
 				<ref bean="kenyaemr.tb.report.inProgram" />
 				<ref bean="kenyaemr.tb.report.needsSputumTest" />
 				<ref bean="kenyaemr.tb.report.missingSputumResults" />
@@ -46,7 +46,7 @@
 			</map>
 		</property>
 		<property name="order" value="200" />
-	</bean>
+	</bean>-->
 
 	<!-- ===================== Identifiers ===================== -->
 

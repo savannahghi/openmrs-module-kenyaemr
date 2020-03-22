@@ -16,7 +16,7 @@
 
 	<!-- ===================== Program ===================== -->
 
-	<bean id="kenyaemr.mchms.program" class="org.openmrs.module.kenyacore.program.ProgramDescriptor">
+	<!--<bean id="kenyaemr.mchms.program" class="org.openmrs.module.kenyacore.program.ProgramDescriptor">
 		<property name="targetUuid" value="${metadata.program.MCH_MS}"/>
 		<property name="eligibilityCalculation"
 				  value="org.openmrs.module.kenyaemr.calculation.library.mchms.EligibleForMchmsProgramCalculation"/>
@@ -24,7 +24,7 @@
 		<property name="defaultCompletionForm" ref="kenyaemr.mchms.form.completion"/>
 		<property name="patientForms">
 			<set>
-				<!--<ref bean="kenyaemr.mchms.form.infantFeeding"/>-->
+				&lt;!&ndash;<ref bean="kenyaemr.mchms.form.infantFeeding"/>&ndash;&gt;
 				<ref bean="kenyaemr.mchms.form.preventiveServices"/>
 				<ref bean="kenyaemr.mchms.form.delivery"/>
 				<ref bean="kenyaemr.mchms.form.discharge"/>
@@ -60,7 +60,7 @@
 		</property>
 		<property name="order" value="300"/>
 	</bean>
-
+-->
 	<!-- ===================== Identifiers ===================== -->
 
 
