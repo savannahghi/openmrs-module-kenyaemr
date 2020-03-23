@@ -67,7 +67,6 @@
 				<ref bean="kenyaemr.app.registration" />
 				<ref bean="kenyaemr.app.intake" />
 				<ref bean="kenyaemr.app.clinician" />
-				<ref bean="kenyaemr.app.chart" />
 			</set>
 		</property>
 		<property name="icon" value="kenyaui:forms/generic.png" />
@@ -80,7 +79,6 @@
 		<property name="apps">
 			<set>
 				<ref bean="kenyaemr.app.clinician" />
-				<ref bean="kenyaemr.app.chart" />
 			</set>
 		</property>
 		<property name="icon" value="kenyaui:forms/generic.png" />
@@ -94,7 +92,6 @@
 		<property name="apps">
 			<set>
 				<ref bean="kenyaemr.app.clinician"/>
-				<ref bean="kenyaemr.app.chart"/>
 			</set>
 		</property>
 		<property name="icon" value="kenyaui:forms/generic.png"/>
@@ -107,7 +104,6 @@
 		<property name="apps">
 			<set>
 				<ref bean="kenyaemr.app.clinician"/>
-				<ref bean="kenyaemr.app.chart"/>
 			</set>
 		</property>
 		<property name="icon" value="kenyaui:forms/generic.png"/>
@@ -120,7 +116,6 @@
 		<property name="apps">
 			<set>
 				<ref bean="kenyaemr.app.clinician"/>
-				<ref bean="kenyaemr.app.chart"/>
 			</set>
 		</property>
 		<property name="icon" value="kenyaui:forms/generic.png"/>
@@ -134,7 +129,6 @@
 		<property name="apps">
 			<set>
 				<ref bean="kenyaemr.app.clinician"/>
-				<ref bean="kenyaemr.app.chart"/>
 			</set>
 		</property>
 		<property name="icon" value="kenyaui:forms/generic.png"/>
@@ -147,7 +141,6 @@
 		<property name="apps">
 			<set>
 				<ref bean="kenyaemr.app.clinician" />
-				<ref bean="kenyaemr.app.chart" />
 			</set>
 		</property>
 		<property name="icon" value="kenyaui:forms/generic.png" />
@@ -163,7 +156,7 @@
 				<ref bean="kenyaemr.app.registration" />
 				<ref bean="kenyaemr.app.intake" />
 				<ref bean="kenyaemr.app.clinician" />
-				<ref bean="kenyaemr.app.chart" />
+
 			</set>
 		</property>
 		<property name="icon" value="kenyaui:forms/completion.png" />
@@ -178,7 +171,7 @@
 				<ref bean="kenyaemr.app.registration" />
 				<ref bean="kenyaemr.app.intake" />
 				<ref bean="kenyaemr.app.clinician" />
-				<ref bean="kenyaemr.app.chart" />
+
 			</set>
 		</property>
 		<property name="enabled" value="false" />
@@ -191,7 +184,7 @@
 		<property name="targetUuid" value="8f5b3ba5-1677-450f-8445-33b9a38107ae" />
 		<property name="apps">
 			<set>
-				<ref bean="kenyaemr.app.chart" />
+
 			</set>
 		</property>
 		<property name="icon" value="kenyaui:forms/moh257.png" />
@@ -203,7 +196,7 @@
 		<property name="targetUuid" value="23b4ebbd-29ad-455e-be0e-04aa6bc30798" />
 		<property name="apps">
 			<set>
-				<ref bean="kenyaemr.app.chart" />
+
 			</set>
 		</property>
 		<property name="autoCreateVisitTypeUuid" value="3371a4d4-f66f-4454-a86d-92c7b3da990c" />
@@ -220,7 +213,7 @@
 		<property name="apps">
 			<set>
 				<ref bean="kenyaemr.app.clinician" />
-				<ref bean="kenyaemr.app.chart" />
+
 			</set>
 		</property>
 		<property name="icon" value="kenyaui:forms/generic.png" />
@@ -234,7 +227,7 @@
 		<property name="apps">
 			<set>
 				<ref bean="kenyaemr.app.clinician" />
-				<ref bean="kenyaemr.app.chart" />
+
 			</set>
 		</property>
 		<property name="icon" value="kenyaui:forms/generic.png" />
@@ -248,7 +241,7 @@
 		<property name="apps">
 			<set>
 				<ref bean="kenyaemr.app.registration" />
-				<ref bean="kenyaemr.app.chart" />
+
 			</set>
 		</property>
 		<property name="showIfCalculation" value="org.openmrs.module.kenyaemr.calculation.library.hiv.StablePatientsCalculation" />
@@ -262,8 +255,7 @@
 		<property name="targetUuid" value="a1a62d1e-2def-11e9-b210-d663bd873d93" />
 		<property name="apps">
 			<set>
-				<ref bean="kenyaemr.app.defaultertracing" />
-				<ref bean="kenyaemr.app.chart" />
+
 			</set>
 		</property>
 <!--

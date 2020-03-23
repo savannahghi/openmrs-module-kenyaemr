@@ -99,7 +99,6 @@
 		<property name="apps">
 			<set>
 				<ref bean="kenyaemr.app.clinician" />
-				<ref bean="kenyaemr.app.chart" />
 
 			</set>
 		</property>
@@ -118,7 +117,6 @@
 				<ref bean="kenyaemr.app.registration" />
 				<ref bean="kenyaemr.app.intake" />
 				<ref bean="kenyaemr.app.clinician" />
-				<ref bean="kenyaemr.app.chart" />
 			</set>
 		</property>
 		<property name="icon" value="kenyaui:forms/obstetric.png" />
@@ -134,8 +132,6 @@
 				<ref bean="kenyaemr.app.registration" />
 				<ref bean="kenyaemr.app.intake" />
 				<ref bean="kenyaemr.app.clinician" />
-				<ref bean="kenyaemr.app.chart" />
-				<ref bean="kenyaemr.app.hts" />
 			</set>
 		</property>
 		<property name="icon" value="kenyaui:forms/generic.png" />
@@ -149,7 +145,6 @@
 		<property name="apps">
 			<set>
 				<ref bean="kenyaemr.app.clinician" />
-				<ref bean="kenyaemr.app.chart" />
 			</set>
 		</property>
 		<property name="icon" value="kenyaui:forms/generic.png" />
@@ -164,7 +159,6 @@
 			<set>
 				<ref bean="kenyaemr.app.intake" />
 				<ref bean="kenyaemr.app.clinician" />
-				<ref bean="kenyaemr.app.chart" />
 			</set>
 		</property>
 		<property name="icon" value="kenyaui:forms/labresults.png" />
@@ -178,7 +172,6 @@
 		<property name="apps">
 			<set>
 				<ref bean="kenyaemr.app.clinician" />
-				<ref bean="kenyaemr.app.chart" />
 			</set>
 		</property>
 		<property name="icon" value="kenyaui:forms/generic.png" />
@@ -193,7 +186,6 @@
 			<set>
 				<ref bean="kenyaemr.app.intake" />
 				<ref bean="kenyaemr.app.clinician" />
-				<ref bean="kenyaemr.app.chart" />
 			</set>
 		</property>
 		<property name="icon" value="kenyaui:forms/generic.png" />
@@ -208,7 +200,6 @@
 			<set>
 				<ref bean="kenyaemr.app.intake" />
 				<ref bean="kenyaemr.app.clinician" />
-				<ref bean="kenyaemr.app.chart" />
 			</set>
 		</property>
 		<property name="icon" value="kenyaui:forms/generic.png" />
@@ -238,7 +229,6 @@
 			<set>
 				<ref bean="kenyaemr.app.registration" />
 				<ref bean="kenyaemr.app.clinician" />
-				<ref bean="kenyaemr.app.chart" />
 			</set>
 		</property>
 		<property name="showIfCalculation" value="org.openmrs.module.kenyaemr.calculation.library.hiv.HIVNegativePatientsCalculation" />
@@ -254,9 +244,6 @@
 			<set>
 				<ref bean="kenyaemr.app.registration" />
 				<ref bean="kenyaemr.app.clinician" />
-				<ref bean="kenyaemr.app.chart" />
-				<ref bean="kenyaemr.app.hts" />
-				<ref bean="kenyaemr.app.prep" />
 			</set>
 		</property>
 		<property name="showIfCalculation" value="org.openmrs.module.kenyaemr.calculation.library.hiv.hts.PatientsEligibleForHtsInitialTestCalculation" />
@@ -272,9 +259,6 @@
 			<set>
 				<ref bean="kenyaemr.app.registration" />
 				<ref bean="kenyaemr.app.clinician" />
-				<ref bean="kenyaemr.app.chart" />
-				<ref bean="kenyaemr.app.hts" />
-				<ref bean="kenyaemr.app.prep" />
 			</set>
 		</property>
 		<property name="showIfCalculation" value="org.openmrs.module.kenyaemr.calculation.library.hiv.hts.PatientsEligibleForHtsRetestCalculation" />
@@ -290,10 +274,6 @@
 			<set>
 				<ref bean="kenyaemr.app.registration" />
 				<ref bean="kenyaemr.app.clinician" />
-				<ref bean="kenyaemr.app.chart" />
-				<ref bean="kenyaemr.app.hts" />
-				<ref bean="kenyaemr.app.defaultertracing" />
-				<ref bean="kenyaemr.app.prep" />
 			</set>
 		</property>
 		<property name="showIfCalculation" value="org.openmrs.module.kenyaemr.calculation.library.hiv.hts.PatientsEligibleForHtsLinkageAndReferralCalculation" />
@@ -307,8 +287,6 @@
 		<property name="targetUuid" value="15ed03d2-c972-11e9-a32f-2a2ae2dbcce4" />
 		<property name="apps">
 			<set>
-				<ref bean="kenyaemr.app.chart" />
-				<ref bean="kenyaemr.app.defaultertracing" />
 			</set>
 		</property>
 		<property name="icon" value="kenyaui:forms/generic.png" />
@@ -322,8 +300,6 @@
 			<set>
 				<ref bean="kenyaemr.app.registration"/>
 				<ref bean="kenyaemr.app.intake"/>
-				<ref bean="kenyaemr.app.chart" />
-				<ref bean="kenyaemr.app.prep" />
 			</set>
 		</property>
 		<property name="showIfCalculation" value="org.openmrs.module.kenyaemr.calculation.library.hiv.HIVNegativePatientsCalculation" />
@@ -338,9 +314,6 @@
 			<set>
 				<ref bean="kenyaemr.app.registration" />
 				<ref bean="kenyaemr.app.clinician" />
-				<ref bean="kenyaemr.app.chart" />
-				<ref bean="kenyaemr.app.hts" />
-				<ref bean="kenyaemr.app.prep" />
 			</set>
 		</property>
 		<property name="showIfCalculation" value="org.openmrs.module.kenyaemr.calculation.library.hiv.hts.PatientsEligibleForHtsScreeningCalculation" />
@@ -356,8 +329,6 @@
 		<property name="targetUuid" value="9284828e-ce55-11e9-a32f-2a2ae2dbcce4" />
 		<property name="apps">
 			<set>
-				<ref bean="kenyaemr.app.chart" />
-				<ref bean="kenyaemr.app.defaultertracing" />
 			</set>
 		</property>
 		<property name="icon" value="kenyaui:forms/generic.png" />
@@ -372,7 +343,6 @@
 			<set>
 				<ref bean="kenyaemr.app.registration" />
 				<ref bean="kenyaemr.app.clinician" />
-				<ref bean="kenyaemr.app.chart" />
 			</set>
 		</property>
 		<property name="icon" value="kenyaui:forms/generic.png" />
@@ -387,7 +357,6 @@
 			<set>
 				<ref bean="kenyaemr.app.registration" />
 				<ref bean="kenyaemr.app.clinician" />
-				<ref bean="kenyaemr.app.chart" />
 			</set>
 		</property>
 		<property name="icon" value="kenyaui:forms/generic.png" />
