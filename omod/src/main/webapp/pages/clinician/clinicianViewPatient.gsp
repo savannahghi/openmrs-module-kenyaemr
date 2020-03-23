@@ -1,38 +1,103 @@
 <%
 	ui.decorateWith("kenyaemr", "standardPage", [ patient: currentPatient ])
+	ui.includeCss("kenyaemr", "referenceapplication.css", 100)
+	ui.includeCss("kenyaemrorderentry", "font-awesome.css")
+	ui.includeCss("kenyaemrorderentry", "font-awesome.min.css")
+	ui.includeCss("kenyaemrorderentry", "font-awesome.css.map")
+	ui.includeCss("kenyaemrorderentry", "../fontawesome-webfont.svg")
+	def triageUuid ="37f6bd8d-586a-4169-95fa-5781f987fe62";
+	def addTriageFormLink = ui.pageLink("kenyaemr", "enterForm", [patientId: currentPatient.patientId, formUuid: triageUuid, appId:currentApp.id, returnUrl: ui.thisUrl()])
+
 %>
 
-<div class="ke-page-content">
+<script type="text/javascript">
 
-	${ /*ui.includeFragment("kenyaui", "widget/tabMenu", [ items: [
-			[ label: "Overview", tabid: "overview" ],
-			[ label: "Lab Tests", tabid: "labtests" ],
-			[ label: "Prescriptions", tabid: "prescriptions" ]
-	] ])*/ "" }
 
-	<!--<div class="ke-tab" data-tabid="overview">-->
-		<table cellpadding="0" cellspacing="0" border="0" width="100%">
-			<tr>
-				<td width="30%" valign="top">
-					${ ui.includeFragment("kenyaemr", "patient/patientSummary", [ patient: currentPatient ]) }
+	jq(function () {
+
+	});
+
+
+</script>
+<style>
+.dashboard .info-header {
+	border-bottom: 6px solid #7f7b72 !important;
+}
+.dashboard .info-header i {
+	font-size: 1.3em;
+	color: #7f7b72 !important;
+}
+.dashboard .info-header h3 {
+	display: inline-block;
+	font-family: "OpenSansBold";
+	font-size: 1em;
+	margin: 0;
+}
+</style>
+
+
+
+
+<div id="content" class="container">
+
+	<div class="clear"></div>
+
+	<div class="container">
+		<div class="dashboard clear">
+			<div class="info-container column">
+
+				<div class="info-section">
+					<div class="info-header">
+						<i class="icon-diagnosis"></i>
+
+						<h3>Registration Info</h3>
+					</div>
+
+					<div class="info-body">
+						${ ui.includeFragment("kenyaemr", "patient/patientSummary", [ patient: currentPatient ]) }
+					</div>
+				</div>
+
+				<div class="info-section">
+					<div class="info-header">
+						<i class="fa fa-users fa-2x"></i>
+
+						<h3>Relationship</h3>
+					</div>
+
 					${ ui.includeFragment("kenyaemr", "patient/patientRelationships", [ patient: currentPatient ]) }
+
+				</div>
+
+				<div class="info-section">
+					<div class="info-header">
+						<i class="fa fa-file-o"></i>
+
+						<h3>Enrollment status</h3>
+					</div>
+
 					${ ui.includeFragment("kenyaemr", "program/programHistories", [ patient: currentPatient, showClinicalData: true ]) }
-				</td>
-				<td width="55%" valign="top" style="padding-left: 5px">
-					${ ui.includeFragment("kenyaemr", "visitMenu", [ patient: currentPatient, visit: activeVisit ]) }
+				</div>
 
-					${ ui.includeFragment("kenyaemr", "program/programCarePanels", [ patient: currentPatient, complete: false, activeOnly: true ]) }
+			</div>
 
-					<% if (activeVisit) { %>
-					${ ui.includeFragment("kenyaemr", "visitAvailableForms", [ visit: activeVisit ]) }
-					${ ui.includeFragment("kenyaemr", "visitCompletedForms", [ visit: activeVisit ]) }
-					<% } %>
-				</td>
-				<td width="15%" valign="top" style="padding-left: 5px">
-					${ ui.includeFragment("kenyaemr", "providerAction/providerActions") }
-				</td>
-			</tr>
-		</table>
-	<!--</div>-->
+			<div class="info-container column">
+				<div class="info-section allergies">
+					<div class="info-header">
+						<i class="icon-stethoscope"></i>
 
+						<h3>Vitals</h3>
+
+
+					</div>
+
+					<div class="info-body">
+
+					</div>
+				</div>
+			</div>
+			${ui.includeFragment("kenyaemr", "patient/actionsPanel", [visit: visit])}
+
+		</div>
+	</div>
 </div>
