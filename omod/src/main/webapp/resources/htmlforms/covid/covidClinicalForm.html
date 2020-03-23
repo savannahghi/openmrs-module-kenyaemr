@@ -61,10 +61,13 @@
                     Sub county:
                 </td>
                 <td>
-                    <obs conceptId="162689AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"/>
+                    <obs conceptId="161551AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"/>
                 </td>
                 <td>
                     County:
+                </td>
+                <td>
+                    <obs conceptId="165851AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"/>
                 </td>
             </tr>
             <tr>
@@ -72,7 +75,7 @@
                     Detected at point of Entry:
                 </td>
                 <td>
-                    <obs id="detected-poe" conceptId="" labelText=" "
+                    <obs id="detected-poe" conceptId="165651AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "
                          answerConceptIds="1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1067AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                          style="radio" answerLabels="Yes,No,Unknown"/>
                 </td>
@@ -90,7 +93,7 @@
     <div>
         <fieldset>
             <legend><b>Clinical Information</b></legend>
-            <b>Patient Clinical course></b>
+            <b>Patient Clinical course</b>
             <table>
                 <tr>
                     <td>
@@ -99,7 +102,7 @@
                              showTime="false"/>
                     </td>
                     <td>Asymptotic:
-                        <obs id="asymptotic" conceptId="5006AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" showTime="false"/>
+                        <obs id="asymptotic" conceptId="1729AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"  />
                     </td>
                 </tr>
                 <tr>
@@ -387,10 +390,10 @@
                     <td>
                         <obs conceptId="1434AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "
                              answerConceptIds="1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-                             style="radio" answerLabels="Yes,No"/>
+                             style="yes_no" answerLabels="Yes,No"/>
                     </td>
                     <td>Trimester:
-                        <obs concept_id="160665" labelText=" "
+                        <obs conceptId="160665" labelText=" "
                              answerConceptIds="1721,1722,1723"
                              style="radio" answerLabels="First,Second,Third"/>
                     </td>
@@ -521,28 +524,28 @@
                              style="radio" answerLabels="Yes,No,unknown"/>
                     </td>
                 </tr>
-                <!--<tr>-->
-                    <!--<th align="left">Country</th>-->
-                    <!--<th align="left">City</th>-->
-                <!--</tr>-->
-                <!--<repeat>-->
-                    <!--<template>-->
-                        <!--<obsgroup groupingConceptId="162605AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA">-->
-                            <!--<tr>-->
-                                <!--<td>-->
-                                    <!--<obs conceptId="162604AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" id="country"/>-->
-                                <!--</td>-->
-                                <!--<td>-->
-                                    <!--<obs conceptId="165645AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" id="city"/>-->
-                                <!--</td>-->
-                            <!--</tr>-->
-                        <!--</obsgroup>-->
-                    <!--</template>-->
-                    <!--<render n="11" concept="country"/>-->
-                    <!--<render n="12" concept="country"/>-->
-                    <!--<render n="13" concept="country"/>-->
+                <tr>
+                    <th align="left">Country</th>
+                    <th align="left">City</th>
+                </tr>
+                <repeat>
+                    <template>
+                        <obsgroup groupingConceptId="162605AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA">
+                            <tr>
+                                <td>
+                                    <obs conceptId="162604AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" id="country"/>
+                                </td>
+                                <td>
+                                    <obs conceptId="165645AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" id="city"/>
+                                </td>
+                            </tr>
+                        </obsgroup>
+                    </template>
+                    <render n="11" concept="country"/>
+                    <render n="12" concept="country"/>
+                    <render n="13" concept="country"/>
 
-                <!--</repeat>-->
+                </repeat>
 
                 <tr></tr>
                 <tr>
@@ -583,7 +586,7 @@
                         Has the patient <b>had contact with probable or confirmed case</b> in the 14 days prior to
                         symptom onset?
                         <obs id="contact-confirmed-probable-case-last-14-days"
-                             conceptId="165610AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "
+                             conceptId="162633AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "
                              answerConceptIds="1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1067AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                              style="radio" answerLabels="Yes,No,unknown"/>
                     </td>
