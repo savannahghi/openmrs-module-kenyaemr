@@ -40,7 +40,7 @@ public class LostToFollowUpCalculation extends AbstractPatientCalculation implem
 
 	@Override
 	public String getFlagMessage() {
-		return "Lost to Followup";
+		return "";
 	}
 
 	/**
