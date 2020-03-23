@@ -38,12 +38,12 @@ import java.util.Set;
  * those on treatment with pulmonary tb positive, a repeat is done 2, 4, and 6 months
  * sputum results recorded
  */
-public class NeedsTbSputumTestCalculation extends AbstractPatientCalculation implements PatientFlagCalculation {
+public class NeedsTbSputumTestCalculation extends AbstractPatientCalculation {
 
 	/**
 	 * @see org.openmrs.module.kenyacore.calculation.PatientFlagCalculation#getFlagMessage()
 	 */
-	@Override
+
 	public String getFlagMessage() {
 		return "Due for TB Sputum";
 	}

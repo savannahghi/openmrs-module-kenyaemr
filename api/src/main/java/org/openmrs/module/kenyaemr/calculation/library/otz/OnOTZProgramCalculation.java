@@ -29,7 +29,7 @@ import java.util.Set;
  * Calculates whether a patient is currently enrolled in OTZ program
  *
  */
-public class OnOTZProgramCalculation extends AbstractPatientCalculation implements PatientFlagCalculation {
+public class OnOTZProgramCalculation extends AbstractPatientCalculation {
 
 	protected static final Log log = LogFactory.getLog(OnOTZProgramCalculation.class);
 
@@ -53,7 +53,7 @@ public class OnOTZProgramCalculation extends AbstractPatientCalculation implemen
 		return ret;
 	}
 
-	@Override
+
 	public String getFlagMessage() {
 		return "On OTZ";
 	}

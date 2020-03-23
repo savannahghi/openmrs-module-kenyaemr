@@ -30,12 +30,12 @@ import org.openmrs.module.kenyaemr.metadata.TbMetadata;
 /**
  * Calculates which patients are missing TB sputum results
  */
-public class MissingTbSputumResultsCalculation extends AbstractPatientCalculation implements PatientFlagCalculation {
+public class MissingTbSputumResultsCalculation extends AbstractPatientCalculation {
 
 	/**
 	 * @see org.openmrs.module.kenyacore.calculation.PatientFlagCalculation#getFlagMessage()
 	 */
-	@Override
+
 	public String getFlagMessage() {
 		return "Missing TB Sputum Results";
 	}

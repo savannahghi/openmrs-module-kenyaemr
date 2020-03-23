@@ -38,12 +38,12 @@ import java.util.Set;
  * is alive, enrolled in the MCH program, gestation is greater than 14 weeks, is HIV+ and was
  * not indicated as being on ART in the last encounter.
  */
-public class NotOnArtCalculation extends AbstractPatientCalculation implements PatientFlagCalculation {
+public class NotOnArtCalculation extends AbstractPatientCalculation  {
 
 	/**
 	 * @see org.openmrs.module.kenyacore.calculation.PatientFlagCalculation#getFlagMessage()
 	 */
-	@Override
+
 	public String getFlagMessage() {
 		return "Not on ART";
 	}

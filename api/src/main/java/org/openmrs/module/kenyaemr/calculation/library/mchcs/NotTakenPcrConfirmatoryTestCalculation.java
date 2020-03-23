@@ -38,12 +38,12 @@ import java.util.Set;
 /**
  * Determines whether a child has been exited from care and No pcr confirmatory test is done
  */
-public class NotTakenPcrConfirmatoryTestCalculation extends AbstractPatientCalculation implements PatientFlagCalculation {
+public class NotTakenPcrConfirmatoryTestCalculation extends AbstractPatientCalculation {
 	protected static final Log log = LogFactory.getLog(NeedsPcrTestCalculation.class);
 	/**
 	 * @see org.openmrs.module.kenyacore.calculation.PatientFlagCalculation#getFlagMessage()
 	 */
-	@Override
+
 	public String getFlagMessage() {
 		return "Due For PCR Confirmatory Test";
 	}

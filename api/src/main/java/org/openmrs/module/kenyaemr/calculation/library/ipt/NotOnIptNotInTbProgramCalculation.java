@@ -17,9 +17,9 @@ import org.openmrs.module.kenyacore.calculation.PatientFlagCalculation;
 import java.util.Collection;
 import java.util.Map;
 
-public class NotOnIptNotInTbProgramCalculation extends AbstractPatientCalculation implements PatientFlagCalculation {
+public class NotOnIptNotInTbProgramCalculation extends AbstractPatientCalculation  {
 
-	@Override
+
 	public String getFlagMessage() {
 		return "Due for IPT";
 	}

@@ -48,12 +48,12 @@ import static org.openmrs.module.kenyaemr.calculation.EmrCalculationUtils.daysSi
 /**
  * Created by codehub on 05/06/15.
  */
-public class NeedsViralLoadTestCalculation extends AbstractPatientCalculation implements PatientFlagCalculation {
+public class NeedsViralLoadTestCalculation extends AbstractPatientCalculation {
     protected static final Log log = LogFactory.getLog(StablePatientsCalculation.class);
     /**
      * @see org.openmrs.module.kenyacore.calculation.PatientFlagCalculation#getFlagMessage()
      */
-    @Override
+
     public String getFlagMessage() {
         return "";
     }

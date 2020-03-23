@@ -22,12 +22,12 @@ import java.util.Map;
 /**
  * Calculates whether patients are on ART
  */
-public class OnArtCalculation extends AbstractPatientCalculation implements PatientFlagCalculation {
+public class OnArtCalculation extends AbstractPatientCalculation {
 
 	/**
 	 * @see org.openmrs.module.kenyacore.calculation.PatientFlagCalculation#getFlagMessage()
 	 */
-	@Override
+
 	public String getFlagMessage() {
 		return "On ART";
 	}

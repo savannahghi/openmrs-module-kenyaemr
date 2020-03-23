@@ -31,12 +31,12 @@ import java.util.Set;
  * Calculates whether a mother has a HIV+ or HIV- HIV status result. Calculation returns true if mother
  * is alive, enrolled in the MCH program and her HIV status is indicated as Not Tested.
  */
-public class NotHivTestedCalculation extends AbstractPatientCalculation implements PatientFlagCalculation {
+public class NotHivTestedCalculation extends AbstractPatientCalculation {
 
 	/**
 	 * @see org.openmrs.module.kenyacore.calculation.PatientFlagCalculation#getFlagMessage()
 	 */
-	@Override
+
 	public String getFlagMessage() {
 		return "Not HIV Tested";
 	}
