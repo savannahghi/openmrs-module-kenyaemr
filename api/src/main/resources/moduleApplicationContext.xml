@@ -18,6 +18,7 @@
 	<!-- ===================== Content ===================== -->
 
 	<import resource="content/kenyaemr.common.xml" />
+	<import resource="content/kenyaemr.covid.xml" />
 	<import resource="content/kenyaemr.hiv.xml" />
 	<import resource="content/kenyaemr.tb.xml" />
 <!--

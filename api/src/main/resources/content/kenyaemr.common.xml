@@ -19,8 +19,8 @@
 	<bean id="kenyaemr.config.form" class="org.openmrs.module.kenyacore.form.FormConfiguration">
 		<property name="commonPatientForms">
 			<set>
-				<ref bean="kenyaemr.common.form.hivFamilyHistory" />
-				<ref bean="kenyaemr.common.form.obstetricHistory" />
+				<!--<ref bean="kenyaemr.common.form.hivFamilyHistory" />
+				<ref bean="kenyaemr.common.form.obstetricHistory" />-->
 				<!--<ref bean="kenyaemr.common.form.medicalAndSurgicalHistory" />-->
 			</set>
 		</property>
@@ -35,7 +35,9 @@
 				<ref bean="kenyaemr.common.form.htsconfirmatorytest"/>
 				<ref bean="kenyaemr.common.form.htsLinkage"/>
 				<ref bean="kenyaemr_hiv_testing.common.form.htsScreeningForm"/>
+<!--
 				<ref bean="kenyaemr.common.form.covid-19-clinical-form"/>
+-->
 				<ref bean="kenyaemr.common.form.covid-19-contact-tracing-form"/>
 			</set>
 		</property>
@@ -364,7 +366,7 @@
 	</bean>
 
 	<!-- COVID-19 clinical form -->
-	<bean id="kenyaemr.common.form.covid-19-clinical-form" class="org.openmrs.module.kenyacore.form.FormDescriptor">
+	<!--<bean id="kenyaemr.common.form.covid-19-clinical-form" class="org.openmrs.module.kenyacore.form.FormDescriptor">
 		<property name="targetUuid" value="0fe60b26-8648-438b-afea-8841dcd993c6" />
 		<property name="apps">
 			<set>
@@ -376,7 +378,7 @@
 		<property name="icon" value="kenyaui:forms/generic.png" />
 		<property name="htmlform" value="kenyaemr:covid/covidClinicalForm.html" />
 		<property name="order" value="201005" />
-	</bean>
+	</bean>-->
 
 	<!-- COVID-19 Contatct tracing and followup -->
 	<bean id="kenyaemr.common.form.covid-19-contact-tracing-form" class="org.openmrs.module.kenyacore.form.FormDescriptor">
