@@ -18,6 +18,7 @@
 	<!-- ===================== Content ===================== -->
 
 	<import resource="content/kenyaemr.common.xml" />
+	<import resource="content/kenyaemr.covid.xml" />
 	<import resource="content/kenyaemr.hiv.xml" />
 	<import resource="content/kenyaemr.tb.xml" />
 <!--
@@ -45,13 +46,6 @@
 		<constructor-arg value="200" />
 	</bean>
 
-	<bean id="kenyaemr.app.hts" factory-bean="kenyacore.appFactoryBean" factory-method="createInstance">
-		<constructor-arg value="kenyaemr.hivtesting" />
-		<constructor-arg value="HIV Testing Services" />
-		<constructor-arg value="kenyaemr/hivTesting/htsHome.page" />
-		<constructor-arg value="kenyaui:apps/hts.png" />
-		<constructor-arg value="250" />
-	</bean>
 
 	<bean id="kenyaemr.app.clinician" factory-bean="kenyacore.appFactoryBean" factory-method="createInstance">
 		<constructor-arg value="kenyaemr.medicalEncounter" />
@@ -59,22 +53,6 @@
 		<constructor-arg value="kenyaemr/clinician/clinicianHome.page" />
 		<constructor-arg value="kenyaui:apps/clinician.png" />
 		<constructor-arg value="300" />
-	</bean>
-
-	<bean id="kenyaemr.app.prep" factory-bean="kenyacore.appFactoryBean" factory-method="createInstance">
-		<constructor-arg value="kenyaemr.prep" />
-		<constructor-arg value="PrEP" />
-		<constructor-arg value="kenyaemr/prep/prepHome.page"/>
-		<constructor-arg value="kenyaui:apps/prep.png" />
-		<constructor-arg value="350" />
-	</bean>
-
-	<bean id="kenyaemr.app.defaultertracing" factory-bean="kenyacore.appFactoryBean" factory-method="createInstance">
-		<constructor-arg value="kenyaemr.defaultertracing" />
-		<constructor-arg value="Patient Tracing" />
-		<constructor-arg value="kenyaemr/defaulterTracing/defaulterTracingHome.page" />
-		<constructor-arg value="kenyaui:apps/defaulter_tracing.png" />
-		<constructor-arg value="399" />
 	</bean>
 
 	<bean id="kenyaemr.app.chart" factory-bean="kenyacore.appFactoryBean" factory-method="createInstance">

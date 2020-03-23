@@ -66,7 +66,6 @@
 				<ref bean="kenyaemr.app.registration" />
 				<ref bean="kenyaemr.app.intake" />
 				<ref bean="kenyaemr.app.clinician" />
-				<ref bean="kenyaemr.app.chart" />
 			</set>
 		</property>
 		<property name="icon" value="kenyaui:forms/generic.png" />
@@ -81,7 +80,6 @@
 				<ref bean="kenyaemr.app.registration" />
 				<ref bean="kenyaemr.app.intake" />
 				<ref bean="kenyaemr.app.clinician" />
-				<ref bean="kenyaemr.app.chart" />
 			</set>
 		</property>
 		<property name="icon" value="kenyaui:forms/completion.png" />
@@ -94,7 +92,6 @@
 		<property name="apps">
 			<set>
 				<ref bean="kenyaemr.app.clinician" />
-				<ref bean="kenyaemr.app.chart" />
 			</set>
 		</property>
 		<property name="icon" value="kenyaui:forms/generic.png" />
