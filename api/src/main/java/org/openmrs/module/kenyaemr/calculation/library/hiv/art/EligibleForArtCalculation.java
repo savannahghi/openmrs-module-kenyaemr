@@ -38,7 +38,7 @@ public class EligibleForArtCalculation extends AbstractPatientCalculation implem
 	 */
 	@Override
 	public String getFlagMessage() {
-		return "Eligible for ART";
+		return "";
 	}
 
 	/**

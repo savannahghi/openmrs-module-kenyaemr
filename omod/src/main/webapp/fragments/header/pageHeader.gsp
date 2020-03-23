@@ -9,8 +9,8 @@
 		<span style="font-size: 10px; color: #7f7b72;">${ moduleVersion }, powered by OpenMRS</span>
 		<br/>
 		<% if (systemLocation) { %>
-			<span style="font-weight: bold; margin-left: 12px; border-top: 1px gray solid;">${ ui.format(systemLocation) }</span>
-			<span style="font-size: 10px;">(${ systemLocationCode })</span>
+			<span style="font-weight: bold; margin-left: 12px; border-top: 1px gray solid;">COVID-19 Tracking</span>
+			<span style="font-size: 10px;"></span>
 
 		<% } %>
 	</div>

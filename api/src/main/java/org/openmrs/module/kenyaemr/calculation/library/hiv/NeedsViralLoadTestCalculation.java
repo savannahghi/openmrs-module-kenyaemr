@@ -55,7 +55,7 @@ public class NeedsViralLoadTestCalculation extends AbstractPatientCalculation im
      */
     @Override
     public String getFlagMessage() {
-        return "Due for Viral Load";
+        return "";
     }
 
     @Override
