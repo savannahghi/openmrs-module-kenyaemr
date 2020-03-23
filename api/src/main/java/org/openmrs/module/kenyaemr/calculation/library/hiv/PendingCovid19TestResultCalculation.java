@@ -15,6 +15,7 @@ import org.openmrs.Order;
 import org.openmrs.OrderType;
 import org.openmrs.Program;
 import org.openmrs.api.OrderService;
+import org.openmrs.api.context.Context;
 import org.openmrs.calculation.patient.PatientCalculationContext;
 import org.openmrs.calculation.result.CalculationResultMap;
 import org.openmrs.module.kenyacore.calculation.AbstractPatientCalculation;
@@ -23,7 +24,6 @@ import org.openmrs.module.kenyacore.calculation.Filters;
 import org.openmrs.module.kenyacore.calculation.PatientFlagCalculation;
 import org.openmrs.module.kenyaemr.metadata.HivMetadata;
 import org.openmrs.module.metadatadeploy.MetadataUtils;
-import org.openmrs.api.context.Context;
 
 import java.util.Collection;
 import java.util.List;
@@ -31,50 +31,45 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Created by pwangoo on 04/03/19.
+ *
  */
-public class PendingViralLoadResultCalculation  extends AbstractPatientCalculation {
+public class PendingCovid19TestResultCalculation extends AbstractPatientCalculation implements PatientFlagCalculation {
 
     /**
-     * @see org.openmrs.module.kenyacore.calculation.PatientFlagCalculation#getFlagMessage()
+     * @see PatientFlagCalculation#getFlagMessage()
      */
-
+    @Override
     public String getFlagMessage() {
-        return "Pending VL result";
+        return "Pending Covid-19 Lab result";
     }
-    protected static final Log log = LogFactory.getLog(PendingViralLoadResultCalculation.class);
+    protected static final Log log = LogFactory.getLog(PendingCovid19TestResultCalculation.class);
     @Override
     public CalculationResultMap evaluate(Collection<Integer> cohort, Map<String, Object> parameterValues, PatientCalculationContext context) {
-        Program hivProgram = MetadataUtils.existing(Program.class, HivMetadata._Program.HIV);
         String TEST_ORDER_TYPE_UUID = "52a447d3-a64a-11e3-9aeb-50e549534c5e";
         Set<Integer> alive = Filters.alive(cohort, context);
-        Set<Integer> inHivProgram = Filters.inProgram(hivProgram, alive, context);
 
         CalculationResultMap ret = new CalculationResultMap();
         for (Integer ptId : cohort) {
-            boolean pendingViralLoadResult = false;
+            boolean pendingCovid19LabResult = false;
 
             OrderService orderService = Context.getOrderService();
-             //In HIV program
-            if (inHivProgram.contains(ptId)) {
-                //Check whether client has active vl order
+                //Check whether client has active covid order
                 OrderType patientLabOrders = orderService.getOrderTypeByUuid(TEST_ORDER_TYPE_UUID);
                 if (patientLabOrders != null) {
                        //Get active lab orders
                     List<Order> activeVLTestOrders = orderService.getActiveOrders(Context.getPatientService().getPatient(ptId), patientLabOrders, null, null);
                     if (activeVLTestOrders.size() > 0) {
                         for (Order o : activeVLTestOrders) {
-                            if (o.getConcept().getConceptId().equals(856)) {
-                                pendingViralLoadResult = true;
+                            if (o.getConcept().getConceptId().equals(165611)) {
+                                pendingCovid19LabResult = true;
                             }
 
                         }
                     }
 
                 }
-            }
 
-            ret.put(ptId, new BooleanResult(pendingViralLoadResult, this));
+            ret.put(ptId, new BooleanResult(pendingCovid19LabResult, this));
         }
         return ret;
     }

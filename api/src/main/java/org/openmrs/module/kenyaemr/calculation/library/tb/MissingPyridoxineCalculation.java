@@ -30,9 +30,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class MissingPyridoxineCalculation extends AbstractPatientCalculation implements PatientFlagCalculation{
+public class MissingPyridoxineCalculation extends AbstractPatientCalculation{
 
-	@Override
+
 	public String getFlagMessage() {
 		return "Missing Pyridoxine";
 	}

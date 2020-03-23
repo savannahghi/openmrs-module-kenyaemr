@@ -45,7 +45,7 @@ import java.util.Set;
  *
  * Adds "Stable" flag on patient's dashboard
  */
-public class StablePatientsCalculation extends AbstractPatientCalculation implements PatientFlagCalculation {
+public class StablePatientsCalculation extends AbstractPatientCalculation {
 
     protected static final Log log = LogFactory.getLog(StablePatientsCalculation.class);
     static ConceptService conceptService = Context.getConceptService();
@@ -223,7 +223,7 @@ public class StablePatientsCalculation extends AbstractPatientCalculation implem
         }
         return ret;
     }
-        @Override
+
     public String getFlagMessage() {
         return "Stable";
     }

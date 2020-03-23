@@ -36,7 +36,7 @@ import java.util.Set;
  * Is currently active in TB program
  *
  */
-public class PatientInTbProgramCalculation extends AbstractPatientCalculation implements PatientFlagCalculation {
+public class PatientInTbProgramCalculation extends AbstractPatientCalculation {
 
     protected static final Log log = LogFactory.getLog(PatientInTbProgramCalculation.class);
 
@@ -65,7 +65,7 @@ public class PatientInTbProgramCalculation extends AbstractPatientCalculation im
         return ret;
         }
 
-    @Override
+
     public String getFlagMessage() {
         return "On TB";
     }

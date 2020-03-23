@@ -40,7 +40,7 @@ import java.util.Set;
  * Has started anti tb drugs
  * Has not been referred elsewhere
  */
-public class PatientDueForTbProgramEnrollmentCalculation extends AbstractPatientCalculation implements PatientFlagCalculation {
+public class PatientDueForTbProgramEnrollmentCalculation extends AbstractPatientCalculation {
 
    // protected static final Log log = LogFactory.getLog(PatientDueForTbProgramEnrollmentCalculation.class);
 
@@ -93,7 +93,7 @@ public class PatientDueForTbProgramEnrollmentCalculation extends AbstractPatient
     /*
     TODO:Enable this flag after complete tests
     */
-    @Override
+
     public String getFlagMessage () {
         return "Due for TB Enrollment";
     }

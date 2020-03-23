@@ -31,12 +31,12 @@ import java.util.Set;
  * Calculates whether patients are eligible for ART
  */
 
-public class EligibleForArtCalculation extends AbstractPatientCalculation implements PatientFlagCalculation {
+public class EligibleForArtCalculation extends AbstractPatientCalculation {
 
 	/**
 	 * @see org.openmrs.module.kenyacore.calculation.PatientFlagCalculation#getFlagMessage()
 	 */
-	@Override
+
 	public String getFlagMessage() {
 		return "";
 	}
