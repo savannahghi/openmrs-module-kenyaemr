@@ -44,6 +44,8 @@ public class CommonMetadata extends AbstractMetadataBundle {
 		public static final String COVID_19_TREATMENT = "a4414aee-6832-11ea-bc55-0242ac130003";
 		public static final String COVID_19_CONTACT_TRACING = "6dd1ace2-6ce2-11ea-bc55-0242ac130003";
 		public static final String COVID_19_TRAVEL_HISTORY = "50a59411-921b-435a-9109-42aa68ee7aa7";
+		public static final String COVID_OUTCOME = "7b118dac-6f61-4466-ad1a-7e01aca077ad";
+
 	}
 
 	public static final class _Form {
@@ -65,6 +67,8 @@ public class CommonMetadata extends AbstractMetadataBundle {
 		public static final String COVID_19_CARE_FORM = "0fe60b26-8648-438b-afea-8841dcd993c6";
 		public static final String COVID_19_CONTATCT_TRACING_FORM = "37ef8f3c-6cd2-11ea-bc55-0242ac130003";
 		public static final String COVID_19_TRAVEL_HISTORY = "87513b50-6ced-11ea-bc55-0242ac130003";
+		public static final String COVID_OUTCOME = "8f4e3e83-c597-47ad-8999-b788e8255d20";
+
 	}
 
 	public static final class _OrderType {
@@ -131,6 +135,7 @@ public class CommonMetadata extends AbstractMetadataBundle {
 		install(encounterType("COVID-19 Contact tracing", "COVID-19 treatment form", _EncounterType.COVID_19_CONTACT_TRACING));
 		install(encounterType("COVID-19 Treatment", "COVID-19 treatment", _EncounterType.COVID_19_TREATMENT));
 		install(encounterType("COVID-19 Travel", "COVID-19 travel", _EncounterType.COVID_19_TRAVEL_HISTORY));
+		install(encounterType("COVID-19 Outcome", "COVID-19 travel", _EncounterType.COVID_OUTCOME));
 
 		install(form("Clinical Encounter", null, _EncounterType.CONSULTATION, "1", _Form.CLINICAL_ENCOUNTER));
 		install(form("Lab Results", null, _EncounterType.LAB_RESULTS, "1", _Form.LAB_RESULTS));
@@ -150,6 +155,8 @@ public class CommonMetadata extends AbstractMetadataBundle {
 		install(form("COVID-19 Clinical Form", "A form to record treatment for covid-19 PUI ", _EncounterType.COVID_19_TREATMENT, "1", _Form.COVID_19_CARE_FORM));
 		install(form("COVID-19 Travel History", "A form to record travel history for covid-19 PUI ", _EncounterType.COVID_19_TRAVEL_HISTORY, "1", _Form.COVID_19_TRAVEL_HISTORY));
 		install(form("COVID-19 Contact tracing Form", "A form to trace contacts for covid-19 ", _EncounterType.COVID_19_CONTACT_TRACING, "1", _Form.COVID_19_CONTATCT_TRACING_FORM));
+
+		install(form("COVID Outcome", "Covid outcome form ", _EncounterType.COVID_OUTCOME, "1", _Form.COVID_OUTCOME));
 
 
 
