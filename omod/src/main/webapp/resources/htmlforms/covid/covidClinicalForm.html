@@ -18,11 +18,130 @@
     </macros>
     <script type="text/javascript" src="../moduleResources/kenyaemr/scripts/moment.js"></script>
     <script type="text/javascript">
-        jQuery(function ($) {
-            beforeSubmit.push(function () {
-            });
+        jq(function () {
+            jq('#date-detected-poe-lbl').hide();
+            jq('#date-detected-poe').hide();
+            jq('#detected-poe input').change(onDetectedAtPOEChange);
+            jq('#hospital-admission').hide();
+            jq('#admission-to-hospital input').change(onAdmissionToHospitalChange);
+            jq('#date-of-death').hide();
+            jq('#status-at-reporting input').change(onStatusAtReportingChange);
+            jq('#places-visited').hide();
+            jq('#travelled-last-14-days input').change(onTravelledRecentlyChange);
+            jq('#specify-symptoms').hide();
+            jq('#obs-other-symptom input').change(onOtherSymptomsChange);
+            jq('#specify-signs').hide();
+            jq('#obs-other-signs input').change(onOtherSignsChange);
+            jq('#contact-setting-infected').hide();
+            jq('#contact-with-infected-person-last-14-days input').change(onRecentlyContactedInfectedPersonChange);
+            jq('#contact-setting-probable').hide();
+            jq('#contact-confirmed-probable-case-last-14-days input').change(onRecentlyContactedProbableCaseChange);
+            jq('#animal-market').hide();
+            jq('#visited-animal-market-last-14-days input').change(onRecentlyVisitedAnimalMarketChange);
 
+            //jq('#animal-market-exposure-location').hide();
         });
+        // jQuery(function ($) {
+        beforeSubmit.push(function () {
+        });
+        function onDetectedAtPOEChange() {
+            var test = getValue('detected-poe.value');
+            if (getValue('detected-poe.value') == 1065) {
+                jq('#date-detected-poe-lbl').show();
+                jq('#date-detected-poe').show();
+            }else{
+                clearHiddenSections(jq('#date-detected-poe'));
+                jq('#date-detected-poe-lbl').hide();
+                jq('#date-detected-poe').hide();
+            }
+        }
+        function onAdmissionToHospitalChange() {
+            if (getValue('admission-to-hospital.value') == 1065) {
+                jq('#hospital-admission').show();
+            }else{
+                clearHiddenSections(jq('#'));
+                jq('#hospital-admission').hide();
+            }
+        }
+
+        function onStatusAtReportingChange() {
+            if (getValue('status-at-reporting.value') == 160432) {
+                jq('#date-of-death').show();
+            }else{
+                clearHiddenSections(jq('#'));
+                jq('#date-of-death').hide();
+            }
+        }
+
+        function onTravelledRecentlyChange() {
+            if (getValue('travelled-last-14-days.value.value') == 1065) {
+                jq('#places-visited').show();
+            }else{
+                clearHiddenSections(jq('#country'));
+                clearHiddenSections(jq('#city'));
+                jq('#places-visited').hide();
+            }
+        }
+
+        function onRecentlyContactedInfectedPersonChange() {
+            if (getValue('contact-with-infected-person-last-14-days.value') == 1065) {
+                jq('#contact-setting-infected').show();
+            }else{
+                clearHiddenSections(jq('#obs-contact-setting-infected'));
+                jq('#contact-setting-infected').hide();
+            }
+        }
+        function onRecentlyContactedProbableCaseChange() {
+            if (getValue('contact-confirmed-probable-case-last-14-days.value') == 1065) {
+                jq('#contact-setting-probable').show();
+            }else{
+                clearHiddenSections(jq('#obs-contact-setting-probable'));
+                jq('#contact-setting-probable').hide();
+            }
+        }
+        function onRecentlyVisitedAnimalMarketChange() {
+
+            if (getValue('visited-animal-market-last-14-days.value') == 1065) {
+                jq('#animal-market').show();
+            }else{
+                clearHiddenSections(jq('#animal-market-exposure-location'));
+                jq('#animal-market').hide();
+            }
+        }
+
+        function onOtherSignsChange() {
+            if (getValue('obs-other-signs.value') == 5622) {
+                jq('#specify-signs').show();
+            }else{
+                clearHiddenSections(jq('#obs-specify-signs'));
+                jq('#specify-signs').hide();
+            }
+        }
+
+     function onOtherSymptomsChange() {
+            if (getValue('obs-other-symptom.value') == 5622) {
+                jq('#specify-symptoms').show();
+            }else{
+                clearHiddenSections(jq('#obs-specify-symptoms'));
+                jq('#specify-symptoms').hide();
+            }
+        }
+
+        //Clear hidden sections
+        clearHiddenSections = function(parentObj) {
+            parentObj.find('input[type=radio]').each(function() {
+                this.checked = false;
+            });
+            parentObj.find('input[type=checkbox]').each(function() {
+                this.checked = false;
+            });
+            parentObj.find('input[type=text]').each(function() {
+                jq(this).val("");
+            });
+            parentObj.find('select').each(function() {
+                this.selectedIndex =0;
+            });
+        }
     </script>
     <style>
         table {
@@ -96,7 +215,7 @@
                     <td>
                         &#160;&#160;&#160;&#160;&#160;&#160;&#160;
                     </td>
-                    <td>
+                    <td id="date-detected-poe-lbl">
                         Date detected:
                     </td>
                     <td id="date-detected-poe">
@@ -129,12 +248,12 @@
                 <tr>
                     <td>Admission to hospital:</td>
                     <td>
-                        <obs conceptId="163403AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "
+                        <obs id ="admission-to-hospital" conceptId="163403AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "
                              answerConceptIds="1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1067AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                              style="radio" answerLabels="Yes,No,Unknown"/>
                     </td>
                 </tr>
-                <tr>
+                <tr id="hospital-admission">
                     <td>First date of admission to hospital:</td>
                     <td>
                         <obs id="admission-date" conceptId="1640AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" allowTime="false"/>
@@ -164,8 +283,8 @@
                              style="radio" answerLabels="Stable,Severly ill,dead,unknown"/>
                     </td>
                 </tr>
-                <tr>
-                    <td id="date-of-death"> Date of death:</td>
+                <tr id="date-of-death">
+                    <td> Date of death:</td>
                     <td>
                         <obs conceptId="1543AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText="" allowTime="false"/>
                     </td>
@@ -288,11 +407,15 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>Other (specify)</td>
+                    <td>Other</td>
                     <td>
-                        <obs conceptId="162737AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "
+                        <obs id="obs-other-symptom" conceptId="162737AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "
                              answerConceptIds="5622AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                              style="radio" answerLabels="Other"/>
+                    </td>
+                    <td>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</td>
+                    <td id="specify-symptoms"> Other (specify)
+                        <obs id ="obs-specify-symptoms" conceptId="1391AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"/>
                     </td>
                 </tr>
             </table>
@@ -306,7 +429,6 @@
                     </td>
                     <td>
                         <obs conceptId="5088AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"/>
-                        &#176;C
                     </td>
                 </tr>
                 <tr>
@@ -374,15 +496,16 @@
                 <tr>
                     <td>Other</td>
                     <td>
-                        <obs conceptId="162737AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "
+                        <obs id="obs-other-signs" conceptId="162737AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "
                              answerConceptIds="5622AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                              style="radio"/>
                     </td>
                     <td>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</td>
-                    <td> Other (specify)
-                        <obs conceptId="1391AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"/>
+                    <td id="specify-signs"> Other (specify)
+                        <obs id ="obs-specify-signs" conceptId="1391AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"/>
                     </td>
                 </tr>
+
             </table>
         </fieldset>
         <fieldset>
@@ -439,7 +562,7 @@
                     <td>Chronic neurological or neuromascular disease</td>
                     <td>
                         <obs conceptId="162747AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "
-                             answerConceptIds="6032AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                             answerConceptIds="152997AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                              style="radio" answerLabels="Yes,No"/>
                     </td>
                 </tr>
@@ -524,6 +647,8 @@
                              style="radio" answerLabels="Yes,No,unknown"/>
                     </td>
                 </tr>
+            </table>
+                <table id ="places-visited">
                 <tr>
                     <th align="left">Country</th>
                     <th align="left">City</th>
@@ -548,7 +673,8 @@
 
                 </repeat>
 
-                <tr> </tr>
+                </table>
+                <table>
                 <tr>
                     <td>
                         Has the patient <b>visited any health care facility (ies)</b> in the 14 days prior to
@@ -575,13 +701,13 @@
                              style="radio" answerLabels="Yes,No,unknown"/>
                     </td>
                 </tr>
-                <tr>
+                <tr id="contact-setting-infected">
                     <td>
                         Contact setting
 
                     </td>
                     <td>
-                        <obs id="contact-setting" conceptId="163577AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "
+                        <obs id="obs-contact-setting-infected" conceptId="163577AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "
                              answerConceptIds="1537AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1536AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,164406AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1067AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                              style="radio" answerLabels="Health care setting,Family setting,Work place, Unknown"/>
                     </td>
@@ -603,7 +729,7 @@
                              style="radio" answerLabels="Yes,No,unknown"/>
                     </td>
                 </tr>
-                <tr>
+                <tr id="contact-setting-probable">
                     <!-- <td>
                          Unique case identifiers of all probable or confirmed cases:
                          <obs id="identifiers-confirmed-probable-case-1" conceptId="" labelText="Case 1 Indentifier"/>
@@ -615,7 +741,7 @@
 
                     </td>
                     <td>
-                        <obs id="contact-setting" conceptId="163577AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "
+                        <obs id="obs-contact-setting-probable" conceptId="163577AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "
                              answerConceptIds="1537AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1536AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,164406AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1067AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                              style="radio" answerLabels="Health care setting,Family setting,Work place, Unknown"/>
                     </td>
@@ -636,7 +762,7 @@
                              style="radio" answerLabels="Yes,No,unknown"/>
                     </td>
                 </tr>
-                <tr>
+                <tr id="animal-market">
                     <td>
                         Location/country/city of exposure:
 
@@ -647,6 +773,7 @@
                     </td>
                 </tr>
             </table>
+
         </fieldset>
        <enrollInProgram programId="e7ee7548-6958-4361-bed9-ee2614423947"/>
 
