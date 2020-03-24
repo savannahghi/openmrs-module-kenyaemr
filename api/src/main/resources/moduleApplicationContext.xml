@@ -55,6 +55,14 @@
 		<constructor-arg value="300" />
 	</bean>
 
+	<bean id="kenyaemr.app.defaultertracing" factory-bean="kenyacore.appFactoryBean" factory-method="createInstance">
+		<constructor-arg value="kenyaemr.defaultertracing" />
+		<constructor-arg value="Contact Followup" />
+		<constructor-arg value="kenyaemr/covid/contactFollowupHome.page" />
+		<constructor-arg value="kenyaui:apps/defaulter_tracing.png" />
+		<constructor-arg value="301" />
+	</bean>
+
 	<bean id="kenyaemr.app.chart" factory-bean="kenyacore.appFactoryBean" factory-method="createInstance">
 		<constructor-arg value="kenyaemr.medicalChart" />
 		<constructor-arg value="Chart" />
