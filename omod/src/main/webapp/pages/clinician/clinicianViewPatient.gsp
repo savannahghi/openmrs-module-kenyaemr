@@ -62,6 +62,16 @@
 					<div class="info-header">
 						<i class="fa fa-users fa-2x"></i>
 
+						<h3>Travel History</h3>
+					</div>
+
+
+				</div>
+
+				<div class="info-section">
+					<div class="info-header">
+						<i class="fa fa-users fa-2x"></i>
+
 						<h3>Relationship</h3>
 					</div>
 

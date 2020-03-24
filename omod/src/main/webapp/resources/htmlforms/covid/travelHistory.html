@@ -1,0 +1,157 @@
+<!--
+  ~ The contents of this file are subject to the OpenMRS Public License
+  ~ Version 1.0 (the "License"); you may not use this file except in
+  ~ compliance with the License. You may obtain a copy of the License at
+  ~ http://license.openmrs.org
+  ~
+  ~ Software distributed under the License is distributed on an "AS IS"
+  ~ basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+  ~ License for the specific language governing rights and limitations
+  ~ under the License.
+  ~
+  ~ Copyright (C) OpenMRS, LLC.  All Rights Reserved.
+-->
+<htmlform>
+
+	<style type="text/css">
+		table.right-aligned-first td:first-child {
+			text-align: right;
+		}
+	</style>
+
+	<script type="text/javascript">
+
+		jq(function() {
+
+		});
+	</script>
+
+	<div class="ke-form-header">
+		<table width="100%">
+			<tr>
+				<td>Date: <encounterDate id="encounter-date" showTime="true" /></td>
+				<td>Location: <encounterLocation default="GlobalProperty:kenyaemr.defaultLocation" type="autocomplete" /></td>
+			</tr>
+		</table>
+	</div>
+
+	<div class="ke-form-content">
+
+		<fieldset>
+			<legend>Travel Information</legend>
+
+			<table cellspacing="5">
+				<tr>
+					<th></th>
+					<th></th>
+				</tr>
+				<tr>
+					<td>Date of arrival in Kenya</td>
+					<td><obs conceptId="160753"/></td>
+				</tr>
+				<tr>
+					<td>Airline/Bus</td>
+					<td><obs conceptId="1375" style="radio"/></td>
+				</tr>
+				<tr>
+					<td>Flight/Bus Number</td>
+					<td><obs conceptId="162612"/></td>
+				</tr>
+				<tr>
+					<td>Seat Number</td>
+					<td><obs conceptId="162086"/></td>
+				</tr>
+				<tr>
+					<td>Destination in Kenya</td>
+					<td><obs conceptId="162725"/></td>
+				</tr>
+			</table>
+
+		</fieldset>
+
+		<fieldset>
+			<legend>Local Contact Information</legend>
+			<div>
+				<em><i>Please provide your contact information if you plan to reside in Kenya for a duration exceeding 1 hour</i></em>
+			</div>
+
+			<table cellspacing="5">
+
+				<tr>
+					<td>Name of your contact person (if not yourself)</td>
+					<td><obs conceptId="163258" /></td>
+				</tr>
+				<tr>
+					<td>Telephone No of your contact person (if any)</td>
+					<td><obs conceptId="159635" /></td>
+				</tr>
+				<tr>
+					<td>Village/House number/Hotel</td>
+					<td><obs  conceptId="1354"/> </td>
+				</tr>
+				<tr>
+					<td>Sublocation/Estate</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>County</td>
+					<td><obs conceptId="165197" /></td>
+				</tr>
+				<tr>
+					<td>Address</td>
+					<td><obs conceptId="162725" /></td>
+				</tr>
+				<tr>
+					<td>Local Telephone Number</td>
+					<td><obs conceptId="163152AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" /></td>
+				</tr>
+				<tr>
+					<td>Email</td>
+					<td></td>
+				</tr>
+			</table>
+		</fieldset>
+
+		<fieldset>
+			<legend>Examination</legend>
+			<div>
+				<em>TODAY OR IN THE PAST 24 HOURS, HAVE YOU HAD ANY OF THE FOLLOWING SYMPTOMS?</em>
+			</div>
+
+			<table cellspacing="10">
+
+				<tr>
+					<td>Fever (38 degrees celcius or higher), felt feverish, or had chills?</td>
+					<td>
+						<obs conceptId="162737AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "
+							 answerConceptIds="140238AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+							 style="radio" answerLabels="Yes,No" />
+					</td>
+				</tr>
+				<tr>
+					<td>Cough</td>
+					<td>
+						<obs conceptId="162737AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "
+							 answerConceptIds="143264AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+							 style="radio" answerLabels="Yes,No"/>
+					</td>
+				</tr>
+				<tr>
+					<td>Difficulty breathing</td>
+					<td>
+						<obs conceptId="162737AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "
+							 answerConceptIds="141600AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+							 style="radio" answerLabels="Yes,No" />
+					</td>
+				</tr>
+			</table>
+		</fieldset>
+
+
+	</div>
+
+	<div class="ke-form-footer">
+		<submit />
+	</div>
+
+</htmlform>
