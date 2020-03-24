@@ -145,7 +145,14 @@
 		<ul class="float-left">
 			<h3>Completed Forms</h3>
 			<li class="float-left" style="margin-top: 7px">
-
+				<a>
+					<%
+						def onEncounterClick = { encounter ->
+							"""kenyaemr.openEncounterDialog('${ currentApp.id }', ${ encounter.id });"""
+						}
+					%>
+					${ ui.includeFragment("kenyaemr", "widget/encounterLightStack", [ encounters: encounters, onEncounterClick: onEncounterClick ]) }
+				</a>
 			</li>
 
 		</ul>
