@@ -45,7 +45,7 @@
         beforeSubmit.push(function () {
         });
         function onDetectedAtPOEChange() {
-            var test = getValue('detected-poe.value');
+
             if (getValue('detected-poe.value') == 1065) {
                 jq('#date-detected-poe-lbl').show();
                 jq('#date-detected-poe').show();
@@ -74,7 +74,7 @@
         }
 
         function onTravelledRecentlyChange() {
-            if (getValue('travelled-last-14-days.value.value') == 1065) {
+            if (getValue('travelled-last-14-days.value') == 1065) {
                 jq('#places-visited').show();
             }else{
                 clearHiddenSections(jq('#country'));
