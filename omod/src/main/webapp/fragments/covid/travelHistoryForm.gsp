@@ -10,9 +10,10 @@
 				<th>Date</th>
 				<th>Arrival</th>
 				<th>Mode</th>
+				<th>Destination</th>
 				<th>Fever</th>
 				<th>Cough</th>
-				<th>Difficulty breathing</th>
+				<th>Difficulty<br/> breathing</th>
 				<th> </th>
 			</tr>
 
@@ -21,6 +22,7 @@
 				<td width="80px">${it.encDate}</td>
 				<td>${it.arrivalDate}</td>
 				<td>${it.transportMode}</td>
+				<td>${it.destination}</td>
 				<td>${it.fever}</td>
 				<td>${it.cough}</td>
 				<td>${it.difficultyBreathing}</td>
