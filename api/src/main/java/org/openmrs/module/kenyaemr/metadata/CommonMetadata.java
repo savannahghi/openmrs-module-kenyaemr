@@ -152,9 +152,9 @@ public class CommonMetadata extends AbstractMetadataBundle {
 		install(form("Drug Regimen Editor", null, _EncounterType.DRUG_REGIMEN_EDITOR, "1", _Form.DRUG_REGIMEN_EDITOR));
 		install(form("HTS Client Tracing Form", "Form for tracing hts clients", _EncounterType.HTS, "1", _Form.HTS_CLIENT_TRACING));
 		install(form("HTS Client Referral Form", "Form for HTS linkage referral", _EncounterType.HTS, "1", _Form.HTS_REFERRAL));
-		install(form("COVID-19 Clinical Form", "A form to record treatment for covid-19 PUI ", _EncounterType.COVID_19_TREATMENT, "1", _Form.COVID_19_CARE_FORM));
+		install(form("COVID-19 Case Investigation Form", "A form to record treatment for covid-19 PUI ", _EncounterType.COVID_19_TREATMENT, "1", _Form.COVID_19_CARE_FORM));
 		install(form("COVID-19 Travel History", "A form to record travel history for covid-19 PUI ", _EncounterType.COVID_19_TRAVEL_HISTORY, "1", _Form.COVID_19_TRAVEL_HISTORY));
-		install(form("COVID-19 Contact tracing Form", "A form to trace contacts for covid-19 ", _EncounterType.COVID_19_CONTACT_TRACING, "1", _Form.COVID_19_CONTATCT_TRACING_FORM));
+		install(form("COVID-19 Monitored Reporting Form", "A form to trace contacts for covid-19 ", _EncounterType.COVID_19_CONTACT_TRACING, "1", _Form.COVID_19_CONTATCT_TRACING_FORM));
 
 		install(form("COVID Outcome", "Covid outcome form ", _EncounterType.COVID_OUTCOME, "1", _Form.COVID_OUTCOME));
 

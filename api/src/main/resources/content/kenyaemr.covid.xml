@@ -18,7 +18,7 @@
 
 	<bean id="kenyaemr.covid.program" class="org.openmrs.module.kenyacore.program.ProgramDescriptor">
 		<property name="targetUuid" value="e7ee7548-6958-4361-bed9-ee2614423947" />
-		<property name="eligibilityCalculation" value="org.openmrs.module.kenyaemr.calculation.library.hiv.art.PatientsWithPositiveCovid19TestCalculation" />
+		<property name="eligibilityCalculation" value="org.openmrs.module.kenyaemr.calculation.library.hiv.EligibleForHivProgramCalculation" />
 		<property name="defaultEnrollmentForm" ref="kenyaemr.covid.form.enrollment" />
 		<property name="defaultCompletionForm" ref="kenyaemr.covid.form.completion" />
 		<property name="visitForms" >
