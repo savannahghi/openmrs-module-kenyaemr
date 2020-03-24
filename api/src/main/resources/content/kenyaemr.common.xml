@@ -31,9 +31,9 @@
 				<ref bean="kenyaemr.common.form.labResults" />
 				<!--<ref bean="kenyaemr.common.form.otherMedications" />-->
 				<ref bean="kenyaemr.common.form.progressNote" />
-<!--
-				<ref bean="kenyaemr.common.form.covid-19-clinical-form"/>
--->
+				<!--
+                                <ref bean="kenyaemr.common.form.covid-19-clinical-form"/>
+                -->
 				<ref bean="kenyaemr.common.form.covid-19-contact-tracing-form"/>
 			</set>
 		</property>
