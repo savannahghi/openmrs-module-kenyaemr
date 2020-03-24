@@ -101,6 +101,38 @@ public class PatientWrapper extends AbstractPatientWrapper {
 	}
 
 	/**
+	 * Gets the patient clinic number
+	 * @return the identifier value
+	 */
+	public String getAlienNumber() {
+		return getAsIdentifier(CommonMetadata._PatientIdentifierType.ALIEN_NUMBER);
+	}
+
+	/**
+	 * Sets the patient clinic number
+	 * @param value the identifier value
+	 * @param location the identifier location
+	 */
+	public void setAlienNumber(String value, Location location) {
+		setAsIdentifier(CommonMetadata._PatientIdentifierType.ALIEN_NUMBER, value, location);
+	}
+	/**
+	 * Gets the patient clinic number
+	 * @return the identifier value
+	 */
+	public String getPassportNumber() {
+		return getAsIdentifier(CommonMetadata._PatientIdentifierType.PASSPORT_NUMBER);
+	}
+
+	/**
+	 * Sets the patient clinic number
+	 * @param value the identifier value
+	 * @param location the identifier location
+	 */
+	public void setPassportNumber(String value, Location location) {
+		setAsIdentifier(CommonMetadata._PatientIdentifierType.PASSPORT_NUMBER, value, location);
+	}
+	/**
 	 * Gets the address of next of kin
 	 * @return the address
 	 */
