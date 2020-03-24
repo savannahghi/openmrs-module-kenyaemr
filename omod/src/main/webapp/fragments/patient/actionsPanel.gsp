@@ -79,9 +79,16 @@
 					Lab Orders
 				</a>
 			</li>
-
 		</ul>
-
+		<ul class="float-left">
+			<h3>Contacts</h3>
+			<li class="float-left" style="margin-top: 7px">
+				<a href="${ ui.pageLink("hivtestingservices", "patientContactList", [patientId: currentPatient.patientId]) }" class="float-left">
+					<i class="fa fa-list-ul fa-2x"></i>
+					Contact Listing
+				</a>
+			</li>
+		</ul>
 		<ul id = "clinical-tools" class="float-left">
 
 			<h3>Self Monitoring Tools</h3>
