@@ -111,6 +111,7 @@
 					</div>
 
 					<div class="info-body">
+						${ui.includeFragment("kenyaemr", "patient/currentVitals", [patient: currentPatient])}
 
 					</div>
 				</div>
