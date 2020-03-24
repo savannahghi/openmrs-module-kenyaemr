@@ -35,9 +35,17 @@ public class ProgramHistoriesFragmentController {
 		if (!patient.isVoided()) {
 			Collection<ProgramDescriptor> activePrograms = programManager.getPatientActivePrograms(patient);
 			Collection<ProgramDescriptor> eligiblePrograms = programManager.getPatientEligiblePrograms(patient);
+			for (ProgramDescriptor ActiveCovidDescriptor : activePrograms) {
+				if (!programs.contains(ActiveCovidDescriptor)) {
+					if (ActiveCovidDescriptor.getTargetUuid().equalsIgnoreCase("e7ee7548-6958-4361-bed9-ee2614423947")) {
+						programs.addAll(activePrograms);
+					}
+
+				}
+			}
 
 			// Display active programs on top
-			programs.addAll(activePrograms);
+
 
 			// Don't add duplicates for programs for which patient is both active and eligible
 			for (ProgramDescriptor descriptor : eligiblePrograms) {
