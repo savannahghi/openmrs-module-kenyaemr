@@ -8,6 +8,9 @@
 	def triageUuid ="37f6bd8d-586a-4169-95fa-5781f987fe62";
 	def addTriageFormLink = ui.pageLink("kenyaemr", "enterForm", [patientId: currentPatient.patientId, formUuid: triageUuid, appId:currentApp.id, returnUrl: ui.thisUrl()])
 
+	def travelHistoryFormUUID ="87513b50-6ced-11ea-bc55-0242ac130003";
+	def addTravelHistoryFormLink = ui.pageLink("kenyaemr", "enterForm", [patientId: currentPatient.patientId, formUuid: travelHistoryFormUUID, appId:currentApp.id, returnUrl: ui.thisUrl()])
+
 %>
 
 <script type="text/javascript">
@@ -63,6 +66,11 @@
 						<i class="fa fa-users fa-2x"></i>
 
 						<h3>Travel History</h3>
+						<i class="fa fa-plus-square right" style="color: steelblue" title="Add History"
+						   onclick="location.href = '${addTravelHistoryFormLink}'"></i>
+					</div>
+					<div class="info-body">
+						${ ui.includeFragment("kenyaemr", "covid/travelHistoryForm", [ patient: currentPatient ]) }
 					</div>
 
 
@@ -97,7 +105,8 @@
 						<i class="icon-stethoscope"></i>
 
 						<h3>Vitals</h3>
-
+						<i class="fa fa-plus-square right" style="color: steelblue" title="Add Vitals"
+						   onclick="location.href = '${addTriageFormLink}'"></i>
 
 					</div>
 
