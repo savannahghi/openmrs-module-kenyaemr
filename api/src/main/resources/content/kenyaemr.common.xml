@@ -91,6 +91,19 @@
 		<property name="targetUuid" value="${metadata.identifiertype.MEDICAL_RECORD_NUMBER}" />
 	</bean>
 
+	<!-- Alien Number -->
+	<bean id="kenyaemr.common.identifier.alien" class="org.openmrs.module.kenyacore.identifier.IdentifierDescriptor">
+		<property name="targetUuid" value="e1e80b5c-6d7e-11ea-bc55-0242ac130003" />
+		<property name="order" value="110" />
+
+	</bean>
+
+	<!-- Passport Number -->
+	<bean id="kenyaemr.common.identifier.passport" class="org.openmrs.module.kenyacore.identifier.IdentifierDescriptor">
+		<property name="targetUuid" value="e1e80daa-6d7e-11ea-bc55-0242ac130003" />
+		<property name="order" value="101" />
+	</bean>
+
 	<!-- ===================== Forms ===================== -->
 
 	<!-- Family History -->

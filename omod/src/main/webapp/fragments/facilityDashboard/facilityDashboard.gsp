@@ -378,18 +378,15 @@
 </script>
 
 <div class="ke-page-content">
-    <div style="font-size: 18px; color: #006056; font-style: normal; font-weight: bold">Facility Dashboard</div>
+    <div style="font-size: 18px; color: #006056; font-style: normal; font-weight: bold">Dashboard</div>
 
     <div id="program-tabs" class="ke-tabs">
         <div class="ke-tabmenu">
-            <div class="ke-tabmenu-item" data-tabid="care_and_treatment">Care and Treatment</div>
+            <div class="ke-tabmenu-item" data-tabid="care_and_treatment">Confirmed Cases</div>
 
-            <div class="ke-tabmenu-item" data-tabid="hts">HTS</div>
+            <div class="ke-tabmenu-item" data-tabid="hts">Cases in Lab</div>
 
-            <div class="ke-tabmenu-item" data-tabid="appointments">Appointments</div>
-
-            <div class="ke-tabmenu-item" data-tabid="diff_care">Differentiated Care</div>
-
+            <div class="ke-tabmenu-item" data-tabid="appointments">Contact Tracing</div>
 
         </div>
 
@@ -565,94 +562,6 @@
 
                     </td>
 
-                </tr>
-            </table>
-        </div>
-        <div class="ke-tab" data-tabid="diff_care">
-            <table cellspacing="0" cellpadding="0" width="100%">
-                <tr>
-                    <td style="width: 50%; vertical-align: top; padding-left: 5px">
-                        <div class="ke-panel-frame">
-                            <div class="ke-panel-heading">Documented Unstable Patients</div>
-
-                            <div class="ke-panel-content">
-                                <table class="alignLeft">
-                                    <tr>
-                                        <td colspan="4" class="heading2"><strong>Reporting Period: Today</strong></td>
-                                    </tr>
-
-                                    <tr>
-                                        <th>Aged Below 15 years</th>
-                                        <th>Females aged 15+ years</th>
-                                        <th>Males aged 15+ years</th>
-                                    </tr>
-                                    <tr>
-                                        <td>${unstableUnder15}</td>
-                                        <td>${unstableFemales15Plus}</td>
-                                        <td>${unstableMales15Plus}</td>
-                                    </tr>
-                                    <tr><strong>
-                                    <td colspan="3" class="heading"><strong style="font-weight: bold">Total Unstable: ${unstableUnder15 + unstableFemales15Plus + unstableMales15Plus }</strong></td></strong>
-                                    </tr>
-                                    <tr><strong>
-                                        <td colspan="3" class="heading"><strong style="font-weight: bold">Patients with undocumented stability: ${undocumentedStability}</strong></td></strong>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="6" class="heading1"><strong style="font-weight: bold;">Current on ART: ${currInCareOnART}</strong></td>
-                                    </tr>
-
-
-                                </table>
-                            </div>
-                        </div>
-                        <div id="differentiated_care_tracker_unstable" style="min-width: 700px; height: 350px; margin: 0 auto"></div>
-                    </td>
-
-                    <td style="width: 50%; vertical-align: top; padding-left: 5px">
-                        <div class="ke-panel-frame">
-                            <div class="ke-panel-heading">Documented Stable Patients</div>
-
-                            <div class="ke-panel-content">
-                                <table class="alignLeft">
-                                    <tr>
-                                        <td colspan="6" class="heading2"><strong>Reporting Period: Today</strong></td>
-                                    </tr>
-
-                                    <tr>
-                                        <th colspan="3">Under 4 months prescription</th>
-                                        <th colspan="3">4+ months prescription</th>
-                                    </tr>
-                                    <tr>
-                                        <th colspan="1">Below 15 years</th>
-                                        <th colspan="1">Females 15+ years</th>
-                                        <th colspan="1">Males 15+ years</th>
-                                        <th colspan="1">Below 15 years</th>
-                                        <th colspan="1">Females 15+ years</th>
-                                        <th colspan="1">Males 15+ years</th>
-                                    </tr>
-                                    <tr>
-                                        <td>${stableUnder4mtcaBelow15}</td>
-                                        <td>${stableUnder4mtcaOver15F}</td>
-                                        <td>${stableUnder4mtcaOver15M}</td>
-                                        <td>${stableOver4mtcaBelow15}</td>
-                                        <td>${stableOver4mtcaOver15F}</td>
-                                        <td>${stableOver4mtcaOver15M}</td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="6" class="heading1"><strong style="font-weight: bold">Total Stable: ${stableUnder4mtcaBelow15 + stableUnder4mtcaOver15F + stableUnder4mtcaOver15M + stableOver4mtcaBelow15 +  stableOver4mtcaOver15F + stableOver4mtcaOver15M}</strong></td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="6" class="heading1"><strong style="font-weight: bold">Patients with undocumented stability: ${undocumentedStability}</strong></td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="6" class="heading1"><strong style="font-weight: bold">Current on ART: ${currInCareOnART}</strong></td>
-                                    </tr>
-
-                                </table>
-                            </div>
-                        </div>
-                        <div id="differentiated_care_tracker_stable" style="min-width: 700px; height: 350px; margin: 0 auto"></div>
-                    </td>
                 </tr>
             </table>
         </div>

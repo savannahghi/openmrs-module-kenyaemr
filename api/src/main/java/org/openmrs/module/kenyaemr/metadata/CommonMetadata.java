@@ -79,7 +79,8 @@ public class CommonMetadata extends AbstractMetadataBundle {
 		public static final String PATIENT_CLINIC_NUMBER = Metadata.IdentifierType.PATIENT_CLINIC_NUMBER;
 		public static final String NATIONAL_UNIQUE_PATIENT_IDENTIFIER = Metadata.IdentifierType.NATIONAL_UNIQUE_PATIENT_IDENTIFIER;
 		public static final String CWC_NUMBER = Metadata.IdentifierType.CWC_NUMBER;
-		public static final String IQCARE_PERSON_PK = "b3d6de9f-f215-4259-9805-8638c887e46b"; // this takes care of migration
+		public static final String ALIEN_NUMBER = "e1e80b5c-6d7e-11ea-bc55-0242ac130003"; // this takes care of migration
+		public static final String PASSPORT_NUMBER = "e1e80daa-6d7e-11ea-bc55-0242ac130003"; // this takes care of migration
 	}
 
 	public static final class _PersonAttributeType {
@@ -179,9 +180,13 @@ public class CommonMetadata extends AbstractMetadataBundle {
 				".{1,14}", "Should take the format (CWC-MFL code-serial number) e.g CWC-15007-00001", null,
 				LocationBehavior.NOT_USED, false, _PatientIdentifierType.CWC_NUMBER));
 
-		install(patientIdentifierType("IQCare Person PK", "A person's primary key in IQCare database",
-				null, null, null,
-				LocationBehavior.NOT_USED, false, _PatientIdentifierType.IQCARE_PERSON_PK));
+		install(patientIdentifierType("Alien Number", "Alien Number",
+				".{1,14}", "At most 14 characters long", null,
+				LocationBehavior.NOT_USED, false, _PatientIdentifierType.ALIEN_NUMBER));
+
+		install(patientIdentifierType("Passport Number", "Passport Number",
+				".{1,14}", "At most 14 characters long", null,
+				LocationBehavior.NOT_USED, false, _PatientIdentifierType.PASSPORT_NUMBER));
 		
 		install(personAttributeType("Telephone contact", "Telephone contact number",
 				String.class, null, false, 1.0, _PersonAttributeType.TELEPHONE_CONTACT));

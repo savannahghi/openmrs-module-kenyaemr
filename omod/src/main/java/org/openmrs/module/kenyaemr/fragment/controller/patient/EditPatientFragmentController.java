@@ -219,6 +219,8 @@ public class EditPatientFragmentController {
 		private String nationalIdNumber;
 		private String patientClinicNumber;
 		private String uniquePatientNumber;
+		private String alienNumber;
+		private String passportNumber;
 		private String telephoneContact;
 		private String nameOfNextOfKin;
 		private String nextOfKinRelationship;
@@ -281,6 +283,8 @@ public class EditPatientFragmentController {
 			patientClinicNumber = wrapper.getPatientClinicNumber();
 			uniquePatientNumber = wrapper.getUniquePatientNumber();
 			nationalIdNumber = wrapper.getNationalIdNumber();
+			alienNumber = wrapper.getAlienNumber();
+			passportNumber = wrapper.getPassportNumber();
 
 			nameOfNextOfKin = wrapper.getNextOfKinName();
 			nextOfKinRelationship = wrapper.getNextOfKinRelationship();
@@ -370,6 +374,8 @@ public class EditPatientFragmentController {
 			validateIdentifierField(errors, "nationalIdNumber", CommonMetadata._PatientIdentifierType.NATIONAL_ID);
 			validateIdentifierField(errors, "patientClinicNumber", CommonMetadata._PatientIdentifierType.PATIENT_CLINIC_NUMBER);
 			validateIdentifierField(errors, "uniquePatientNumber", HivMetadata._PatientIdentifierType.UNIQUE_PATIENT_NUMBER);
+			validateIdentifierField(errors, "alienNumber", CommonMetadata._PatientIdentifierType.ALIEN_NUMBER);
+			validateIdentifierField(errors, "passportNumber", CommonMetadata._PatientIdentifierType.PASSPORT_NUMBER);
 
 			// check birth date against future dates and really old dates
 			if (birthdate != null) {
@@ -457,6 +463,8 @@ public class EditPatientFragmentController {
 			wrapper.setNationalIdNumber(nationalIdNumber, location);
 			wrapper.setPatientClinicNumber(patientClinicNumber, location);
 			wrapper.setUniquePatientNumber(uniquePatientNumber, location);
+			wrapper.setAlienNumber(alienNumber, location);
+			wrapper.setPassportNumber(passportNumber, location);
 			wrapper.setNextOfKinName(nameOfNextOfKin);
 			wrapper.setNextOfKinRelationship(nextOfKinRelationship);
 			wrapper.setNextOfKinContact(nextOfKinContact);
@@ -651,6 +659,22 @@ public class EditPatientFragmentController {
 		public void setNationalIdNumber(String nationalIdNumber) {
 
 			this.nationalIdNumber = nationalIdNumber;
+		}
+
+		public String getAlienNumber() {
+			return alienNumber;
+		}
+
+		public void setAlienNumber(String alienNumber) {
+			this.alienNumber = alienNumber;
+		}
+
+		public String getPassportNumber() {
+			return passportNumber;
+		}
+
+		public void setPassportNumber(String passportNumber) {
+			this.passportNumber = passportNumber;
 		}
 
 		/**
