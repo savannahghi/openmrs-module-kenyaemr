@@ -609,7 +609,8 @@
         </fieldset>
         <fieldset>
             <legend>Underlying conditions/comorbidity</legend>
-            <table>
+            <includeIf velocityTest="$patient.gender == 'F'">
+            <table id="pregnancy-details">
                 <tr>
                     <td>Pregnant</td>
                     <td>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</td>
@@ -629,6 +630,7 @@
                     </td>
                </tr>
             </table>
+            </includeIf>
             <table>
                <tr>
                     <td>Any underlying conditions</td>
