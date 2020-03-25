@@ -46,6 +46,7 @@ public class SecurityMetadata extends AbstractMetadataBundle {
 		public static final String API_PRIVILEGES_VIEW_AND_EDIT = "API Privileges (View and Edit)";
 		public static final String API_PRIVILEGES = "API Privileges";
 		public static final String CLINICIAN = "Clinician";
+		public static final String SURVEILLANCE_OFFICER = "Surveillance Officer";
 		public static final String DATA_CLERK = "Data Clerk";
 		public static final String INTAKE = "Intake";
 		public static final String MANAGER = "Manager";
@@ -54,7 +55,6 @@ public class SecurityMetadata extends AbstractMetadataBundle {
 		public static final String SYSTEM_DEVELOPER = "System Developer";
 		public static final String DRUG_ORDER = "Pharmacist";
 		public static final String LAB_TECHNICIAN = "Lab Technician";
-		public static final String PEER_EDUCATOR = "Peer Educator";
 		public static final String HIV_TESTING_COUNSELLOR = "HTS Counsellor";
 	}
 
@@ -78,8 +78,7 @@ public class SecurityMetadata extends AbstractMetadataBundle {
 				EmrConstants.APP_DRUG_ORDER,
 				EmrConstants.APP_LAB_ORDER,
 				EmrConstants.APP_DEFAULTER_TRACING,
-				EmrConstants.APP_HIV_TESTING,
-				EmrConstants.APP_PREP
+				EmrConstants.APP_SURVEILLANCE
 		};
 
 		// Ensure a privilege exists for each app. App framework does create these but not always before this
@@ -104,7 +103,7 @@ public class SecurityMetadata extends AbstractMetadataBundle {
 				null, getApiPrivileges(false))
 		);
 
-		install(role(_Role.REGISTRATION, "Can access the registration app",
+		/*install(role(_Role.REGISTRATION, "Can access the registration app",
 				idSet(_Role.API_PRIVILEGES_VIEW_AND_EDIT),
 				idSet(
 						app(EmrConstants.APP_REGISTRATION),
@@ -114,9 +113,9 @@ public class SecurityMetadata extends AbstractMetadataBundle {
 						app(EmrConstants.APP_DEFAULTER_TRACING),
 						app(EmrConstants.APP_PREP)
 				)
-		));
+		));*/
 
-		install(role(_Role.INTAKE, "Can access the registration and triage apps",
+		/*install(role(_Role.INTAKE, "Can access the registration and triage apps",
 				idSet(_Role.API_PRIVILEGES_VIEW_AND_EDIT),
 				idSet(
 						app(EmrConstants.APP_REGISTRATION),
@@ -128,9 +127,9 @@ public class SecurityMetadata extends AbstractMetadataBundle {
 						app(EmrConstants.APP_PREP),
 						_Privilege.VIEW_LEGACY_INTERFACE
 				)
-		));
+		));*/
 
-		install(role(_Role.MANAGER, "Can access all apps except admin",
+		/*install(role(_Role.MANAGER, "Can access all apps except admin",
 				idSet(_Role.API_PRIVILEGES),
 				idSet(
 						app(EmrConstants.APP_REGISTRATION),
@@ -149,9 +148,9 @@ public class SecurityMetadata extends AbstractMetadataBundle {
 						app(EmrConstants.APP_PREP),
 						_Privilege.VIEW_LEGACY_INTERFACE
 				)
-		));
+		));*/
 
-		install(role(_Role.CLINICIAN, "Can access the registration, triage, clinician, chart and reports apps",
+		/*install(role(_Role.CLINICIAN, "Can access the registration, triage, clinician, chart and reports apps",
 				idSet(_Role.API_PRIVILEGES_VIEW_AND_EDIT),
 				idSet(
 						app(EmrConstants.APP_REGISTRATION),
@@ -167,6 +166,19 @@ public class SecurityMetadata extends AbstractMetadataBundle {
 						app(EmrConstants.APP_DEFAULTER_TRACING),
 						app(EmrConstants.APP_PREP),
 						_Privilege.MANAGE_DRUG_ORDERS,
+						_Privilege.VIEW_LEGACY_INTERFACE
+				)
+		));*/
+
+		install(role(_Role.SURVEILLANCE_OFFICER, "Can access the surveillance officer, dashboard, and reports apps",
+				idSet(_Role.API_PRIVILEGES_VIEW_AND_EDIT),
+				idSet(
+						app(EmrConstants.APP_REPORTS),
+						app(EmrConstants.APP_DIRECTORY),
+						app(EmrConstants.APP_FACILITIES),
+						app(EmrConstants.APP_FACILITY_DASHBOARD),
+						app(EmrConstants.APP_DEFAULTER_TRACING),
+						app(EmrConstants.APP_SURVEILLANCE),
 						_Privilege.VIEW_LEGACY_INTERFACE
 				)
 		));
@@ -188,19 +200,8 @@ public class SecurityMetadata extends AbstractMetadataBundle {
 				)
 		));
 
-		install(role(_Role.PEER_EDUCATOR, "Can access the defaulter tracing and reporting apps",
-				idSet(_Role.API_PRIVILEGES_VIEW_AND_EDIT),
-				idSet(
-						app(EmrConstants.APP_REPORTS),
-						app(EmrConstants.APP_DIRECTORY),
-						app(EmrConstants.APP_FACILITIES),
-						app(EmrConstants.APP_FACILITY_DASHBOARD),
-						app(EmrConstants.APP_DEFAULTER_TRACING),
-						_Privilege.VIEW_LEGACY_INTERFACE
-				)
-		));
 
-		install(role(_Role.HIV_TESTING_COUNSELLOR, "Can access the hts and reporting apps",
+		/*install(role(_Role.HIV_TESTING_COUNSELLOR, "Can access the hts and reporting apps",
 				idSet(_Role.API_PRIVILEGES_VIEW_AND_EDIT),
 				idSet(
 						app(EmrConstants.APP_REPORTS),
@@ -211,7 +212,7 @@ public class SecurityMetadata extends AbstractMetadataBundle {
 						app(EmrConstants.APP_PREP),
 						_Privilege.VIEW_LEGACY_INTERFACE
 				)
-		));
+		));*/
 
 		install(role(_Role.SYSTEM_ADMIN, "Can access the admin app",
 				idSet(_Role.API_PRIVILEGES_VIEW_AND_EDIT),
@@ -223,7 +224,7 @@ public class SecurityMetadata extends AbstractMetadataBundle {
 				)
 		));
 
-		install(role(_Role.DRUG_ORDER, "Can access the drug prescriptions app",
+		/*install(role(_Role.DRUG_ORDER, "Can access the drug prescriptions app",
 				idSet(_Role.API_PRIVILEGES_VIEW_AND_EDIT),
 				idSet(
 						app(EmrConstants.APP_DRUG_ORDER),
@@ -241,7 +242,7 @@ public class SecurityMetadata extends AbstractMetadataBundle {
 						app(EmrConstants.APP_FACILITIES),
 						_Privilege.VIEW_LEGACY_INTERFACE
 				)
-		));
+		));*/
 	}
 
 	/**
