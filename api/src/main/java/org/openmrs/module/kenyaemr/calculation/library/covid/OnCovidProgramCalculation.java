@@ -55,7 +55,7 @@ public class OnCovidProgramCalculation extends AbstractPatientCalculation implem
 	
 	@Override
 	public String getFlagMessage() {
-		return "Positive";
+		return " COVID-19 Positive";
 	}
 	
 }
