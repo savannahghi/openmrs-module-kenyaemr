@@ -382,7 +382,7 @@
 
     <div id="program-tabs" class="ke-tabs">
         <div class="ke-tabmenu">
-            <div class="ke-tabmenu-item" data-tabid="care_and_treatment">Confirmed Cases</div>
+            <div class="ke-tabmenu-item" data-tabid="care_and_treatment">Updates</div>
 
             <div class="ke-tabmenu-item" data-tabid="hts">Cases in Lab</div>
 
@@ -395,57 +395,18 @@
                 <tr>
                     <td style="width: 50%; vertical-align: top">
                         <div class="ke-panel-frame">
-                            <div class="ke-panel-heading">Summary of Care and Treatment Statistics</div>
+                            <div class="ke-panel-heading"></div>
 
-                            <div class="ke-panel-content">
-                                <table class="alignLeft">
-                                    <tr>
-                                        <td colspan="3"
-                                            class="heading2"><strong>Reporting Period: ${reportPeriod}</strong>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>Total Patients</th>
-                                        <th>Total enrolled in HIV</th>
-                                        <th>Current in Care</th>
-                                        <th>Current on ART</th>
-                                        <th>Newly Enrolled</th>
-                                        <th>New on ART</th>
-                                    </tr>
-                                    <tr>
-                                        <td>${allPatients}</td>
-                                        <td>${cumulativeEnrolledInHiv}</td>
-                                        <td>${inCare}</td>
-                                        <td>${onArt}</td>
-                                        <td>${newlyEnrolledInHiv}</td>
-                                        <td>${newOnArt}</td>
-                                    </tr>
-                                </table>
-                            </div>
                         </div>
 
                         <div id="care_and_treatment_chart" style="min-width: 450px; height: 300px; margin: 0 auto"></div>
                     </td>
                     <td style="width: 50%; vertical-align: top; padding-left: 5px">
                         <div class="ke-panel-frame">
-                            <div class="ke-panel-heading">Viral Load Tracker</div>
+                            <div class="ke-panel-heading"></div>
 
                             <div class="ke-panel-content">
-                                <table class="alignLeft">
-                                    <tr>
-                                        <td colspan="3" class="heading2"><strong>Reporting Period: Today</strong></td>
-                                    </tr>
-                                    <tr>
-                                        <th>Total clients with viral loads <br/>(in last 12 months)</th>
-                                        <th>Total Unsuppressed</th>
-                                        <th>Total Suppressed</th>
-                                    </tr>
-                                    <tr>
-                                        <td>${vlResults}</td>
-                                        <td>${vlResults - suppressedVl}</td>
-                                        <td>${suppressedVl}</td>
-                                    </tr>
-                                </table>
+
                             </div>
                         </div>
 
@@ -459,26 +420,10 @@
                 <tr>
                     <td style="width: 50%; vertical-align: top">
                         <div class="ke-panel-frame">
-                            <div class="ke-panel-heading">HTS</div>
+                            <div class="ke-panel-heading"></div>
 
                             <div class="ke-panel-content">
-                                <table class="alignLeft">
-                                    <tr>
-                                        <td colspan="3" class="heading2"><strong>Reporting Period: Today</strong></td>
-                                    </tr>
-                                    <tr>
-                                        <th>&nbsp;</th>
-                                        <th>Total Tested</th>
-                                        <th>Total Positive</th>
-                                        <th>Total Enrolled</th>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Total Clients</b></td>
-                                        <td>${htsTested}</td>
-                                        <td>${htsPositive}</td>
-                                        <td>${htsLinked}</td>
-                                    </tr>
-                                </table>
+
                             </div>
                         </div>
                         <div id="hts_tracker" style="min-width: 450px; height: 300px; margin: 0 auto"></div>
@@ -488,40 +433,7 @@
                             <div class="ke-panel-heading">Contact Testing</div>
 
                             <div class="ke-panel-content">
-                                <table class="alignLeft">
-                                    <tr>
-                                        <td colspan="3" class="heading2"><strong>Reporting Period: Today</strong></td>
-                                    </tr>
-                                    <tr>
-                                        <th>&nbsp;</th>
-                                        <th>Total Tested</th>
-                                        <th>Total Positive</th>
-                                        <th>Total Unknown</th>
-                                        <th>Total Enrolled</th>
-                                    </tr>
 
-                                    <tr>
-                                        <td><b>Family Member(s)</b></td>
-                                        <td>${htsTestedFamily}</td>
-                                        <td>${htsPositiveFamily}</td>
-                                        <td>${htsUnknownStatusFamily}</td>
-                                        <td>${htsLinkedFamily}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Sex Partner(s)</b></td>
-                                        <td>${htsTestedPartners}</td>
-                                        <td>${htsPositivePartner}</td>
-                                        <td>${htsUnknownStatusPartner}</td>
-                                        <td>${htsLinkedPartner}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Injectable Drug User(s)</b></td>
-                                        <td>${htsTestedIDU}</td>
-                                        <td>${htsPositiveIDU}</td>
-                                        <td>${htsUnknownStatusIDU}</td>
-                                        <td>${htsLinkedIDU}</td>
-                                    </tr>
-                                </table>
                             </div>
                         </div>
                         <div id="hts_contacts_tracker" style="min-width: 700px; height: 350px; margin: 0 auto"></div>
@@ -534,29 +446,10 @@
                 <tr>
                     <td style="width: 50%; vertical-align: top">
                         <div class="ke-panel-frame">
-                            <div class="ke-panel-heading">Today's Workload</div>
+                            <div class="ke-panel-heading"></div>
 
                             <div class="ke-panel-content">
-                                <table class="alignLeft">
-                                    <tr>
-                                        <td colspan="3"
-                                            class="heading2"><strong>Date: Today</strong>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>Number Scheduled </th>
-                                        <th>Number Checked In </th>
-                                        <th>Number Seen</th>
-                                        <th>Unscheduled Visits</th>
 
-                                    </tr>
-                                    <tr>
-                                        <td>${patientsScheduled}</td>
-                                        <td>${checkedIn}</td>
-                                        <td>${patientsSeen}</td>
-                                        <td>${unscheduled}</td>
-                                    </tr>
-                                </table>
                             </div>
                         </div>
 

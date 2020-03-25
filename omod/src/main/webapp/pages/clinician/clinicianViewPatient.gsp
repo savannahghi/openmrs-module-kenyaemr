@@ -99,19 +99,17 @@
 
 			</div>
 
+
 			<div class="info-container column">
 				<div class="info-section allergies">
 					<div class="info-header">
 						<i class="icon-stethoscope"></i>
 
-						<h3>Vitals</h3>
-						<i class="fa fa-plus-square right" style="color: steelblue" title="Add Vitals"
-						   onclick="location.href = '${addTriageFormLink}'"></i>
-
+						<h3>Comorbidities</h3>
 					</div>
 
 					<div class="info-body">
-						${ui.includeFragment("kenyaemr", "patient/currentVitals", [patient: currentPatient])}
+						${ui.includeFragment("kenyaemr", "patient/patientComorbidities", [patient: currentPatient])}
 
 					</div>
 				</div>

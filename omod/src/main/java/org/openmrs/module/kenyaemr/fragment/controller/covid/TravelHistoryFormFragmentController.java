@@ -61,6 +61,7 @@ public class TravelHistoryFormFragmentController {
 		int feverConcept = 140238;
 		int coughConcept = 143264;
 		int shortnessOfBreathConcept = 141600;
+		int destinationConcept = 161550;
 		int symptomsConcept = 162737;
 		
 		String transportMode = "Uknown";
@@ -68,6 +69,7 @@ public class TravelHistoryFormFragmentController {
 		String fever = "No";
 		String difficultyBreathing = "No";
 		String arrivalDate = "No";
+		String destination = "";
 
 		String encDate = e != null ? DATE_FORMAT.format(e.getEncounterDatetime()) : "";
 		
@@ -89,13 +91,15 @@ public class TravelHistoryFormFragmentController {
 				}
 			} else if (obs.getConcept().getConceptId().equals(dateOfArrivalConcept)) {
 				arrivalDate = DATE_FORMAT.format(obs.getValueDatetime());
+			} else if (obs.getConcept().getConceptId().equals(destinationConcept)) {
+				destination = obs.getValueText() != null ? obs.getValueText() : "";
 			}
 		}
 		
 		return SimpleObject.create("encDate", encDate, "encId", e.getEncounterId(), "transportMode", transportMode != null ? transportMode : "",
 		    "arrivalDate", arrivalDate != null ? arrivalDate : "", "fever",
 		    fever != null ? fever : "", "cough", cough != null ? cough
-		            : "", "difficultyBreathing", difficultyBreathing != null ? difficultyBreathing : ""
+		            : "", "difficultyBreathing", difficultyBreathing != null ? difficultyBreathing : "", "destination", destination != null ? destination : ""
 		
 		);
 	}
