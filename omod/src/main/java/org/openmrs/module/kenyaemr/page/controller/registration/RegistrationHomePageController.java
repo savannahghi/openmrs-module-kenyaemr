@@ -41,7 +41,7 @@ public class RegistrationHomePageController {
 		model.addAttribute("scheduleDate", scheduleDate);
 
 		if (patient != null) {
-			return "redirect:" + ui.pageLink(EmrConstants.MODULE_ID, "registration/registrationViewPatient", SimpleObject.create("patientId", patient.getId()));
+			return "redirect:" + ui.pageLink(EmrConstants.MODULE_ID, "surveillance/surveillanceViewPatient", SimpleObject.create("patientId", patient.getId()));
 		} else {
 			return null;
 		}

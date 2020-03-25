@@ -81,7 +81,7 @@ public class ContactFollowupFormFragmentController {
 				} else if (obs.getValueCoded().getConceptId().equals(shortnessOfBreathConcept)) {
 					difficultyBreathing = "Yes";
 				} else if (obs.getValueCoded().getConceptId().equals(soreThroatConcept)) {
-					difficultyBreathing = "Yes";
+					soreThroat = "Yes";
 				}
 			} else if (obs.getConcept().getConceptId().equals(referralConcept)) {
 				if (obs.getValueCoded().getConceptId().equals(1065)) {
