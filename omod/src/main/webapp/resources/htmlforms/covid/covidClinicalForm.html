@@ -19,9 +19,9 @@
     <script type="text/javascript" src="../moduleResources/kenyaemr/scripts/moment.js"></script>
     <script type="text/javascript">
         jq(function () {
+            jq('#detected-poe input').change(onDetectedAtPOEChange);
             jq('#date-detected-poe-lbl').hide();
             jq('#date-detected-poe').hide();
-            jq('#detected-poe input').change(onDetectedAtPOEChange);
             jq('#hospital-admission').hide();
             jq('#admission-to-hospital input').change(onAdmissionToHospitalChange);
             jq('#date-of-death').hide();
@@ -46,7 +46,7 @@
         });
         function onDetectedAtPOEChange() {
 
-            if (getValue('detected-poe.value') == 1065) {
+            if (getValue('detected-poe.value') == 165651 || getValue('detected-poe.value') == 163488) {
                 jq('#date-detected-poe-lbl').show();
                 jq('#date-detected-poe').show();
             }else{
@@ -176,7 +176,26 @@
     <!-- hide / show additional fields -->
 
     <div class="ke-form-header">
-        <table width="100%">
+           <ifMode mode="EDIT">
+                        <script type="text/javascript">
+                            jq(function(){
+                                onDetectedAtPOEChange();
+
+                            });
+                            function onDetectedAtPOEChange() {
+
+                                if (getValue('detected-poe.value') == 165651 || getValue('detected-poe.value') == 163488) {
+                                    jq('#date-detected-poe-lbl').show();
+                                    jq('#date-detected-poe').show();
+                                }else{
+                                    clearHiddenSections(jq('#date-detected-poe'));
+                                    jq('#date-detected-poe-lbl').hide();
+                                    jq('#date-detected-poe').hide();
+                                }
+                            }
+                        </script>
+                    </ifMode>
+         <table width="100%">
             <tr>
                 <td>Date of reporting to national health authority:
                     <encounterDate id="encounter-date" showTime="true"/>
