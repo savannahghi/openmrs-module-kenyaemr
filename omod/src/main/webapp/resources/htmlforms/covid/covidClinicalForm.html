@@ -20,6 +20,10 @@
     <script type="text/javascript">
         jq(function () {
             jq('#detected-poe input').change(onDetectedAtPOEChange);
+            jq('#asymptomatic input').change(onAsymptomaticChange);
+            jq('#pregnant input').change(onPregnantChange);
+            jq('#onset-date').hide();
+            jq('#trimester').hide();
             jq('#date-detected-poe-lbl').hide();
             jq('#date-detected-poe').hide();
             jq('#hospital-admission').hide();
@@ -53,6 +57,24 @@
                 clearHiddenSections(jq('#date-detected-poe'));
                 jq('#date-detected-poe-lbl').hide();
                 jq('#date-detected-poe').hide();
+            }
+        }
+        function onAsymptomaticChange() {
+
+            if (getValue('asymptomatic.value') == 1065) {
+                jq('#onset-date').show();
+               }else{
+                clearHiddenSections(jq('#date-onset-of-symptoms'));
+                jq('#onset-date').hide();
+            }
+        }
+        function onPregnantChange() {
+
+            if (getValue('pregnant.value') == 1065) {
+                jq('#trimester').show();
+            }else{
+                clearHiddenSections(jq('#trimester-number'));
+                jq('#trimester').hide();
             }
         }
         function onAdmissionToHospitalChange() {
@@ -180,6 +202,8 @@
                         <script type="text/javascript">
                             jq(function(){
                                 onDetectedAtPOEChange();
+                                onAsymptomaticChange();
+                                onPregnantChange();
 
                             });
                             function onDetectedAtPOEChange() {
@@ -191,6 +215,24 @@
                                     clearHiddenSections(jq('#date-detected-poe'));
                                     jq('#date-detected-poe-lbl').hide();
                                     jq('#date-detected-poe').hide();
+                                }
+                                function onAsymptomaticChange() {
+
+                                    if (getValue('asymptomatic.value') == 1065) {
+                                        jq('#onset-date').show();
+                                    }else{
+                                        clearHiddenSections(jq('#date-onset-of-symptoms'));
+                                        jq('#onset-date').hide();
+                                    }
+                                }
+                                function onPregnantChange() {
+
+                                    if (getValue('pregnant.value') == 1065) {
+                                        jq('#trimester').show();
+                                    }else{
+                                        clearHiddenSections(jq('#trimester-number'));
+                                        jq('#trimester').hide();
+                                    }
                                 }
                             }
                         </script>
@@ -248,6 +290,14 @@
             <b>Patient Clinical course</b>
             <table>
                 <tr>
+                    <td> Asymptomatic:</td>
+                    <td>
+                        <obs id="asymptomatic" conceptId="1729AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"  labelText=" "
+                             answerConceptIds="1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1067AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                             style="radio" answerLabels="Yes,No,Unknown"/>
+                    </td>
+                </tr>
+                <tr id="onset-date">
                     <td>
                         Date of onset of symptoms:
                     </td>
@@ -257,11 +307,17 @@
                     </td>
                 </tr>
                 <tr>
-                    <td> Asymptotic:</td>
+                    <td> Health status at the time of reporting:</td>
                     <td>
-                        <obs id="asymptotic" conceptId="1729AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"  labelText=" "
-                             answerConceptIds="1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1067AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-                             style="radio" answerLabels="Yes,No,Unknown"/>
+                        <obs id="status-at-reporting" conceptId="159640AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "
+                             answerConceptIds="159405AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,159407AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,160432AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1067AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                             style="radio" answerLabels="Stable,Severly ill,Dead,Unknown"/>
+                    </td>
+                </tr>
+                <tr id="date-of-death">
+                    <td> Date of death:</td>
+                    <td>
+                        <obs conceptId="1543AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText="" allowTime="false"/>
                     </td>
                 </tr>
                 <tr>
@@ -287,25 +343,13 @@
                     <td>
                         <obs id="isolation-date" conceptId="165648AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" allowTime="false"/>
                     </td>
+                </tr>
+                <tr>
                     <td> Was the patient ventilated?</td>
                     <td>
                         <obs id="ventilated" conceptId="165647AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "
                              answerConceptIds="1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1067AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                              style="radio" answerLabels="Yes,No,Unknown"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td> Health status at the time of reporting:</td>
-                    <td>
-                        <obs id="status-at-reporting" conceptId="159640AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "
-                             answerConceptIds="159405AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,159407AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,160432AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1067AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-                             style="radio" answerLabels="Stable,Severly ill,dead,unknown"/>
-                    </td>
-                </tr>
-                <tr id="date-of-death">
-                    <td> Date of death:</td>
-                    <td>
-                        <obs conceptId="1543AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText="" allowTime="false"/>
                     </td>
                 </tr>
             </table>
@@ -531,25 +575,26 @@
             <legend>Underlying conditions/comorbidity</legend>
             <table>
                 <tr>
+                    <td>Pregnant</td>
+                    <td>
+                        <obs conceptId="5272AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" " id="pregnant"
+                             answerConceptIds="1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                             style="radio" answerLabels="Yes,No"/>
+                    </td>
+                </tr>
+                <tr id= "trimester">
+                    <td> Trimester:
+                        <obs conceptId="160665" labelText=" " id="trimester-number"
+                             answerConceptIds="1721,1722,1723"
+                             style="dropdown" answerLabels="First,Second,Third"/>
+                    </td>
+               </tr>
+               <tr>
                     <td>Any underlying conditions</td>
                     <td>
                         <obs conceptId="162747AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "
                              answerConceptIds="1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                              style="radio" answerLabels="Yes,No"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Pregnant</td>
-                    <td>
-                        <obs conceptId="1434AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "
-                             answerConceptIds="1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-                             style="yes_no" answerLabels="Yes,No"/>
-                    </td>
-                    <td>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</td>
-                    <td> Trimester:
-                        <obs conceptId="160665" labelText=" "
-                             answerConceptIds="1721,1722,1723"
-                             style="dropdown" answerLabels="First,Second,Third"/>
                     </td>
                 </tr>
                 <tr>
