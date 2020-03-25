@@ -38,14 +38,6 @@
 		<constructor-arg value="100" />
 	</bean>
 
-	<bean id="kenyaemr.app.intake" factory-bean="kenyacore.appFactoryBean" factory-method="createInstance">
-		<constructor-arg value="kenyaemr.intake" />
-		<constructor-arg value="Triage" />
-		<constructor-arg value="kenyaemr/intake/intakeHome.page" />
-		<constructor-arg value="kenyaui:apps/intake.png" />
-		<constructor-arg value="200" />
-	</bean>
-
 
 	<bean id="kenyaemr.app.clinician" factory-bean="kenyacore.appFactoryBean" factory-method="createInstance">
 		<constructor-arg value="kenyaemr.medicalEncounter" />
