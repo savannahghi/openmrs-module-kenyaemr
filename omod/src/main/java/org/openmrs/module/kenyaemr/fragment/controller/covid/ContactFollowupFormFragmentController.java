@@ -55,15 +55,17 @@ public class ContactFollowupFormFragmentController {
 	}
 	
 	public static SimpleObject buildEncounterData(Set<Obs> obsList, Encounter e) {
-		
+
+
 		int feverConcept = 140238;
 		int coughConcept = 143264;
-		int shortnessOfBreathConcept = 141600;
+		int shortnessOfBreathConcept = 164441;
 		int soreThroatConcept = 158843;
 		int referralConcept = 1788;
 		int symptomsConcept = 162737;
-		
-		String soreThroat = "Uknown";
+		int yesConcept = 1065;
+
+		String soreThroat = "No";
 		String cough = "No";
 		String fever = "No";
 		String difficultyBreathing = "No";
@@ -73,16 +75,14 @@ public class ContactFollowupFormFragmentController {
 		
 		for (Obs obs : obsList) {
 			
-			if (obs.getConcept().getConceptId().equals(symptomsConcept)) {
-				if (obs.getValueCoded().getConceptId().equals(feverConcept)) {
-					fever = "Yes";
-				} else if (obs.getValueCoded().getConceptId().equals(coughConcept)) {
-					cough = "Yes";
-				} else if (obs.getValueCoded().getConceptId().equals(shortnessOfBreathConcept)) {
-					difficultyBreathing = "Yes";
-				} else if (obs.getValueCoded().getConceptId().equals(soreThroatConcept)) {
-					soreThroat = "Yes";
-				}
+			if (obs.getConcept().getConceptId().equals(feverConcept) && obs.getValueCoded().getConceptId().equals(yesConcept)) {
+				fever = "Yes";
+			} else if (obs.getConcept().getConceptId().equals(coughConcept) && obs.getValueCoded().getConceptId().equals(yesConcept)) {
+				cough = "Yes";
+			} else if (obs.getConcept().getConceptId().equals(shortnessOfBreathConcept) && obs.getValueCoded().getConceptId().equals(yesConcept)) {
+				difficultyBreathing = "Yes";
+			} else if (obs.getConcept().getConceptId().equals(symptomsConcept) && obs.getValueCoded().getConceptId().equals(soreThroatConcept)) {
+				soreThroat = "Yes";
 			} else if (obs.getConcept().getConceptId().equals(referralConcept)) {
 				if (obs.getValueCoded().getConceptId().equals(1065)) {
 					referredForTreatment = "Yes";
