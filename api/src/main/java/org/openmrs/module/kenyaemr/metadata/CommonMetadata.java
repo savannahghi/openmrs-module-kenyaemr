@@ -65,7 +65,7 @@ public class CommonMetadata extends AbstractMetadataBundle {
 		public static final String HTS_CLIENT_TRACING = "15ed03d2-c972-11e9-a32f-2a2ae2dbcce4";
 		public static final String HTS_REFERRAL = "9284828e-ce55-11e9-a32f-2a2ae2dbcce4";
 		public static final String COVID_19_CARE_FORM = "0fe60b26-8648-438b-afea-8841dcd993c6";
-		public static final String COVID_19_CONTATCT_TRACING_FORM = "37ef8f3c-6cd2-11ea-bc55-0242ac130003";
+		public static final String COVID_19_CONTACT_TRACING_FORM = "37ef8f3c-6cd2-11ea-bc55-0242ac130003";
 		public static final String COVID_19_TRAVEL_HISTORY = "87513b50-6ced-11ea-bc55-0242ac130003";
 		public static final String COVID_OUTCOME = "8f4e3e83-c597-47ad-8999-b788e8255d20";
 
@@ -154,7 +154,7 @@ public class CommonMetadata extends AbstractMetadataBundle {
 		install(form("HTS Client Referral Form", "Form for HTS linkage referral", _EncounterType.HTS, "1", _Form.HTS_REFERRAL));
 		install(form("COVID-19 Case Investigation Form", "A form to record treatment for covid-19 PUI ", _EncounterType.COVID_19_TREATMENT, "1", _Form.COVID_19_CARE_FORM));
 		install(form("COVID-19 Travel History", "A form to record travel history for covid-19 PUI ", _EncounterType.COVID_19_TRAVEL_HISTORY, "1", _Form.COVID_19_TRAVEL_HISTORY));
-		install(form("COVID-19 Monitored Reporting Form", "A form to trace contacts for covid-19 ", _EncounterType.COVID_19_CONTACT_TRACING, "1", _Form.COVID_19_CONTATCT_TRACING_FORM));
+		install(form("COVID-19 Monitored Reporting Form", "A form to trace contacts for covid-19 ", _EncounterType.COVID_19_CONTACT_TRACING, "1", _Form.COVID_19_CONTACT_TRACING_FORM));
 
 		install(form("COVID Outcome", "Covid outcome form ", _EncounterType.COVID_OUTCOME, "1", _Form.COVID_OUTCOME));
 
