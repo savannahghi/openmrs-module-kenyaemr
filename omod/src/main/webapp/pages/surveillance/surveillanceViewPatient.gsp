@@ -103,7 +103,6 @@
 
             </div>
 
-
             <div class="info-container column">
                 <div class="info-section allergies">
                     <div class="info-header">

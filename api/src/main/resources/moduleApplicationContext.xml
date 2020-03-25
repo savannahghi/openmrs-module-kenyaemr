@@ -88,7 +88,7 @@
 
 	<bean id="kenyaemr.app.facilityDashboard" factory-bean="kenyacore.appFactoryBean" factory-method="createInstance">
 		<constructor-arg value="kenyaemr.facilityDashboard" />
-		<constructor-arg value="Facility Dashboard" />
+		<constructor-arg value="Dashboard" />
 		<constructor-arg value="kenyaemr/facilityDashboard/facilityDashboardHome.page" />
 		<constructor-arg value="kenyaui:apps/facilityDashboard.png" />
 		<constructor-arg value="510" />
