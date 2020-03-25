@@ -28,7 +28,7 @@ import java.util.Set;
 /**
  * Calculates whether a patient is currently enrolled in Covid program
  */
-public class OnCovidProgramCalculation extends AbstractPatientCalculation implements PatientFlagCalculation {
+public class OnCovidProgramCalculation extends AbstractPatientCalculation{
 	
 	protected static final Log log = LogFactory.getLog(OnCovidProgramCalculation.class);
 	
@@ -52,10 +52,5 @@ public class OnCovidProgramCalculation extends AbstractPatientCalculation implem
 		}
 		return ret;
 	}
-	
-	@Override
-	public String getFlagMessage() {
-		return " COVID-19 Positive";
-	}
-	
+
 }
