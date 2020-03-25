@@ -124,7 +124,6 @@
 		<property name="apps">
 			<set>
 				<ref bean="kenyaemr.app.registration" />
-				<ref bean="kenyaemr.app.intake" />
 				<ref bean="kenyaemr.app.clinician" />
 			</set>
 		</property>
@@ -139,7 +138,6 @@
 		<property name="apps">
 			<set>
 				<ref bean="kenyaemr.app.registration" />
-				<ref bean="kenyaemr.app.intake" />
 				<ref bean="kenyaemr.app.clinician" />
 			</set>
 		</property>
@@ -166,7 +164,6 @@
 		<property name="targetUuid" value="7e603909-9ed5-4d0c-a688-26ecb05d8b6e" />
 		<property name="apps">
 			<set>
-				<ref bean="kenyaemr.app.intake" />
 				<ref bean="kenyaemr.app.clinician" />
 			</set>
 		</property>
@@ -193,7 +190,6 @@
 		<property name="targetUuid" value="${metadata.form.PROGRESS_NOTE}" />
 		<property name="apps">
 			<set>
-				<ref bean="kenyaemr.app.intake" />
 				<ref bean="kenyaemr.app.clinician" />
 			</set>
 		</property>
@@ -207,7 +203,6 @@
 		<property name="targetUuid" value="${metadata.form.TB_SCREENING}" />
 		<property name="apps">
 			<set>
-				<ref bean="kenyaemr.app.intake" />
 				<ref bean="kenyaemr.app.clinician" />
 			</set>
 		</property>

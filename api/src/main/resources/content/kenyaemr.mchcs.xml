@@ -77,7 +77,6 @@
 		<property name="apps">
 			<set>
 				<ref bean="kenyaemr.app.registration" />
-				<ref bean="kenyaemr.app.intake" />
 				<ref bean="kenyaemr.app.clinician" />
 			</set>
 		</property>
@@ -91,7 +90,6 @@
 		<property name="apps">
 			<set>
 				<ref bean="kenyaemr.app.registration" />
-				<ref bean="kenyaemr.app.intake" />
 				<ref bean="kenyaemr.app.clinician" />
 			</set>
 		</property>
@@ -105,7 +103,6 @@
 		<property name="apps">
 			<set>
 				<ref bean="kenyaemr.app.registration" />
-				<ref bean="kenyaemr.app.intake" />
 				<ref bean="kenyaemr.app.clinician" />
 			</set>
 		</property>
@@ -119,7 +116,6 @@
 		<property name="apps">
 			<set>
 				<ref bean="kenyaemr.app.registration" />
-				<ref bean="kenyaemr.app.intake" />
 				<ref bean="kenyaemr.app.clinician" />
 			</set>
 		</property>
@@ -134,7 +130,6 @@
 		<property name="apps">
 			<set>
 				<ref bean="kenyaemr.app.registration" />
-				<ref bean="kenyaemr.app.intake" />
 				<ref bean="kenyaemr.app.clinician" />
 			</set>
 		</property>
