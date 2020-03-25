@@ -249,6 +249,7 @@
 				<ref bean="kenyaemr.app.registration" />
 				<ref bean="kenyaemr.app.clinician" />
 				<ref bean="kenyaemr.app.defaultertracing" />
+				<ref bean="kenyaemr.app.surveillance" />
 			</set>
 		</property>
 		<property name="icon" value="kenyaui:forms/generic.png" />
@@ -263,6 +264,7 @@
 			<set>
 				<ref bean="kenyaemr.app.registration" />
 				<ref bean="kenyaemr.app.clinician" />
+				<ref bean="kenyaemr.app.surveillance" />
 			</set>
 		</property>
 		<property name="icon" value="kenyaui:forms/generic.png" />

@@ -22,7 +22,6 @@ import org.openmrs.module.metadatadeploy.MetadataUtils;
 import org.openmrs.ui.framework.UiUtils;
 import org.openmrs.ui.framework.page.PageModel;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -37,7 +36,7 @@ public class ContactFollowupViewPatientPageController {
 
 		Patient patient = (Patient) model.getAttribute(EmrWebConstants.MODEL_ATTR_CURRENT_PATIENT);
 		PatientWrapper patientWrapper = new PatientWrapper(patient);
-		Form contactFollowupForm = MetadataUtils.existing(Form.class, CommonMetadata._Form.COVID_19_CONTATCT_TRACING_FORM);
+		Form contactFollowupForm = MetadataUtils.existing(Form.class, CommonMetadata._Form.COVID_19_CONTACT_TRACING_FORM);
 
 		List<Encounter> contactFollowupEncounters = patientWrapper.allEncounters(contactFollowupForm);
 		Collections.reverse(contactFollowupEncounters);
@@ -54,7 +53,7 @@ public class ContactFollowupViewPatientPageController {
 		}
 
 		model.put("followupEncounters", contactFollowupEncounters);
-		model.put("contactFollowupformUuid", CommonMetadata._Form.COVID_19_CONTATCT_TRACING_FORM);
+		model.put("contactFollowupformUuid", CommonMetadata._Form.COVID_19_CONTACT_TRACING_FORM);
 		model.put("hasNoCovidEnrollment", notEnrolledInCovid);
 
 

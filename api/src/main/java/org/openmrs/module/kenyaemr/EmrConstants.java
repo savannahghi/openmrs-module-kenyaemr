@@ -38,6 +38,7 @@ public class EmrConstants {
 	public static final String APP_HIV_TESTING = MODULE_ID + ".hivtesting";
 	public static final String APP_PREP = MODULE_ID + ".prep";
 	public static final String APP_KP = KP_MODULE_ID + ".keypopulation.provider";
+	public static final String APP_SURVEILLANCE = MODULE_ID + ".surveillance";
 
 	/**
 	 * Global property names
