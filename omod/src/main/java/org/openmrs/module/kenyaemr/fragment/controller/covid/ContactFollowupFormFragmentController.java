@@ -56,44 +56,6 @@ public class ContactFollowupFormFragmentController {
 	
 	public static SimpleObject buildEncounterData(Set<Obs> obsList, Encounter e) {
 
-		/*<table>
-                <tr>
-                    <td>Fever (38 degrees celcius or higher), felt feverish, or had chills?</td>
-                    <td>
-                        <obs conceptId="140238AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "
-                             answerConceptIds="1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-                             style="radio" answerLabels="Yes,No" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>Cough</td>
-                    <td>
-                        <obs conceptId="143264AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "
-                             answerConceptIds="1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-                             style="radio" answerLabels="Yes,No"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Difficulty breathing</td>
-                    <td>
-
-                        <obs conceptId="164441AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "
-                             answerConceptIds="1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-                             style="radio" answerLabels="Yes,No" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>Sore throat</td>
-                    <td>
-                        <obs conceptId="162737AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "
-                             answerConceptIds="158843AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-                             style="radio" answerLabels="Yes,No"  />
-                    </td>
-                </tr>
-
-                <tr></tr>
-                <tr></tr>
-            </table>*/
 
 		int feverConcept = 140238;
 		int coughConcept = 143264;
@@ -103,7 +65,7 @@ public class ContactFollowupFormFragmentController {
 		int symptomsConcept = 162737;
 		int yesConcept = 1065;
 
-		String soreThroat = "Uknown";
+		String soreThroat = "No";
 		String cough = "No";
 		String fever = "No";
 		String difficultyBreathing = "No";
