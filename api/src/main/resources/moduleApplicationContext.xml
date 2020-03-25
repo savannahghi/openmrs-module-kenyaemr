@@ -38,19 +38,19 @@
 		<constructor-arg value="100" />
 	</bean>
 
-	<bean id="kenyaemr.app.intake" factory-bean="kenyacore.appFactoryBean" factory-method="createInstance">
+	<!--<bean id="kenyaemr.app.intake" factory-bean="kenyacore.appFactoryBean" factory-method="createInstance">
 		<constructor-arg value="kenyaemr.intake" />
 		<constructor-arg value="Triage" />
 		<constructor-arg value="kenyaemr/intake/intakeHome.page" />
 		<constructor-arg value="kenyaui:apps/intake.png" />
 		<constructor-arg value="200" />
-	</bean>
+	</bean>-->
 
 	<bean id="kenyaemr.app.surveillance" factory-bean="kenyacore.appFactoryBean" factory-method="createInstance">
 		<constructor-arg value="kenyaemr.surveillance" />
 		<constructor-arg value="Surveillance Officer" />
 		<constructor-arg value="kenyaemr/surveillance/surveillanceHome.page" />
-		<constructor-arg value="kenyaui:apps/clinician.png" />
+		<constructor-arg value="kenyaemr:apps/surveillance.png" />
 		<constructor-arg value="210" />
 	</bean>
 
