@@ -52,9 +52,7 @@
 			<span ng-if="activeTypes.length == 0"><em>None</em></span>
 		</div>
 
-		<div class="ke-panel-controls" ng-show="activeTypes.length > 0">
-			<button type="button" ng-click="closeSelected()"><img src="${ ui.resourceLink("kenyaui", "images/glyphs/checkout.png") }" /> Close Visits</button>
-		</div>
+
 	</div>
 	${ ui.includeFragment("kenyaui", "widget/panelMenu", [ heading: "", items: menuItemsNew ]) }
 </div>

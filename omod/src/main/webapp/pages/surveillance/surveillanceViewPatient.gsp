@@ -82,6 +82,16 @@
 
                 <div class="info-section">
                     <div class="info-header">
+                        <i class="fa fa-file-o"></i>
+
+                        <h3>Enrollment status</h3>
+                    </div>
+
+                    ${ ui.includeFragment("kenyaemr", "program/programHistories", [ patient: currentPatient, showClinicalData: true ]) }
+                </div>
+
+                <div class="info-section">
+                    <div class="info-header">
                         <i class="fa fa-users fa-2x"></i>
 
                         <h3>Relationship</h3>
@@ -91,24 +101,14 @@
 
                 </div>
 
-                <div class="info-section">
-                    <div class="info-header">
-                        <i class="fa fa-file-o"></i>
-
-                        <h3>Enrollment status</h3>
-                    </div>
-
-                    ${ ui.includeFragment("kenyaemr", "program/programHistories", [ patient: currentPatient, showClinicalData: true ]) }
-                </div>
-
             </div>
 
             <div class="info-container column">
-                <div class="info-section allergies">
+                <div class="info-section">
                     <div class="info-header">
                         <i class="icon-stethoscope"></i>
 
-                        <h3>Contact Tracing/Followup</h3>
+                        <h3>Tracing/Followup</h3>
                         <i class="fa fa-plus-square right" style="color: steelblue" title="Add Trace"
                            onclick="location.href = '${addTracingFormLink}'"></i>
                     </div>
@@ -117,6 +117,7 @@
                         ${ ui.includeFragment("kenyaemr", "covid/contactFollowupForm", [ patient: currentPatient ]) }
                     </div>
                 </div>
+
             </div>
             ${ui.includeFragment("kenyaemr", "patient/surveillancePanel", [visit: visit])}
 
