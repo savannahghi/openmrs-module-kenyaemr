@@ -47,6 +47,9 @@ public class SecurityMetadata extends AbstractMetadataBundle {
 		public static final String API_PRIVILEGES = "API Privileges";
 		public static final String CLINICIAN = "Clinician";
 		public static final String SURVEILLANCE_OFFICER = "Surveillance Officer";
+		public static final String RAPID_RESPONSE_TEAM = "Rapid Response";
+		public static final String CONTACT_TRACING = "Contact Tracing/Followup";
+		public static final String DATA_MANAGER = "Data Manager";
 		public static final String DATA_CLERK = "Data Clerk";
 		public static final String INTAKE = "Intake";
 		public static final String MANAGER = "Manager";
@@ -170,9 +173,10 @@ public class SecurityMetadata extends AbstractMetadataBundle {
 				)
 		));*/
 
-		install(role(_Role.SURVEILLANCE_OFFICER, "Can access the surveillance officer, dashboard, and reports apps",
+		install(role(_Role.RAPID_RESPONSE_TEAM, "Can access the surveillance officer, dashboard, and reports apps",
 				idSet(_Role.API_PRIVILEGES_VIEW_AND_EDIT),
 				idSet(
+						app(EmrConstants.APP_REGISTRATION),
 						app(EmrConstants.APP_REPORTS),
 						app(EmrConstants.APP_DIRECTORY),
 						app(EmrConstants.APP_FACILITIES),
@@ -183,7 +187,32 @@ public class SecurityMetadata extends AbstractMetadataBundle {
 				)
 		));
 
-		install(role(_Role.DATA_CLERK, "Can access the chart, reporting and data quality apps",
+		install(role(_Role.DATA_MANAGER, "Can access the apps for data management",
+				idSet(_Role.API_PRIVILEGES_VIEW_AND_EDIT),
+				idSet(
+
+						app(EmrConstants.APP_REPORTS),
+						app(EmrConstants.APP_DIRECTORY),
+						app(EmrConstants.APP_FACILITIES),
+						app(EmrConstants.APP_FACILITY_DASHBOARD)
+				)
+		));
+
+		install(role(_Role.CONTACT_TRACING, "Can access the registration, surveillance app, dashboard, and the tracing app",
+				idSet(_Role.API_PRIVILEGES_VIEW_AND_EDIT),
+				idSet(
+						app(EmrConstants.APP_REGISTRATION),
+						app(EmrConstants.APP_REPORTS),
+						app(EmrConstants.APP_DIRECTORY),
+						app(EmrConstants.APP_FACILITIES),
+						app(EmrConstants.APP_FACILITY_DASHBOARD),
+						app(EmrConstants.APP_DEFAULTER_TRACING),
+						app(EmrConstants.APP_SURVEILLANCE),
+						_Privilege.VIEW_LEGACY_INTERFACE
+				)
+		));
+
+		/*install(role(_Role.DATA_CLERK, "Can access the chart, reporting and data quality apps",
 				idSet(_Role.API_PRIVILEGES_VIEW_AND_EDIT),
 				idSet(
 						app(EmrConstants.APP_CHART),
@@ -199,7 +228,7 @@ public class SecurityMetadata extends AbstractMetadataBundle {
 						_Privilege.VIEW_LEGACY_INTERFACE
 				)
 		));
-
+*/
 
 		/*install(role(_Role.HIV_TESTING_COUNSELLOR, "Can access the hts and reporting apps",
 				idSet(_Role.API_PRIVILEGES_VIEW_AND_EDIT),
