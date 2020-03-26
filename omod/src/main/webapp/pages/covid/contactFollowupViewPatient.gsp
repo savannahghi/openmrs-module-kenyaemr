@@ -28,7 +28,7 @@
 
             </td>
             <td width="70%" valign="top" style="padding-left: 5px">
-                <% if (hasNoCovidEnrollment) { %>
+
                 <div class="ke-panel-frame">
                     <div class="ke-panel-heading">Contact Followup History</div>
 
@@ -49,7 +49,6 @@
 
                     </div>
                 </div>
-                <% }  %>
             </td>
         </tr>
     </table>

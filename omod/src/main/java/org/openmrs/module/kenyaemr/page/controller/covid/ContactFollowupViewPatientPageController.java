@@ -54,7 +54,6 @@ public class ContactFollowupViewPatientPageController {
 
 		model.put("followupEncounters", contactFollowupEncounters);
 		model.put("contactFollowupformUuid", CommonMetadata._Form.COVID_19_CONTACT_TRACING_FORM);
-		model.put("hasNoCovidEnrollment", notEnrolledInCovid);
 
 
 	}

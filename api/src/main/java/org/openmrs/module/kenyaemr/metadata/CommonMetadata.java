@@ -110,6 +110,13 @@ public class CommonMetadata extends AbstractMetadataBundle {
 		public static final String GUARDIAN_DEPENDANT = "5f115f62-68b7-11e3-94ee-6bef9086de92";
 		public static final String PARTNER = "007b765f-6725-4ae9-afee-9966302bace4";
 		public static final String CO_WIFE = "2ac0d501-eadc-4624-b982-563c70035d46";
+
+
+		public static final String WORKING_TOGETHER_WITH_COVD_CASE = "8ea9902c-6ed3-11ea-bc55-0242ac130003";
+		public static final String TRAVELING_TOGETHER_WITH_COVD_CASE = "8ea992ac-6ed3-11ea-bc55-0242ac130003";
+		public static final String LIVING_TOGETHER_WITH_COVD_CASE = "8ea993ba-6ed3-11ea-bc55-0242ac130003";
+		public static final String HEALTHCARE_ASSOCIATED_EXPOSURE_TO_COVD = "8ea99662-6ed3-11ea-bc55-0242ac130003";
+
 	}
 
 	public static final class _VisitAttributeType {
@@ -222,10 +229,15 @@ public class CommonMetadata extends AbstractMetadataBundle {
 				String.class, null, false, 4.3, _PersonAttributeType.GUARDIAN_LAST_NAME));
 
 
-		install(relationshipType("Guardian", "Dependant", "One that guards, watches over, or protects", _RelationshipType.GUARDIAN_DEPENDANT));
+		/*install(relationshipType("Guardian", "Dependant", "One that guards, watches over, or protects", _RelationshipType.GUARDIAN_DEPENDANT));
 		install(relationshipType("Spouse", "Spouse", "A spouse is a partner in a marriage, civil union, domestic partnership or common-law marriage a male spouse is a husband and a female spouse is a wife", _RelationshipType.SPOUSE));
 		install(relationshipType("Partner", "Partner", "Someone I had sex with for fun without commitment to a relationship", _RelationshipType.PARTNER));
 		install(relationshipType("Co-wife", "Co-wife", "Female member spouse in a polygamist household", _RelationshipType.CO_WIFE));
+*/
+		install(relationshipType("Work together", "Work together", "Work together with a nCoV patient", _RelationshipType.WORKING_TOGETHER_WITH_COVD_CASE));
+		install(relationshipType("Traveled together", "Traveled together", "Traveled together with a nCoV patient", _RelationshipType.TRAVELING_TOGETHER_WITH_COVD_CASE));
+		install(relationshipType("Live together", "Live together", "Live together with a nCoV patient", _RelationshipType.LIVING_TOGETHER_WITH_COVD_CASE));
+		install(relationshipType("Patient", "Health care provider", "Health care associated exposure", _RelationshipType.HEALTHCARE_ASSOCIATED_EXPOSURE_TO_COVD));
 
 		install(visitAttributeType("Source form", "The form whose submission created the visit",
 				FormDatatype.class, null, 0, 1, _VisitAttributeType.SOURCE_FORM));

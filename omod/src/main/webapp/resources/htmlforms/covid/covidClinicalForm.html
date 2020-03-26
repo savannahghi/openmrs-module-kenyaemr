@@ -22,10 +22,11 @@
     <script type="text/javascript">
         jq(function () {
             jq('#detected-poe input').change(onDetectedAtPOEChange);
-            jq('#asymptomatic input').change(onAsymptomaticChange);
+            jq('#symptomatic input').change(onSymptomaticChange);
             jq('#pregnant input').change(onPregnantChange);
             jq('#underlying-conditions input').change(onUnderlyingConditionsChange);
             jq('#onset-date').hide();
+            jq('#patient-symptoms').hide();
             jq('#trimester').hide();
             jq('#conditions').hide();
             jq('#date-detected-poe-lbl').hide();
@@ -63,13 +64,31 @@
                 jq('#date-detected-poe').hide();
             }
         }
-        function onAsymptomaticChange() {
+        function onSymptomaticChange() {
 
-            if (getValue('asymptomatic.value') == 1065) {
+            if (getValue('symptomatic.value') == 1065) {
                 jq('#onset-date').show();
+                jq('#patient-symptoms').show();
                }else{
-                clearHiddenSections(jq('#date-onset-of-symptoms'));
                 jq('#onset-date').hide();
+                jq('#patient-symptoms').hide();
+                clearHiddenSections(jq('#date-onset-of-symptoms'));
+                clearHiddenSections(jq('#fever'));
+                clearHiddenSections(jq('#sore-throat'));
+                clearHiddenSections(jq('#weakness'));
+                clearHiddenSections(jq('#cough'));
+                clearHiddenSections(jq('#diarrhoea'));
+                clearHiddenSections(jq('#joint-pain'));
+                clearHiddenSections(jq('#chest-pain'));
+                clearHiddenSections(jq('#confusion'));
+                clearHiddenSections(jq('#vomiting'));
+                clearHiddenSections(jq('#short-breath'));
+                clearHiddenSections(jq('#runny-nose'));
+                clearHiddenSections(jq('#headache'));
+                clearHiddenSections(jq('#abdominal-pain'));
+                clearHiddenSections(jq('#muscular-pain'));
+                clearHiddenSections(jq('#obs-other-symptom'));
+                clearHiddenSections(jq('#obs-specify-symptoms'));
             }
         }
         function onPregnantChange() {
@@ -223,7 +242,7 @@
                         <script type="text/javascript">
                             jq(function(){
                                 onDetectedAtPOEChange();
-                                onAsymptomaticChange();
+                                onSymptomaticChange();
                                 onPregnantChange();
                                 onUnderlyingConditionsChange()
 
@@ -238,13 +257,31 @@
                                     jq('#date-detected-poe-lbl').hide();
                                     jq('#date-detected-poe').hide();
                                 }
-                                function onAsymptomaticChange() {
+                                function onSymptomaticChange() {
 
-                                    if (getValue('asymptomatic.value') == 1065) {
+                                    if (getValue('symptomatic.value') == 1065) {
                                         jq('#onset-date').show();
+                                        jq('#patient-symptoms').show();
                                     }else{
-                                        clearHiddenSections(jq('#date-onset-of-symptoms'));
                                         jq('#onset-date').hide();
+                                        jq('#patient-symptoms').hide();
+                                        clearHiddenSections(jq('#date-onset-of-symptoms'));
+                                        clearHiddenSections(jq('#fever'));
+                                        clearHiddenSections(jq('#sore-throat'));
+                                        clearHiddenSections(jq('#weakness'));
+                                        clearHiddenSections(jq('#cough'));
+                                        clearHiddenSections(jq('#diarrhoea'));
+                                        clearHiddenSections(jq('#joint-pain'));
+                                        clearHiddenSections(jq('#chest-pain'));
+                                        clearHiddenSections(jq('#confusion'));
+                                        clearHiddenSections(jq('#vomiting'));
+                                        clearHiddenSections(jq('#short-breath'));
+                                        clearHiddenSections(jq('#runny-nose'));
+                                        clearHiddenSections(jq('#headache'));
+                                        clearHiddenSections(jq('#abdominal-pain'));
+                                        clearHiddenSections(jq('#muscular-pain'));
+                                        clearHiddenSections(jq('#obs-other-symptom'));
+                                        clearHiddenSections(jq('#obs-specify-symptoms'));
                                     }
                                 }
                                 function onPregnantChange() {
@@ -329,9 +366,9 @@
             <b>Patient Clinical course</b>
             <table>
                 <tr>
-                    <td> Asymptomatic:</td>
+                    <td> Symptomatic:</td>
                     <td>
-                        <obs id="asymptomatic" conceptId="1729AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"  labelText=" "
+                        <obs id="symptomatic" conceptId="1729AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"  labelText=" "
                              answerConceptIds="1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1067AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                              style="radio" answerLabels="Yes,No,Unknown"/>
                     </td>
@@ -393,20 +430,20 @@
                 </tr>
             </table>
         </fieldset>
-        <fieldset>
+        <fieldset id="patient-symptoms">
             <legend>Patient Symptoms</legend>
             <table>
                 <tr>
                     <td>History of fever / chills</td>
                     <td>
-                        <obs conceptId="140238AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "
+                        <obs conceptId="140238AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" " id="fever"
                              answerConceptIds="1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                              style="radio" answerLabels="Yes,No"/>
                     </td>
                     <td>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</td>
                     <td>General Weakness</td>
                     <td>
-                        <obs conceptId="122943AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "
+                        <obs conceptId="122943AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" " id="weakness"
                              answerConceptIds="5226AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                              style="radio" answerLabels="Yes,No"/>
                     </td>
@@ -414,14 +451,14 @@
                 <tr>
                     <td>Cough</td>
                     <td>
-                        <obs conceptId="143264AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "
+                        <obs conceptId="143264AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "  id="cough"
                              answerConceptIds="1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                              style="radio" answerLabels="Yes,No"/>
                     </td>
                     <td>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</td>
                     <td>Sore throat</td>
                     <td>
-                        <obs conceptId="163741AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "
+                        <obs conceptId="163741AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" " id="sore-throat"
                              answerConceptIds="158843AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                              style="radio" answerLabels="Yes,No"/>
                     </td>
@@ -429,14 +466,14 @@
                 <tr>
                     <td>Runny nose</td>
                     <td>
-                        <obs conceptId="163336AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "
+                        <obs conceptId="163336AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" " id="runny-nose"
                              answerConceptIds="113224AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                              style="radio" answerLabels="Yes,No"/>
                     </td>
                     <td>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</td>
                     <td>Shortness of breath</td>
                     <td>
-                        <obs conceptId="164441AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "
+                        <obs conceptId="164441AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "   id="short-breath"
                              answerConceptIds="1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                              style="radio" answerLabels="Yes,No"/>
                     </td>
@@ -444,14 +481,14 @@
                 <tr>
                     <td>Diarrhoea</td>
                     <td>
-                        <obs conceptId="142412AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "
+                        <obs conceptId="142412AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "     id="diarrhoea"
                              answerConceptIds="1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                              style="radio" answerLabels="Yes,No"/>
                     </td>
                     <td>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</td>
                     <td>Nausea/vomiting</td>
                     <td>
-                        <obs conceptId="122983AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "
+                        <obs conceptId="122983AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "    id="vomiting"
                              answerConceptIds="1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                              style="radio" answerLabels="Yes,No"
                         />
@@ -460,7 +497,7 @@
                 <tr>
                     <td>Headache</td>
                     <td>
-                        <obs conceptId="5219AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "
+                        <obs conceptId="5219AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "    id="headache"
                              answerConceptIds="139084AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                              style="radio" answerLabels="Yes,No"
                         />
@@ -468,7 +505,7 @@
                     <td>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</td>
                     <td>Irritability/confusion</td>
                     <td>
-                        <obs conceptId="6023AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "
+                        <obs conceptId="6023AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "    id="confusion"
                              answerConceptIds="1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                              style="radio" answerLabels="Yes,No"
                         />
@@ -477,7 +514,7 @@
                 <tr>
                     <td>Mascular pain</td>
                     <td>
-                        <obs conceptId="160388AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "
+                        <obs conceptId="160388AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "   id="muscular-pain"
                              answerConceptIds="133632AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                              style="radio" answerLabels="Yes,No"
                         />
@@ -485,7 +522,7 @@
                     <td>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</td>
                     <td>Chest pain</td>
                     <td>
-                        <obs conceptId="1123AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "
+                        <obs conceptId="1123AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "    id="chest-pain"
                              answerConceptIds="120749AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                              style="radio" answerLabels="Yes,No"
                         />
@@ -494,7 +531,7 @@
                 <tr>
                     <td>Abdominal pain</td>
                     <td>
-                        <obs conceptId="1125AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "
+                        <obs conceptId="1125AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "     id="abdominal-pain"
                              answerConceptIds="151AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                              style="radio" answerLabels="Yes,No"
                         />
@@ -502,7 +539,7 @@
                     <td>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</td>
                     <td>Joint pain</td>
                     <td>
-                        <obs conceptId="160687AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "
+                        <obs conceptId="160687AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "    id="joint-pain"
                              answerConceptIds="80AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                              style="radio" answerLabels="Yes,No"
                         />
@@ -517,7 +554,7 @@
                     </td>
                     <td>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</td>
                     <td id="specify-symptoms"> Other (specify)
-                        <obs id ="obs-specify-symptoms" conceptId="160632AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"/>
+                        <obs id ="obs-specify-symptoms" conceptId="160632AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"  />
                     </td>
                 </tr>
             </table>
