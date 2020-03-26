@@ -244,7 +244,8 @@
                                 onDetectedAtPOEChange();
                                 onSymptomaticChange();
                                 onPregnantChange();
-                                onUnderlyingConditionsChange()
+                                onUnderlyingConditionsChange();
+                                onTravelledRecentlyChange();
 
                             });
                             function onDetectedAtPOEChange() {
@@ -257,6 +258,16 @@
                                     jq('#date-detected-poe-lbl').hide();
                                     jq('#date-detected-poe').hide();
                                 }
+                                function onTravelledRecentlyChange() {
+                                    if (getValue('travelled-last-14-days.value') == 1065) {
+                                        jq('#places-visited').show();
+                                    }else{
+                                        clearHiddenSections(jq('#country'));
+                                        clearHiddenSections(jq('#city'));
+                                        jq('#places-visited').hide();
+                                    }
+                                }
+
                                 function onSymptomaticChange() {
 
                                     if (getValue('symptomatic.value') == 1065) {
@@ -324,8 +335,7 @@
                     County:
                 </td>
                 <td>
-                    <!--<obs conceptId="165851AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"/>-->
-                    <obs id="county" conceptId="CIEL:165851"  answers="$countyCodes" answerLabels="$countyNames"/>
+                       <obs id="county" conceptId="CIEL:165197"  answers="$countyCodes" answerLabels="$countyNames"/>
                 </td>
                 <td>
                     Sub county:
