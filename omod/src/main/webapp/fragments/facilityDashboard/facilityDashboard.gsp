@@ -121,9 +121,9 @@
             },
 
             series: [{
-                data: [{y:${totalContactsListed},color:"#f28f43"},
-                    {y:${totalContactsReached},color:"#910000"},
-                    {y:${contactsUnderCovid19Followup},color:"#8bbc21"}]
+                data: [{y:${totalContactsListed},color:"#003f5c"},
+                    {y:${totalContactsReached},color:"#444e86"},
+                    {y:${contactsUnderCovid19Followup},color:"#955196"}]
             }],
             xAxis: {
                 categories: [{
@@ -176,11 +176,11 @@
             },
 
             series: [{
-                data: [{y:${totalContactsListed},color:"#f28f43"},
-                    {y:${exposureFromLivingTogether},color:"#910000"},
-                    {y:${coworkerAssociatedExposure},color:"#492970"},
-                    {y:${exposureFromTravelingTogether},color:"#c42525"},
-                    {y:${healthcareAssociatedExposure},color:"#a6c96a"}]
+                data: [{y:${totalContactsListed},color:"#003f5c"},
+                    {y:${exposureFromLivingTogether},color:"#444e86"},
+                    {y:${coworkerAssociatedExposure},color:"#955196"},
+                    {y:${exposureFromTravelingTogether},color:"#dd5182"},
+                    {y:${healthcareAssociatedExposure},color:"#ff6e54"}]
             }],
             xAxis: {
                 categories: [{
@@ -269,7 +269,7 @@
                                 </table>
                             </div>
                         </div>
-                        <div id="contact_exposure" style="min-width: 450px; height: 300px; margin: 0 auto"></div>
+                        <div id="contact_exposure" style="min-width: 700px; height: 350px; margin: 0 auto"></div>
                     </td>
                     <td style="width: 50%; vertical-align: top; padding-left: 5px">
                         <div class="ke-panel-frame">
