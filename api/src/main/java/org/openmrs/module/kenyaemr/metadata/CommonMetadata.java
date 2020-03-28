@@ -99,6 +99,7 @@ public class CommonMetadata extends AbstractMetadataBundle {
 		public static final String NEAREST_HEALTH_CENTER = "27573398-4651-4ce5-89d8-abec5998165c";
 		public static final String GUARDIAN_FIRST_NAME = "8caf6d06-9070-49a5-b715-98b45e5d427b";
 		public static final String GUARDIAN_LAST_NAME = "0803abbd-2be4-4091-80b3-80c6940303df";
+		public static final String COUNTY = "3b2d1ef0-204b-4493-95f4-fcfdb4c4f7fa";
 	}
 
 	public static final class _Provider {
@@ -227,7 +228,8 @@ public class CommonMetadata extends AbstractMetadataBundle {
 				String.class, null, false, 4.3, _PersonAttributeType.GUARDIAN_FIRST_NAME));
 		install(personAttributeType("Guardian Last Name", "Guardian's last name",
 				String.class, null, false, 4.3, _PersonAttributeType.GUARDIAN_LAST_NAME));
-
+		install(personAttributeType("County Name", "Name of the county user resides",
+				String.class, null, false, 4.3, _PersonAttributeType.COUNTY));
 
 		/*install(relationshipType("Guardian", "Dependant", "One that guards, watches over, or protects", _RelationshipType.GUARDIAN_DEPENDANT));
 		install(relationshipType("Spouse", "Spouse", "A spouse is a partner in a marriage, civil union, domestic partnership or common-law marriage a male spouse is a husband and a female spouse is a wife", _RelationshipType.SPOUSE));
