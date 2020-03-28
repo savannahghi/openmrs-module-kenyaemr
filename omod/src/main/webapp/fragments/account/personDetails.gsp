@@ -1,3 +1,10 @@
+<%
+	def countyName = []
+	countyList.each {
+		countyName.add([label: it, value: it])
+	}
+%>
+
 <div class="ke-panel-frame">
 	<div class="ke-panel-heading">Personal Details</div>
 	<div class="ke-panel-content">
@@ -29,6 +36,9 @@
 										[ label: "Female", value: "F" ],
 										[ label: "Male", value: "M" ]
 								]
+						],
+						"countyName": [
+								options: countyName
 						]
 				],
 				submitLabel: "Save Changes",
