@@ -85,13 +85,16 @@ public class ReportPageController {
 
 		String downloadReportRole = "Download Reports";
 		boolean canDownloadReport = false;
-		for (Role r : Context.getAuthenticatedUser().getAllRoles()) {
-			if (r.getName().equals(downloadReportRole)) {
-				canDownloadReport = true;
-				break;
+		if (Context.getAuthenticatedUser().isSuperUser()) {
+			canDownloadReport = true;
+		} else {
+			for (Role r : Context.getAuthenticatedUser().getAllRoles()) {
+				if (r.getName().equals(downloadReportRole)) {
+					canDownloadReport = true;
+					break;
+				}
 			}
 		}
-
 
 
 
