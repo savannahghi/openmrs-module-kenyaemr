@@ -16,14 +16,11 @@ import static org.openmrs.module.metadatadeploy.bundle.CoreConstructors.program;
 
 
 /**
- * IPT metadata bundle
+ * COVID metadata bundle
  */
 @Component
 @Requires({ CommonMetadata.class })
 public class COVIDMetadata extends AbstractMetadataBundle {
-
-
-
 
 	public static final class _Program {
 		public static final String COVID = "e7ee7548-6958-4361-bed9-ee2614423947";
@@ -31,7 +28,6 @@ public class COVIDMetadata extends AbstractMetadataBundle {
 	}
 
 	public static final class _Concept {
-
 		public static final String COVID = "113021AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
 		public static final String COVID_QUARANTINE = "126311AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
 	}
@@ -41,9 +37,7 @@ public class COVIDMetadata extends AbstractMetadataBundle {
 	 */
 	@Override
 	public void install() {
-
-
 		install(program("COVID-19 Case Investigation", "COVID-19 Case Investigation", _Concept.COVID, _Program.COVID));
-		install(program("COVID-19 Quarantine", "COVID-19 Quarantine", _Concept.COVID_QUARANTINE, _Program.COVID_QUARANTINE));
+		install(program("COVID-19 Quarantine Program", "COVID-19 Quarantine Program", _Concept.COVID_QUARANTINE, _Program.COVID_QUARANTINE));
 	}
 }

@@ -19,4 +19,6 @@
 	<ref key="OTZ" uuid="24d05d30-0488-11ea-8d71-362b9e155667" />
 	<ref key="OVC" uuid="6eda83f0-09d9-11ea-8d71-362b9e155667" />
 	<ref key="COVID" uuid="e7ee7548-6958-4361-bed9-ee2614423947" />
+	<ref key="COVID_QUARANTINE" uuid="9a5d555e-739a-11ea-bc55-0242ac130003" />
+
 </refs>
