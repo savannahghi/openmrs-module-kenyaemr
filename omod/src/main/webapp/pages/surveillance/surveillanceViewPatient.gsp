@@ -9,7 +9,9 @@
     def addTriageFormLink = ui.pageLink("kenyaemr", "enterForm", [patientId: currentPatient.patientId, formUuid: triageUuid, appId:currentApp.id, returnUrl: ui.thisUrl()])
 
     def travelHistoryFormUUID ="87513b50-6ced-11ea-bc55-0242ac130003";
+    def quarantineFollowpFormUUID ="33a3aab6-73ae-11ea-bc55-0242ac130003";
     def addTravelHistoryFormLink = ui.pageLink("kenyaemr", "enterForm", [patientId: currentPatient.patientId, formUuid: travelHistoryFormUUID, appId:currentApp.id, returnUrl: ui.thisUrl()])
+    def addQuarantineFollowupFormLink = ui.pageLink("kenyaemr", "enterForm", [patientId: currentPatient.patientId, formUuid: quarantineFollowpFormUUID, appId:currentApp.id, returnUrl: ui.thisUrl()])
 
     def contactTracingUuid ="37ef8f3c-6cd2-11ea-bc55-0242ac130003";
     def addTracingFormLink = ui.pageLink("kenyaemr", "enterForm", [patientId: currentPatient.patientId, formUuid: contactTracingUuid, appId:currentApp.id, returnUrl: ui.thisUrl()])
@@ -116,6 +118,19 @@
 
                     <div class="info-body">
                         ${ ui.includeFragment("kenyaemr", "covid/contactFollowupForm", [ patient: currentPatient ]) }
+                    </div>
+                </div>
+
+                <div class="info-section">
+                    <div class="info-header">
+                        <i class="fa fa-plus-square right" style="color: steelblue" title="Record followup"
+                           onclick="location.href = '${addQuarantineFollowupFormLink}'"></i>
+
+                        <h3>Followup at quarantine center</h3>
+                    </div>
+                    <div class="info-body">
+
+                        ${ ui.includeFragment("kenyaemr", "covid/quarantineFollowupForm", [ patient: currentPatient ]) }
                     </div>
                 </div>
 

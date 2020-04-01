@@ -14,38 +14,72 @@
 <htmlform>
 	<script type="text/javascript">
 
+        var tranferredOutConcept = 159492;
+        var referredConcept = 164165;
+        var dischargedConcept = 1692;
 		jq(document).ready(function(){
+            getField('discReason.value').change(fillDetails);
 
-/*
-            answerConceptIds="159492AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,164165AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1692AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA "
-*/
-			var tranferredOutConcept = 159492;
-			var referredConcept = 159492;
-			var tranferredOut = 159492;
-            var discontinueDate;
-
-			beforeSubmit.push(function() {
-				discontinueDate = new Date(getValue('encounter-date.value')).getTime();
-
-				if(discontinueDate &lt; pbirthdate){
-					getField('encounter-date.error').html('Discontinue date, should not be earlier than Birth date').show();
-					return false;
-				}
-				if(discontinueDate &lt; enrollmentDate){
-					getField('encounter-date.error').html('Discontinue date, should not be earlier than Enrollment date').show();
-					return false;
-				}else {
-					getField('encounter-date.error').html('Discontinue date, should not be earlier than Enrollment').hide();
-
-				}
-
-				return true;
-			});
 		});
+
+        function fillDetails() {
+            var discontReason = getValue('discReason.value');
+            if (discontReason == tranferredOutConcept) {
+                jq('#transferred').show();
+                jq('#referred').hide();
+                jq('#discharged').hide();
+                clearSections(jq('#referred'));
+                clearSections(jq('#discharged'));
+            } else if (discontReason == referredConcept) {
+                jq('#transferred').hide();
+                jq('#referred').show();
+                jq('#discharged').hide();
+                clearSections(jq('#transferred'));
+                clearSections(jq('#discharged'));
+            } else if (discontReason == dischargedConcept) {
+                jq('#transferred').hide();
+                jq('#referred').hide();
+                jq('#discharged').show();
+                clearSections(jq('#referred'));
+                clearSections(jq('#transferred'));
+            } else {
+                jq('#transferred').hide();
+                jq('#referred').hide();
+                jq('#discharged').hide();
+                clearSections(jq('#referred'));
+                clearSections(jq('#discharged'));
+                clearSections(jq('#transferred'));
+			}
+
+        }
+
+        //Clear hidden sections
+        clearSections = function(parentObj) {
+            parentObj.find('input[type=radio]').each(function() {
+                this.checked = false;
+            });
+            parentObj.find('input[type=checkbox]').each(function() {
+                this.checked = false;
+            });
+            parentObj.find('input[type=text]').each(function() {
+                jq(this).val("");
+            });
+            parentObj.find('select').each(function() {
+                this.selectedIndex =0;
+            });
+        }
 	</script>
 
 
 
+	<div class="ke-form-header">
+		<table width="100%">
+			<tr>
+				<td>Date: <encounterDate id="encounter-date" showTime="true" /></td>
+				<td>Location: <encounterLocation default="GlobalProperty:kenyaemr.defaultLocation" type="autocomplete" /></td>
+			</tr>
+		</table>
+	</div>
 	<div class="ke-form-content">
 		<fieldset>
 			<legend>COVID Quarantine Discontinuation</legend>
@@ -56,25 +90,19 @@ comments
 -->
 			<table>
 				<tr>
-					<td>Date:</td>
-					<td><encounterDate id="encounter-date" showTime="false" /></td>
-					<td></td>
-					<td></td>
+					<td>Reason for discontinuation:</td>
+					<td><obs id="discReason" conceptId="161555AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+							 answerConceptIds="159492AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,164165AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1692AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA "
+							 answerLabels="Transferred out,Referral, Discharged" style="dropdown" labelText=""  showDate="false"/></td>
+
 				</tr>
 				<tr></tr>
-				<tr> <!--discharged for home quarantine, end of quarantine,  -->
-					<td>Reason for discontinuation:</td>
-					<td><obs conceptId="161555AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" dateLabel="Date:"
-							 answerConceptIds="159492AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,164165AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1692AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA "
-							 answerLabels="Transferred out,Referral, Discharged" style="dropdown" labelText=""  showDate="true"/></td>
-
-				</tr>
-
+				<tr></tr>
 				<tr id="transferred" style="display: none">
-					<td><i>(If transferred out)</i> <br/>Transfer to Facility:</td>
-					<td ><br/><obs conceptId="159495AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "/></td>
-					<td>Date Transferred Out</td>
-					<td><obs conceptId="160649AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" " /></td>
+					<td>Transfer to Facility:</td>
+					<td ><obs conceptId="159495AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "/></td>
+					<td></td>
+					<td></td>
 				</tr>
 
 				<tr id="referred" style="display: none">
@@ -92,7 +120,8 @@ comments
 							  answerConceptIds="126311AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1855AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
 							  answerLabels="Home quarantine,End of quarantine" labelText=" " style="radio"/></td>
 				</tr>
-
+				<tr></tr>
+				<tr></tr>
 				<tr>
 					<td>Comments:</td>
 					<td ><obs conceptId="160632AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" rows="5" cols="50"/></td>
@@ -101,7 +130,6 @@ comments
 		</fieldset>
 
 	</div>
-
 
 	<completeProgram programId="9a5d555e-739a-11ea-bc55-0242ac130003" />
 
