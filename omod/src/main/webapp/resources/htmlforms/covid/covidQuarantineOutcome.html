@@ -1,0 +1,112 @@
+<!--
+  ~ The contents of this file are subject to the OpenMRS Public License
+  ~ Version 1.0 (the "License"); you may not use this file except in
+  ~ compliance with the License. You may obtain a copy of the License at
+  ~ http://license.openmrs.org
+  ~
+  ~ Software distributed under the License is distributed on an "AS IS"
+  ~ basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+  ~ License for the specific language governing rights and limitations
+  ~ under the License.
+  ~
+  ~ Copyright (C) OpenMRS, LLC.  All Rights Reserved.
+  -->
+<htmlform>
+	<script type="text/javascript">
+
+		jq(document).ready(function(){
+
+/*
+            answerConceptIds="159492AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,164165AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1692AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA "
+*/
+			var tranferredOutConcept = 159492;
+			var referredConcept = 159492;
+			var tranferredOut = 159492;
+            var discontinueDate;
+
+			beforeSubmit.push(function() {
+				discontinueDate = new Date(getValue('encounter-date.value')).getTime();
+
+				if(discontinueDate &lt; pbirthdate){
+					getField('encounter-date.error').html('Discontinue date, should not be earlier than Birth date').show();
+					return false;
+				}
+				if(discontinueDate &lt; enrollmentDate){
+					getField('encounter-date.error').html('Discontinue date, should not be earlier than Enrollment date').show();
+					return false;
+				}else {
+					getField('encounter-date.error').html('Discontinue date, should not be earlier than Enrollment').hide();
+
+				}
+
+				return true;
+			});
+		});
+	</script>
+
+
+
+	<div class="ke-form-content">
+		<fieldset>
+			<legend>COVID Quarantine Discontinuation</legend>
+<!--
+referral for comorbidity mgt, covid-treatment - state facility referred to
+transfer out - reason for transfer out - facility transferred to
+comments
+-->
+			<table>
+				<tr>
+					<td>Date:</td>
+					<td><encounterDate id="encounter-date" showTime="false" /></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr></tr>
+				<tr> <!--discharged for home quarantine, end of quarantine,  -->
+					<td>Reason for discontinuation:</td>
+					<td><obs conceptId="161555AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" dateLabel="Date:"
+							 answerConceptIds="159492AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,164165AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1692AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA "
+							 answerLabels="Transferred out,Referral, Discharged" style="dropdown" labelText=""  showDate="true"/></td>
+
+				</tr>
+
+				<tr id="transferred" style="display: none">
+					<td><i>(If transferred out)</i> <br/>Transfer to Facility:</td>
+					<td ><br/><obs conceptId="159495AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "/></td>
+					<td>Date Transferred Out</td>
+					<td><obs conceptId="160649AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" " /></td>
+				</tr>
+
+				<tr id="referred" style="display: none">
+					<td>Reason for referral:</td>
+					<td ><obs conceptId="159623AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+							  answerConceptIds="162747AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1185AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+							  answerLabels="Cormobidity management,Covid treatment" labelText=" " style="radio"/></td>
+					<td>Facility referred to:</td>
+					<td><obs conceptId="161562AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" " /></td>
+				</tr>
+
+				<tr id="discharged" style="display: none">
+					<td>Reason for discharge:</td>
+					<td ><obs conceptId="160433AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+							  answerConceptIds="126311AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1855AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+							  answerLabels="Home quarantine,End of quarantine" labelText=" " style="radio"/></td>
+				</tr>
+
+				<tr>
+					<td>Comments:</td>
+					<td ><obs conceptId="160632AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" rows="5" cols="50"/></td>
+				</tr>
+			</table>
+		</fieldset>
+
+	</div>
+
+
+	<completeProgram programId="9a5d555e-739a-11ea-bc55-0242ac130003" />
+
+	<div class="ke-form-footer">
+		<submit />
+	</div>
+
+</htmlform>

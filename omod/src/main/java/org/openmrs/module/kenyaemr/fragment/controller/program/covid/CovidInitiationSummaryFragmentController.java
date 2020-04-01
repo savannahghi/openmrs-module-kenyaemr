@@ -9,20 +9,16 @@
  */
 package org.openmrs.module.kenyaemr.fragment.controller.program.covid;
 
-import org.openmrs.Concept;
 import org.openmrs.Encounter;
 import org.openmrs.Obs;
 import org.openmrs.PatientProgram;
-import org.openmrs.api.ConceptService;
 import org.openmrs.api.EncounterService;
-import org.openmrs.api.ObsService;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.kenyaemr.Dictionary;
 import org.openmrs.module.kenyaemr.wrapper.EncounterWrapper;
 import org.openmrs.ui.framework.annotation.FragmentParam;
 import org.openmrs.ui.framework.fragment.FragmentModel;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -31,8 +27,6 @@ import java.util.Map;
  */
 public class CovidInitiationSummaryFragmentController {
 
-	ConceptService conceptService = Context.getConceptService();
-	ObsService obsService = Context.getObsService();
 	String POINT_OF_DETECTION_CONCEPT = "161010AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
 	String SYMPTOMATIC_CONCEPT = "1729AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
 	String DATE_DETECTED_CONCEPT = "159948AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
@@ -83,51 +77,7 @@ public class CovidInitiationSummaryFragmentController {
 			}
 
 		}
-
-		/*Enrollment enrollment = new Enrollment(patientProgram);
-
-		List<Obs> obs = obsService.getObservations(
-				Arrays.asList(Context.getPersonService().getPerson(patientProgram.getPatient().getPersonId())),
-				Arrays.asList(enrollment.lastEncounter(encounterService.getEncounterTypeByUuid(CommonMetadata._EncounterType.CO))),
-				Arrays.asList(groupingConcept),
-				null,
-				null,
-				null,
-				Arrays.asList("obsId"),
-				null,
-				null,
-				null,
-				null,
-				false
-		);*/
-
-
 		model.put("dataPoints", dataPoints);
 		return "view/dataPoints";
-	}
-
-	String booleanAnswerConverter (Concept key) {
-		Map<Concept, String> booleanAnswerList = new HashMap<Concept, String>();
-		booleanAnswerList.put(conceptService.getConcept(1065), "Yes");
-		booleanAnswerList.put(conceptService.getConcept(1066), "No");
-		booleanAnswerList.put(conceptService.getConcept(1067), "Unknown");
-		return booleanAnswerList.get(key);
-	}
-
-	String pointofDetectionConverter (Concept key) {
-		Map<Concept, String> pointofDetectionList = new HashMap<Concept, String>();
-		pointofDetectionList.put(conceptService.getConcept(165651), "Point of Entry");
-		pointofDetectionList.put(conceptService.getConcept(163488), "Community");
-		pointofDetectionList.put(conceptService.getConcept(1067), "Unknown");
-		return pointofDetectionList.get(key);
-	}
-
-	String healthStatusConverter (Concept key) {
-		Map<Concept, String> pointofDetectionList = new HashMap<Concept, String>();
-		pointofDetectionList.put(conceptService.getConcept(159405), "Stable");
-		pointofDetectionList.put(conceptService.getConcept(159407), "Severely ill");
-		pointofDetectionList.put(conceptService.getConcept(160432), "Dead");
-		pointofDetectionList.put(conceptService.getConcept(1067), "Unknown");
-		return pointofDetectionList.get(key);
 	}
 }
