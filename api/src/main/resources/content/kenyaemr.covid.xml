@@ -62,7 +62,7 @@
 			<map>
 				<entry key="enrollment-summary" value="kenyaemr:program/covidQuarantine/quarantineAdmissionSummary" />
 				<entry key="care-panel" value="kenyaemr:program/covid/covidCarePanel" />
-				<entry key="completion-summary" value="kenyaemr:program/covid/covidOutcomeSummary" />
+				<entry key="completion-summary" value="kenyaemr:program/covidQuarantine/outcomeSummary" />
 			</map>
 		</property>
 		<property name="order" value="250" />
