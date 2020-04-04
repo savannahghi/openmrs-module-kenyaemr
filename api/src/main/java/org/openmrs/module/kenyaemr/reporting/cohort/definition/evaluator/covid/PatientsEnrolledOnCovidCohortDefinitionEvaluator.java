@@ -15,6 +15,7 @@ import org.openmrs.Cohort;
 import org.openmrs.annotation.Handler;
 import org.openmrs.module.kenyaemr.reporting.cohort.definition.OTZRegisterCohortDefinition;
 import org.openmrs.module.kenyaemr.reporting.cohort.definition.covid.PatientsEnrolledOnCovidCohortDefinition;
+import org.openmrs.module.kenyaemr.util.EmrUtils;
 import org.openmrs.module.reporting.cohort.EvaluatedCohort;
 import org.openmrs.module.reporting.cohort.definition.CohortDefinition;
 import org.openmrs.module.reporting.cohort.definition.evaluator.CohortDefinitionEvaluator;
@@ -51,10 +52,21 @@ public class PatientsEnrolledOnCovidCohortDefinitionEvaluator implements CohortD
 
         context = ObjectUtil.nvl(context, new EvaluationContext());
 
-        String qry = "Select e.patient_id from kenyaemr_etl.etl_covid_19_enrolment e\n" +
+        String qry = "";
+        SqlQueryBuilder builder = new SqlQueryBuilder();
+
+        qry = "Select e.patient_id from kenyaemr_etl.etl_covid_19_enrolment e\n" +
                 "group by e.patient_id having date(max(e.visit_date)) between date(:startDate) and date(:endDate);";
 
-        SqlQueryBuilder builder = new SqlQueryBuilder();
+        /*if (EmrUtils.getUserCounty() != null) {
+            qry = "Select e.patient_id from kenyaemr_etl.etl_covid_19_enrolment e where e.county=:userCounty\n" +
+                    "group by e.patient_id having date(max(e.visit_date)) between date(:startDate) and date(:endDate);";
+            builder.addParameter("userCounty", EmrUtils.getUserCounty().trim());
+
+        } else {
+            qry = "Select e.patient_id from kenyaemr_etl.etl_covid_19_enrolment e\n" +
+                    "group by e.patient_id having date(max(e.visit_date)) between date(:startDate) and date(:endDate);";
+        }*/
         builder.append(qry);
         Date startDate = (Date) context.getParameterValue("startDate");
         Date endDate = (Date) context.getParameterValue("endDate");

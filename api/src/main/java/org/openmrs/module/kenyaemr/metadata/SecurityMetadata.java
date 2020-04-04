@@ -183,7 +183,9 @@ public class SecurityMetadata extends AbstractMetadataBundle {
 				idSet(_Role.API_PRIVILEGES_VIEW_AND_EDIT),
 				idSet(
 						app(EmrConstants.APP_REGISTRATION),
+/*
 						app(EmrConstants.APP_REPORTS),
+*/
 						app(EmrConstants.APP_DIRECTORY),
 						app(EmrConstants.APP_FACILITIES),
 						app(EmrConstants.APP_FACILITY_DASHBOARD),
@@ -208,7 +210,9 @@ public class SecurityMetadata extends AbstractMetadataBundle {
 				idSet(_Role.API_PRIVILEGES_VIEW_AND_EDIT),
 				idSet(
 						app(EmrConstants.APP_REGISTRATION),
+/*
 						app(EmrConstants.APP_REPORTS),
+*/
 						app(EmrConstants.APP_DIRECTORY),
 						app(EmrConstants.APP_FACILITIES),
 						app(EmrConstants.APP_FACILITY_DASHBOARD),

@@ -41,7 +41,9 @@
 	<bean id="kenyaemr.config.report" class="org.openmrs.module.kenyacore.report.ReportConfiguration">
 		<property name="commonReports">
 			<set>
+<!--
 				<ref bean="kenyaemr.covid.report.confirmedCases"/>
+-->
 
 			</set>
 		</property>
