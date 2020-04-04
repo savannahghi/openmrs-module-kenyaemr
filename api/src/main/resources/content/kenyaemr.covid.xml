@@ -28,9 +28,7 @@
 	
 		<property name="reports">
 			<set>
-				<ref bean="kenyaemr.covid.report.enrolledInCovid" />
 				<ref bean="kenyaemr.covid.report.covidLineList" />
-				<ref bean="kenyaemr.covid.report.discontinuedOnCovid" />
 			</set>
 		</property>
 		<property name="fragments">

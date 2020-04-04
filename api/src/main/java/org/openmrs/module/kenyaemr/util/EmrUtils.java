@@ -291,10 +291,12 @@ public class EmrUtils {
 	public static String getUserCounty() {
 		PersonAttributeType userCountyType = Context.getPersonService().getPersonAttributeTypeByUuid(CommonMetadata._PersonAttributeType.COUNTY);
 		PersonAttribute userCounty = Context.getAuthenticatedUser().getPerson().getAttribute(userCountyType);
+		//System.out.println("Active attributes: ===============> " + Context.getAuthenticatedUser().getPerson().getActiveAttributes());
+
 		if (userCounty != null) {
-			return null;
+			return userCounty.getValue();
 		}
-		return userCounty.getValue();
+		return null;
 	}
 
 }

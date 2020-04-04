@@ -10,18 +10,26 @@
 package org.openmrs.module.kenyaemr.reporting.builder.covid;
 
 import org.openmrs.PatientIdentifierType;
+import org.openmrs.PersonAttributeType;
 import org.openmrs.module.kenyacore.report.HybridReportDescriptor;
 import org.openmrs.module.kenyacore.report.ReportDescriptor;
 import org.openmrs.module.kenyacore.report.ReportUtils;
 import org.openmrs.module.kenyacore.report.builder.AbstractHybridReportBuilder;
 import org.openmrs.module.kenyacore.report.builder.Builds;
+import org.openmrs.module.kenyacore.report.data.patient.definition.CalculationDataDefinition;
+import org.openmrs.module.kenyaemr.calculation.library.covid.PersonAddressCountyCalculation;
+import org.openmrs.module.kenyaemr.calculation.library.covid.PersonAddressSubCountyCalculation;
+import org.openmrs.module.kenyaemr.metadata.CommonMetadata;
 import org.openmrs.module.kenyaemr.metadata.HivMetadata;
+import org.openmrs.module.kenyaemr.reporting.calculation.converter.RDQACalculationResultConverter;
 import org.openmrs.module.kenyaemr.reporting.cohort.definition.covid.PatientsEnrolledOnCovidCohortDefinition;
+import org.openmrs.module.kenyaemr.reporting.data.converter.IdentifierConverter;
 import org.openmrs.module.kenyaemr.reporting.data.converter.definition.covid.*;
 import org.openmrs.module.metadatadeploy.MetadataUtils;
 import org.openmrs.module.reporting.cohort.definition.CohortDefinition;
 import org.openmrs.module.reporting.common.SortCriteria;
 import org.openmrs.module.reporting.data.DataDefinition;
+import org.openmrs.module.reporting.data.converter.BirthdateConverter;
 import org.openmrs.module.reporting.data.converter.DataConverter;
 import org.openmrs.module.reporting.data.converter.ObjectFormatter;
 import org.openmrs.module.reporting.data.patient.definition.ConvertedPatientDataDefinition;
@@ -79,14 +87,19 @@ public class PatientsEnrolledOnCovidReportBuilder extends AbstractHybridReportBu
 
     protected PatientDataSetDefinition covidDataSetDefinition() {
 
+        PatientIdentifierType nationalIdType = MetadataUtils.existing(PatientIdentifierType.class, CommonMetadata._PatientIdentifierType.NATIONAL_ID);
+        PatientIdentifierType passportNumberType = MetadataUtils.existing(PatientIdentifierType.class, CommonMetadata._PatientIdentifierType.PASSPORT_NUMBER);
+        DataDefinition natIdDef = new ConvertedPatientDataDefinition("identifier", new PatientIdentifierDataDefinition(nationalIdType.getName(), nationalIdType), new IdentifierConverter());
+        DataDefinition passportDef = new ConvertedPatientDataDefinition("identifier", new PatientIdentifierDataDefinition(passportNumberType.getName(), passportNumberType), new IdentifierConverter());
+        PersonAttributeType phoneNumber = MetadataUtils.existing(PersonAttributeType.class, CommonMetadata._PersonAttributeType.TELEPHONE_CONTACT);
+        String DATE_FORMAT = "dd/MM/yyyy";
         PatientDataSetDefinition dsd = new PatientDataSetDefinition("CovidLinelist");
-        dsd.addSortCriteria("DOBAndAge", SortCriteria.SortDirection.DESC);
         dsd.addParameter(new Parameter("startDate", "Start Date", Date.class));
         dsd.addParameter(new Parameter("endDate", "End Date", Date.class));
         dsd.addParameter(new Parameter("startDate", "Start Date", Date.class));
         String defParam = "startDate=${startDate}";
 
-        PatientIdentifierType upn = MetadataUtils.existing(PatientIdentifierType.class, HivMetadata._PatientIdentifierType.UNIQUE_PATIENT_NUMBER);
+        PatientIdentifierType upn = MetadataUtils.existing(PatientIdentifierType.class, CommonMetadata._PatientIdentifierType.NATIONAL_ID);
         DataConverter identifierFormatter = new ObjectFormatter("{identifier}");
         DataDefinition identifierDef = new ConvertedPatientDataDefinition("identifier", new PatientIdentifierDataDefinition(upn.getName(), upn), identifierFormatter);
 
@@ -94,13 +107,16 @@ public class PatientsEnrolledOnCovidReportBuilder extends AbstractHybridReportBu
         DataDefinition nameDef = new ConvertedPersonDataDefinition("name", new PreferredNameDataDefinition(), nameFormatter);
         dsd.addColumn("Unique Patient No", identifierDef, "");
         dsd.addColumn("id", new PersonIdDataDefinition(), "");
+        dsd.addColumn("Passport Number", passportDef, "");
+
         dsd.addColumn("Name", nameDef, "");
+        dsd.addColumn("Date of Birth", new BirthdateDataDefinition(), "", new BirthdateConverter(DATE_FORMAT));
         dsd.addColumn("Age", new AgeDataDefinition(), "");
         dsd.addColumn("Sex", new GenderDataDefinition(), "");
-        dsd.addColumn("Phone Number",new PhoneNumberDataDefinition(), "");
+        dsd.addColumn("Phone Number", new PersonAttributeDataDefinition(phoneNumber), "");
         dsd.addColumn("Occupation",new OccupationDataDefinition(), "");
-        dsd.addColumn("County",new CountyDataDefinition(), "");
-        dsd.addColumn("SubCounty",new SubcountyDataDefinition(), "");
+        dsd.addColumn("County", new CalculationDataDefinition("County", new PersonAddressCountyCalculation()), "", new RDQACalculationResultConverter());
+        dsd.addColumn("SubCounty", new CalculationDataDefinition("SubCounty", new PersonAddressSubCountyCalculation()), "", new RDQACalculationResultConverter());
         //dsd.addColumn("Ward",new WardDataDefinition(), "");
         //dsd.addColumn("Landmark",new LandmarkDataDefinition(), "");
         dsd.addColumn("Recently Travelled",new RecentTravelDataDefinition(), "");

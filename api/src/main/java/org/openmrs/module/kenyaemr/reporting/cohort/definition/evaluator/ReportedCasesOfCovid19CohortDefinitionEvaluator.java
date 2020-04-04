@@ -14,6 +14,7 @@ import org.apache.commons.logging.LogFactory;
 import org.openmrs.Cohort;
 import org.openmrs.annotation.Handler;
 import org.openmrs.module.kenyaemr.reporting.cohort.definition.ReportedCasesOfCovid19CohortDefinition;
+import org.openmrs.module.kenyaemr.util.EmrUtils;
 import org.openmrs.module.reporting.cohort.EvaluatedCohort;
 import org.openmrs.module.reporting.cohort.definition.CohortDefinition;
 import org.openmrs.module.reporting.cohort.definition.evaluator.CohortDefinitionEvaluator;
@@ -46,10 +47,30 @@ public class ReportedCasesOfCovid19CohortDefinitionEvaluator implements CohortDe
             return null;
 
 		Cohort newCohort = new Cohort();
-
-		String qry="select patient_id from patient_program where voided=0;";
-
 		SqlQueryBuilder builder = new SqlQueryBuilder();
+
+
+		String qry = "";
+
+		qry = "select pp.patient_id from patient_program pp \n" +
+				"inner join (select program_id from program where uuid='e7ee7548-6958-4361-bed9-ee2614423947') p on pp.program_id = p.program_id\n" +
+				"inner join kenyaemr_etl.etl_covid_19_enrolment e on e.patient_id = pp.patient_id \n" +
+				"where pp.voided=0";
+
+		/*if (EmrUtils.getUserCounty() != null) {
+			qry = "select pp.patient_id from patient_program pp \n" +
+					"inner join (select program_id from program where uuid='e7ee7548-6958-4361-bed9-ee2614423947') p on pp.program_id = p.program_id\n" +
+					"inner join kenyaemr_etl.etl_covid_19_enrolment e on e.patient_id = pp.patient_id \n" +
+					"where pp.voided=0 and e.county=:userCounty;";
+			builder.addParameter("userCounty", EmrUtils.getUserCounty());
+
+		} else {
+			qry = "select pp.patient_id from patient_program pp \n" +
+					"inner join (select program_id from program where uuid='e7ee7548-6958-4361-bed9-ee2614423947') p on pp.program_id = p.program_id\n" +
+					"inner join kenyaemr_etl.etl_covid_19_enrolment e on e.patient_id = pp.patient_id \n" +
+					"where pp.voided=0";
+		}*/
+
 		builder.append(qry);
 		Date endDate = (Date)context.getParameterValue("endDate");
 		builder.addParameter("endDate", endDate);
