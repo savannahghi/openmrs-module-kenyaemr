@@ -12,6 +12,7 @@ package org.openmrs.module.kenyaemr.fragment.controller.program;
 import org.openmrs.Patient;
 import org.openmrs.module.kenyacore.program.ProgramDescriptor;
 import org.openmrs.module.kenyacore.program.ProgramManager;
+import org.openmrs.module.kenyaemr.metadata.COVIDMetadata;
 import org.openmrs.ui.framework.annotation.FragmentParam;
 import org.openmrs.ui.framework.annotation.SpringBean;
 import org.openmrs.ui.framework.fragment.FragmentModel;
@@ -37,7 +38,9 @@ public class ProgramHistoriesFragmentController {
 			Collection<ProgramDescriptor> eligiblePrograms = programManager.getPatientEligiblePrograms(patient);
 			for (ProgramDescriptor ActiveCovidDescriptor : activePrograms) {
 				if (!programs.contains(ActiveCovidDescriptor)) {
-					if (ActiveCovidDescriptor.getTargetUuid().equalsIgnoreCase("e7ee7548-6958-4361-bed9-ee2614423947")) {
+					if (ActiveCovidDescriptor.getTargetUuid().equalsIgnoreCase(COVIDMetadata._Program.COVID) ||
+							ActiveCovidDescriptor.getTargetUuid().equalsIgnoreCase(COVIDMetadata._Program.COVID_QUARANTINE)
+							) {
 						programs.addAll(activePrograms);
 					}
 
@@ -50,7 +53,9 @@ public class ProgramHistoriesFragmentController {
 			// Don't add duplicates for programs for which patient is both active and eligible
 			for (ProgramDescriptor descriptor : eligiblePrograms) {
 				if (!programs.contains(descriptor)) {
-					if (descriptor.getTargetUuid().equalsIgnoreCase("e7ee7548-6958-4361-bed9-ee2614423947")) {
+					if (descriptor.getTargetUuid().equalsIgnoreCase(COVIDMetadata._Program.COVID) ||
+							descriptor.getTargetUuid().equalsIgnoreCase(COVIDMetadata._Program.COVID_QUARANTINE)
+							) {
 						programs.add(descriptor);
 					}
 

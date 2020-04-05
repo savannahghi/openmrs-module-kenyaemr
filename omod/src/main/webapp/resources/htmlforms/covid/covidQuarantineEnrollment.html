@@ -1,0 +1,100 @@
+<!--
+  ~ The contents of this file are subject to the OpenMRS Public License
+  ~ Version 1.0 (the "License"); you may not use this file except in
+  ~ compliance with the License. You may obtain a copy of the License at
+  ~ http://license.openmrs.org
+  ~
+  ~ Software distributed under the License is distributed on an "AS IS"
+  ~ basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+  ~ License for the specific language governing rights and limitations
+  ~ under the License.
+  ~
+  ~ Copyright (C) OpenMRS, LLC.  All Rights Reserved.
+
+-->
+<htmlform>
+
+    <script type="text/javascript" src="../moduleResources/kenyaemr/scripts/moment.js"></script>
+    <script>
+        var TRANSFER_IN = 160563;
+
+        jq(function () {
+            jq('#transferFacility :input').prop('disabled', true);
+            jq('#transfer-in-status input').change(onEntryPointChange);
+
+        });
+
+        function onEntryPointChange() {
+            var entryPointStatus = getValue('transfer-in-status.value');
+            if (entryPointStatus == TRANSFER_IN) {
+                jq('#transferFacility :input').prop('disabled', false);
+            } else {
+                jq('#transferFacility :input').val('');
+                jq('#transferFacility :input').prop('disabled', true);
+            }
+
+        }
+    </script>
+    <style>
+
+
+        .disabled {
+            color: #ebebe4;
+    </style>
+
+    <div class="ke-form-header">
+        <table width="100%">
+            <tr>
+
+            </tr>
+        </table>
+    </div>
+
+    <div class="ke-form-content">
+
+
+        <fieldset>
+            <legend>Admission</legend>
+            <table>
+                <tr>
+                    <td>Date of admission:</td>
+                    <td>
+                        <encounterDate id="encounter-date" showTime="true"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Name of quarantine center</td>
+                    <td>
+                        <obs conceptId="162724AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"/>
+                    </td>
+                </tr>
+                <tr></tr>
+                <tr>
+                    <td>Type of admission</td>
+                    <td>
+                        <obs
+                                id="transfer-in-status" conceptId="161641AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" style="radio"
+                                answerConceptIds="164144AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,160563AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                                answerLabels="New,Transfer in"
+                                required="true"
+                        />
+                    </td>
+                </tr>
+                <tr></tr>
+                <tr>
+                    <td>Name of quarantine center transferred from</td>
+                    <td>
+                        <obs id="transferFacility" conceptId="161550AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"/>
+                    </td>
+                </tr>
+                <tr></tr>
+
+            </table>
+        </fieldset>
+        <enrollInProgram programId="9a5d555e-739a-11ea-bc55-0242ac130003"/>
+    </div>
+    <div class="ke-form-footer">
+        <submit/>
+    </div>
+
+</htmlform>

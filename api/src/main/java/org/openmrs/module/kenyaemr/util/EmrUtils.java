@@ -26,11 +26,14 @@ import org.openmrs.Order;
 import org.openmrs.OrderType;
 import org.openmrs.Patient;
 import org.openmrs.Person;
+import org.openmrs.PersonAttribute;
+import org.openmrs.PersonAttributeType;
 import org.openmrs.Provider;
 import org.openmrs.User;
 import org.openmrs.api.EncounterService;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.kenyaemr.Dictionary;
+import org.openmrs.module.kenyaemr.metadata.CommonMetadata;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -285,5 +288,15 @@ public class EmrUtils {
 				return Arrays.asList(countryNames.split(","));
 	}
 
+	public static String getUserCounty() {
+		PersonAttributeType userCountyType = Context.getPersonService().getPersonAttributeTypeByUuid(CommonMetadata._PersonAttributeType.COUNTY);
+		PersonAttribute userCounty = Context.getAuthenticatedUser().getPerson().getAttribute(userCountyType);
+		//System.out.println("Active attributes: ===============> " + Context.getAuthenticatedUser().getPerson().getActiveAttributes());
+
+		if (userCounty != null) {
+			return userCounty.getValue();
+		}
+		return null;
+	}
 
 }

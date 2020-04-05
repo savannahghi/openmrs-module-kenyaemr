@@ -45,6 +45,9 @@ public class CommonMetadata extends AbstractMetadataBundle {
 		public static final String COVID_19_CONTACT_TRACING = "6dd1ace2-6ce2-11ea-bc55-0242ac130003";
 		public static final String COVID_19_TRAVEL_HISTORY = "50a59411-921b-435a-9109-42aa68ee7aa7";
 		public static final String COVID_OUTCOME = "7b118dac-6f61-4466-ad1a-7e01aca077ad";
+		public static final String COVID_QUARANTINE_ENROLLMENT = "33a3a55c-73ae-11ea-bc55-0242ac130003";
+		public static final String COVID_QUARANTINE_OUTCOME = "33a3a7be-73ae-11ea-bc55-0242ac130003";
+		public static final String COVID_QUARANTINE_FOLLOWUP = "33a3a8e0-73ae-11ea-bc55-0242ac130003";
 
 	}
 
@@ -68,6 +71,9 @@ public class CommonMetadata extends AbstractMetadataBundle {
 		public static final String COVID_19_CONTACT_TRACING_FORM = "37ef8f3c-6cd2-11ea-bc55-0242ac130003";
 		public static final String COVID_19_TRAVEL_HISTORY = "87513b50-6ced-11ea-bc55-0242ac130003";
 		public static final String COVID_OUTCOME = "8f4e3e83-c597-47ad-8999-b788e8255d20";
+		public static final String COVID_QUARANTINE_ENROLLMENT = "9a5d57b6-739a-11ea-bc55-0242ac130003";
+		public static final String COVID_QUARANTINE_FOLLOWUP = "33a3aab6-73ae-11ea-bc55-0242ac130003";
+		public static final String COVID_QUARANTINE_OUTCOME = "9a5d58c4-739a-11ea-bc55-0242ac130003";
 
 	}
 
@@ -99,6 +105,7 @@ public class CommonMetadata extends AbstractMetadataBundle {
 		public static final String NEAREST_HEALTH_CENTER = "27573398-4651-4ce5-89d8-abec5998165c";
 		public static final String GUARDIAN_FIRST_NAME = "8caf6d06-9070-49a5-b715-98b45e5d427b";
 		public static final String GUARDIAN_LAST_NAME = "0803abbd-2be4-4091-80b3-80c6940303df";
+		public static final String COUNTY = "3b2d1ef0-204b-4493-95f4-fcfdb4c4f7fa";
 	}
 
 	public static final class _Provider {
@@ -142,6 +149,9 @@ public class CommonMetadata extends AbstractMetadataBundle {
 		install(encounterType("COVID-19 Contact tracing", "COVID-19 treatment form", _EncounterType.COVID_19_CONTACT_TRACING));
 		install(encounterType("COVID-19 Travel", "COVID-19 travel", _EncounterType.COVID_19_TRAVEL_HISTORY));
 		install(encounterType("COVID-19 Outcome", "COVID-19 travel", _EncounterType.COVID_OUTCOME));
+		install(encounterType("COVID-19 Quarantine Enrollment", "COVID-19 Quarantine Enrollment", _EncounterType.COVID_QUARANTINE_ENROLLMENT));
+		install(encounterType("COVID-19 Quarantine Followup", "COVID-19 Quarantine Followup", _EncounterType.COVID_QUARANTINE_FOLLOWUP));
+		install(encounterType("COVID-19 Quarantine Outcome", "COVID-19 Quarantine Outcome", _EncounterType.COVID_QUARANTINE_OUTCOME));
 
 		install(form("Clinical Encounter", null, _EncounterType.CONSULTATION, "1", _Form.CLINICAL_ENCOUNTER));
 		install(form("Lab Results", null, _EncounterType.LAB_RESULTS, "1", _Form.LAB_RESULTS));
@@ -163,6 +173,9 @@ public class CommonMetadata extends AbstractMetadataBundle {
 		install(form("COVID-19 Monitored Reporting Form", "A form to trace contacts for covid-19 ", _EncounterType.COVID_19_CONTACT_TRACING, "1", _Form.COVID_19_CONTACT_TRACING_FORM));
 
 		install(form("COVID Outcome", "Covid outcome form ", _EncounterType.COVID_OUTCOME, "1", _Form.COVID_OUTCOME));
+		install(form("COVID Quaratine Enrollment", "Covid Quaratine Enrollment form ", _EncounterType.COVID_QUARANTINE_ENROLLMENT, "1", _Form.COVID_QUARANTINE_ENROLLMENT));
+		install(form("COVID Quaratine Followup", "Covid Quaratine Followup form ", _EncounterType.COVID_QUARANTINE_FOLLOWUP, "1", _Form.COVID_QUARANTINE_FOLLOWUP));
+		install(form("COVID Quarantine Discontinuation", "Covid Quarantine outcome form ", _EncounterType.COVID_QUARANTINE_OUTCOME, "1", _Form.COVID_QUARANTINE_OUTCOME));
 
 
 
@@ -194,11 +207,11 @@ public class CommonMetadata extends AbstractMetadataBundle {
 				LocationBehavior.NOT_USED, false, _PatientIdentifierType.CWC_NUMBER));
 
 		install(patientIdentifierType("Alien Number", "Alien Number",
-				".{1,14}", "At most 14 characters long", null,
+				".{1,20}", "At most 14 characters long", null,
 				LocationBehavior.NOT_USED, false, _PatientIdentifierType.ALIEN_NUMBER));
 
 		install(patientIdentifierType("Passport Number", "Passport Number",
-				".{1,14}", "At most 14 characters long", null,
+				".{1,20}", "At most 14 characters long", null,
 				LocationBehavior.NOT_USED, false, _PatientIdentifierType.PASSPORT_NUMBER));
 		
 		install(personAttributeType("Telephone contact", "Telephone contact number",
@@ -226,7 +239,8 @@ public class CommonMetadata extends AbstractMetadataBundle {
 				String.class, null, false, 4.3, _PersonAttributeType.GUARDIAN_FIRST_NAME));
 		install(personAttributeType("Guardian Last Name", "Guardian's last name",
 				String.class, null, false, 4.3, _PersonAttributeType.GUARDIAN_LAST_NAME));
-
+		install(personAttributeType("County Name", "Name of the county user resides",
+				String.class, null, false, 4.3, _PersonAttributeType.COUNTY));
 
 		/*install(relationshipType("Guardian", "Dependant", "One that guards, watches over, or protects", _RelationshipType.GUARDIAN_DEPENDANT));
 		install(relationshipType("Spouse", "Spouse", "A spouse is a partner in a marriage, civil union, domestic partnership or common-law marriage a male spouse is a husband and a female spouse is a wife", _RelationshipType.SPOUSE));

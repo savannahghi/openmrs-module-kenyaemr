@@ -185,6 +185,7 @@ public class EmrUiUtils {
 		);
 	}
 
+
 	/*
 	* public List<SimpleObject> simpleRegimenDefinitions(Collection<RegimenDefinition> definitions, UiUtils ui) {
 		return SimpleObject.fromCollection(definitions, ui,
