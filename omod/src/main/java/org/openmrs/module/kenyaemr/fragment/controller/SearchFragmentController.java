@@ -15,9 +15,14 @@ import org.apache.commons.logging.LogFactory;
 import org.openmrs.Concept;
 import org.openmrs.ConceptClass;
 import org.openmrs.ConceptSearchResult;
-import org.openmrs.Encounter;
 import org.openmrs.Location;
 import org.openmrs.Patient;
+import org.openmrs.api.ObsService;
+import org.openmrs.Obs;
+import org.openmrs.Program;
+import org.openmrs.module.kenyaemr.metadata.COVIDMetadata;
+import org.openmrs.module.kenyaemr.util.EmrUtils;
+import org.openmrs.module.metadatadeploy.MetadataUtils;
 import org.openmrs.Person;
 import org.openmrs.Provider;
 import org.openmrs.Relationship;
@@ -26,6 +31,8 @@ import org.openmrs.Visit;
 import org.openmrs.api.ConceptService;
 import org.openmrs.api.LocationService;
 import org.openmrs.api.context.Context;
+import org.openmrs.api.ProgramWorkflowService;
+import org.openmrs.PatientProgram;
 import org.openmrs.module.kenyacore.CoreConstants;
 import org.openmrs.module.kenyaemr.api.KenyaEmrService;
 import org.openmrs.ui.framework.SimpleObject;
@@ -53,6 +60,9 @@ import java.util.TreeSet;
  * Fragment actions specifically for searching for OpenMRS objects
  */
 public class SearchFragmentController {
+	ObsService obsService = Context.getObsService();
+	ConceptService conceptService = Context.getConceptService();
+
 
 	protected static final Log log = LogFactory.getLog(SearchFragmentController.class);
 
@@ -82,6 +92,7 @@ public class SearchFragmentController {
 									   @RequestParam(value = "which", required = false, defaultValue = "all") String which,
 									   UiUtils ui) {
 
+
 		// Return empty list if we don't have enough input to search on
 		if (StringUtils.isBlank(query) && "all".equals(which)) {
 			return Collections.emptyList();
@@ -94,6 +105,8 @@ public class SearchFragmentController {
 		Map<Patient, Visit> patientActiveVisits = getActiveVisitsByPatients();
 
 		List<Patient> matched = new ArrayList<Patient>();
+		List<Patient> matchedWithUserCounty = new ArrayList<Patient>();
+
 
 		// If query wasn't long enough to be searched on, and they've requested checked-in patients, return the list
 		// of checked in patients
@@ -125,9 +138,21 @@ public class SearchFragmentController {
 			}
 		}
 
+
+
+		//only filter those who are from the same county as the authenticated user or not yet enrolled
+		for (Patient p : matched) {
+			if(!patientEnrolledInCovid(p) || patientEnrolledInSameCountyAsAuthenticatedUser(p)) {
+					matchedWithUserCounty.add(p);
+
+			}
+
+		}
+
+
 		// Simplify and attach active visits to patient objects
 		List<SimpleObject> simplePatients = new ArrayList<SimpleObject>();
-		for (Patient patient : matched) {
+		for (Patient patient : matchedWithUserCounty) {
 			SimpleObject simplePatient = ui.simplifyObject(patient);
 
 			Visit activeVisit = patientActiveVisits.get(patient);
@@ -135,7 +160,6 @@ public class SearchFragmentController {
 
 			simplePatients.add(simplePatient);
 		}
-
 		return simplePatients;
 	}
 
@@ -318,7 +342,7 @@ public class SearchFragmentController {
 									   @RequestParam(value = "size", required = false) Integer size,
 									   UiUtils ui) {
 
-		ConceptService conceptService = Context.getConceptService();
+
 
 		List<ConceptClass> conceptClasses = conceptClass != null ? Collections.singletonList(conceptClass) : null;
 
@@ -476,6 +500,28 @@ public class SearchFragmentController {
 			if (relationship.getPersonA().equals(patient) && relationship.getRelationshipType().getaIsToB().equals("Peer-educator")) {
 				return true;
 			}
+		}
+		return false;
+	}
+
+	private boolean patientEnrolledInSameCountyAsAuthenticatedUser(Patient patient) {
+		//165197 county concept
+		List<Obs> county = obsService.getObservationsByPersonAndConcept(patient, conceptService.getConcept(165197));
+		for (Obs c : county) {
+			if (c.getValueText().equalsIgnoreCase(EmrUtils.getUserCounty())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean patientEnrolledInCovid(Patient patient) {
+		Program covidProgram = MetadataUtils.existing(Program.class, COVIDMetadata._Program.COVID);
+		ProgramWorkflowService service = Context.getProgramWorkflowService();
+		List<PatientProgram> programs = service.getPatientPrograms(Context.getPatientService().getPatient(patient.getId()), covidProgram, null, null, null,null, true);
+		if (programs.size() > 0) {
+			return true;
+
 		}
 		return false;
 	}
