@@ -144,13 +144,16 @@ public class SearchFragmentController {
 		Set<Role> userRoles = loggedInUser.getAllRoles();
 		String userRole = null;
 		for (Role role : userRoles) {
-			if(role.getName().equalsIgnoreCase("System Developer")) {
-				userRole ="System Developer";
+			if(role.getName().equalsIgnoreCase("System Administrator")) {
+				userRole ="System Administrator";
+				break;
+
 			}
+
 
 		}
 
-		if(userRole !=null) {
+		if(userRole !=null || Context.getUserContext().getAuthenticatedUser().isSuperUser()) {
 			matchedWithUserCounty = matched;
 		}else {
 			//only filter those who are from the same county as the authenticated user or not yet enrolled
