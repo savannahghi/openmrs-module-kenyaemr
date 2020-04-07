@@ -46,7 +46,7 @@
 				<!--
                                 <ref bean="kenyaemr.covid.report.confirmedCases"/>
                 -->
-
+				<ref bean="kenyaemr.common.report.deadCovid19Cases"/>
 			</set>
 		</property>
 	</bean>
@@ -535,6 +535,12 @@
 		<property name="apps"><set><ref bean="kenyaemr.app.reports" /></set></property>
 	</bean>
 
+	<bean id="kenyaemr.common.report.deadCovid19Cases" class="org.openmrs.module.kenyacore.report.HybridReportDescriptor">
+		<property name="targetUuid" value="5cf668e0-fcd2-4733-9aaa-2119a8ba26da" />
+		<property name="name" value="Covid-19 Dead Confirmed Cases" />
+		<property name="description" value="Covid-19 Dead Confirmed Cases" />
+		<property name="apps"><set><ref bean="kenyaemr.app.reports" /></set></property>
+	</bean>
 
 
 </beans>
