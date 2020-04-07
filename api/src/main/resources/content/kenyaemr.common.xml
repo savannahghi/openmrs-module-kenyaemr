@@ -42,6 +42,7 @@
 		<property name="commonReports">
 			<set>
 				<ref bean="kenyaemr.common.report.pendingLabResults" />
+				<ref bean="kenyaemr.common.report.confirmedPositives" />
 
 				<!--
                                 <ref bean="kenyaemr.covid.report.confirmedCases"/>
@@ -539,6 +540,12 @@
 		<property name="targetUuid" value="5cf668e0-fcd2-4733-9aaa-2119a8ba26da" />
 		<property name="name" value="Covid-19 Dead Confirmed Cases" />
 		<property name="description" value="Covid-19 Dead Confirmed Cases" />
+		<property name="apps"><set><ref bean="kenyaemr.app.reports" /></set></property>
+	</bean>
+	<bean id="kenyaemr.common.report.confirmedPositives" class="org.openmrs.module.kenyacore.report.HybridReportDescriptor">
+		<property name="targetUuid" value="88f93b67-3454-4a62-b6a3-f628bd04f3fc" />
+		<property name="name" value="Confirmed Covid-19 Positive" />
+		<property name="description" value="Confirmed Covid-19 Positive" />
 		<property name="apps"><set><ref bean="kenyaemr.app.reports" /></set></property>
 	</bean>
 
