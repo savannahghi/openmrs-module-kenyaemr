@@ -84,7 +84,7 @@ public class CovidDashboardCohortQueries {
                 " from kenyaemr_etl.etl_patient_program_discontinuation pd\n" +
                 "  inner join openmrs.person p on p.person_id=pd.patient_id\n" +
                 "where pd.discontinuation_reason = 160034\n" +
-                "group by pd.patient_id;;";
+                "group by pd.patient_id;";
         cd.setName("deceased");
         cd.setQuery(sqlQuery);
         cd.addParameter(new Parameter("startDate", "Start Date", Date.class));
@@ -137,7 +137,7 @@ public class CovidDashboardCohortQueries {
                 "join openmrs.person p on p.person_id=obs.person_id\n" +
                 "where obs.voided=0 and obs.order_id is not null and obs.value_coded =664 or obs.value_coded =703\n" +
                 "group by obs.person_id\n" +
-                ")t";
+                ")t;";
         cd.setName("personsTested");
         cd.setQuery(sqlQuery);
         cd.addParameter(new Parameter("startDate", "Start Date", Date.class));
