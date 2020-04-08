@@ -43,6 +43,7 @@
 			<set>
 				<ref bean="kenyaemr.common.report.pendingLabResults" />
 				<ref bean="kenyaemr.common.report.confirmedPositives" />
+				<ref bean="kenyaemr.common.report.covidDashboardIndicators" />
 
 				<!--
                                 <ref bean="kenyaemr.covid.report.confirmedCases"/>
@@ -548,6 +549,12 @@
 		<property name="description" value="Confirmed Covid-19 Positive" />
 		<property name="apps"><set><ref bean="kenyaemr.app.reports" /></set></property>
 	</bean>
-
+	<bean id="kenyaemr.common.report.covidDashboardIndicators" class="org.openmrs.module.kenyacore.report.IndicatorReportDescriptor">
+		<property name="targetUuid" value="35c003d1-e87a-4282-8a8e-a2cfe0e8e5d2" />
+		<property name="name" value="Covid-19 Dashboard Indicators" />
+		<property name="description" value="Covid-19 Dashboard Indicators" />
+		<property name="apps"><set><ref bean="kenyaemr.app.reports" /></set></property>
+		<property name="template" value="kenyaemr:covid/covid19_dashboard.xls" />
+	</bean>
 
 </beans>
