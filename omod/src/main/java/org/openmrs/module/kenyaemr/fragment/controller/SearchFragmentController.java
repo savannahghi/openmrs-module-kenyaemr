@@ -20,19 +20,20 @@ import org.openmrs.Patient;
 import org.openmrs.api.ObsService;
 import org.openmrs.Obs;
 import org.openmrs.Program;
-import org.openmrs.module.kenyaemr.metadata.COVIDMetadata;
-import org.openmrs.module.kenyaemr.util.EmrUtils;
-import org.openmrs.module.metadatadeploy.MetadataUtils;
+import org.openmrs.PatientProgram;
 import org.openmrs.Person;
 import org.openmrs.Provider;
 import org.openmrs.Relationship;
 import org.openmrs.User;
 import org.openmrs.Visit;
+import org.openmrs.Role;
+import org.openmrs.module.kenyaemr.metadata.COVIDMetadata;
+import org.openmrs.module.kenyaemr.util.EmrUtils;
+import org.openmrs.module.metadatadeploy.MetadataUtils;
 import org.openmrs.api.ConceptService;
 import org.openmrs.api.LocationService;
 import org.openmrs.api.context.Context;
 import org.openmrs.api.ProgramWorkflowService;
-import org.openmrs.PatientProgram;
 import org.openmrs.module.kenyacore.CoreConstants;
 import org.openmrs.module.kenyaemr.api.KenyaEmrService;
 import org.openmrs.ui.framework.SimpleObject;
@@ -62,6 +63,8 @@ import java.util.TreeSet;
 public class SearchFragmentController {
 	ObsService obsService = Context.getObsService();
 	ConceptService conceptService = Context.getConceptService();
+
+
 
 
 	protected static final Log log = LogFactory.getLog(SearchFragmentController.class);
@@ -137,13 +140,29 @@ public class SearchFragmentController {
 				}
 			}
 		}
+		User loggedInUser = Context.getUserContext().getAuthenticatedUser();
+		Set<Role> userRoles = loggedInUser.getAllRoles();
+		String userRole = null;
+		for (Role role : userRoles) {
+			if(role.getName().equalsIgnoreCase("System Administrator")) {
+				userRole ="System Administrator";
+				break;
+
+			}
 
 
+		}
 
-		//only filter those who are from the same county as the authenticated user or not yet enrolled
-		for (Patient p : matched) {
-			if(!patientEnrolledInCovid(p) || patientEnrolledInSameCountyAsAuthenticatedUser(p)) {
+		if(userRole !=null || Context.getUserContext().getAuthenticatedUser().isSuperUser()) {
+			matchedWithUserCounty = matched;
+		}else {
+			//only filter those who are from the same county as the authenticated user or not yet enrolled
+
+			for (Patient p : matched) {
+				if(!patientEnrolledInCovid(p) || patientEnrolledInSameCountyAsAuthenticatedUser(p)) {
 					matchedWithUserCounty.add(p);
+
+				}
 
 			}
 

@@ -10,8 +10,7 @@
 package org.openmrs.module.kenyaemr.reporting.data.converter.definition.evaluator.covid;
 
 import org.openmrs.annotation.Handler;
-import org.openmrs.module.kenyaemr.reporting.data.converter.definition.covid.OrderDateDataDefinition;
-import org.openmrs.module.kenyaemr.reporting.data.converter.definition.covid.OrderReasonDataDefinition;
+import org.openmrs.module.kenyaemr.reporting.data.converter.definition.covid.DeathDateDataDefinition;
 import org.openmrs.module.reporting.data.person.EvaluatedPersonData;
 import org.openmrs.module.reporting.data.person.definition.PersonDataDefinition;
 import org.openmrs.module.reporting.data.person.evaluator.PersonDataEvaluator;
@@ -25,10 +24,10 @@ import java.util.Date;
 import java.util.Map;
 
 /**
- * Evaluates a OrderReasonDataDefinition
+ * Evaluates a DeathDateDataDefinition
  */
-@Handler(supports= OrderReasonDataDefinition.class, order=50)
-public class OrderReasonDataEvaluator implements PersonDataEvaluator {
+@Handler(supports= DeathDateDataDefinition.class, order=50)
+public class DeathDateDataEvaluator implements PersonDataEvaluator {
 
     @Autowired
     private EvaluationService evaluationService;
@@ -36,15 +35,10 @@ public class OrderReasonDataEvaluator implements PersonDataEvaluator {
     public EvaluatedPersonData evaluate(PersonDataDefinition definition, EvaluationContext context) throws EvaluationException {
         EvaluatedPersonData c = new EvaluatedPersonData(definition, context);
 
-        String qry = "SELECT o.patient_id,\n" +
-                "(case o.order_reason \n" +
-                "when 162080 then \"Baseline\" \n" +
-                "when 164142 then \"2nd Follow up\" \n" +
-                "when 159490 then \"3rd Follow up\" \n" +
-                "when 159489 then \"4th Follow up\" \n" +
-                "when 161893 then \"5th Follow up\" \n" +
-                "when 162081 then \"1st Follow up\" else \"\" end) as orderReason\n" +
-                "FROM openmrs.orders o where voided=0 group by o.patient_id";
+        String qry = "select pd.patient_id,pd.date_died from kenyaemr_etl.etl_patient_program_discontinuation pd\n" +
+                "inner join openmrs.person p on p.person_id=pd.patient_id\n" +
+                "where pd.discontinuation_reason = 160034\n" +
+                "group by pd.patient_id;";
 
         SqlQueryBuilder queryBuilder = new SqlQueryBuilder();
         Date startDate = (Date)context.getParameterValue("startDate");

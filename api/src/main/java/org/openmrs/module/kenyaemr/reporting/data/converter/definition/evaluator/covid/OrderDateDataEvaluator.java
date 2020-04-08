@@ -36,7 +36,7 @@ public class OrderDateDataEvaluator implements PersonDataEvaluator {
     public EvaluatedPersonData evaluate(PersonDataDefinition definition, EvaluationContext context) throws EvaluationException {
         EvaluatedPersonData c = new EvaluatedPersonData(definition, context);
 
-        String qry = "SELECT o.patient_id,date(date_activated) FROM .orders o where voided =0 and date_stopped is null and order_action='NEW'\n" +
+        String qry = "SELECT o.patient_id,date(date_activated) FROM .orders o where voided =0\n" +
                 "group by o.patient_id";
 
         SqlQueryBuilder queryBuilder = new SqlQueryBuilder();
