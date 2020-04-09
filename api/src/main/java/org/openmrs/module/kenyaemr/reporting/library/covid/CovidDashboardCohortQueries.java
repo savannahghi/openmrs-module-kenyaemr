@@ -118,7 +118,10 @@ public class CovidDashboardCohortQueries {
     /*Persons under investigation*/
     public CohortDefinition personsUnderInvestigation(){
         SqlCohortDefinition cd = new SqlCohortDefinition();
-        String sqlQuery = ";";
+        String sqlQuery = "select patient_id from\n" +
+                "  (select cf.patient_id from kenyaemr_etl.etl_contact_tracing_followup cf\n" +
+                "  inner join person p on p.person_id = cf.patient_id\n" +
+                " group by cf.patient_id ) t;";
         cd.setName("personsUnderInvestigation");
         cd.setQuery(sqlQuery);
         cd.addParameter(new Parameter("startDate", "Start Date", Date.class));
@@ -217,7 +220,10 @@ public class CovidDashboardCohortQueries {
 /*Contacts under followup*/
     public CohortDefinition contactsUnderFollowup(){
         SqlCohortDefinition cd = new SqlCohortDefinition();
-        String sqlQuery = ";";
+        String sqlQuery = "select patient_id from\n" +
+                "  (select patient_id,max(visit_date) from kenyaemr_etl.etl_contact_tracing_followup cf\n" +
+                "    inner join person p on p.person_id = cf.patient_id\n" +
+                "  group by cf.patient_id having round(DATEDIFF(max(cf.visit_date),now())) < 14) t;";
         cd.setName("contactsUnderFollowup");
         cd.setQuery(sqlQuery);
         cd.addParameter(new Parameter("startDate", "Start Date", Date.class));
