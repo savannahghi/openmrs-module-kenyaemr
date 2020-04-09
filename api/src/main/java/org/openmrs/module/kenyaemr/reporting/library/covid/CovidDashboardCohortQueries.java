@@ -189,9 +189,9 @@ public class CovidDashboardCohortQueries {
     /*Contacts Listed*/
     public CohortDefinition contactsListed(){
         SqlCohortDefinition cd = new SqlCohortDefinition();
-        String sqlQuery = "select id from (select c.id from openmrs.kenyaemr_hiv_testing_patient_contact c\n" +
-                "                  inner join openmrs.person p on p.person_id = c.patient_related_to\n" +
-                "                group by c.id ) t;";
+        String sqlQuery = "select person_id from (select p.person_id from person p\n" +
+                "  inner join kenyaemr_hiv_testing_patient_contact c on p.person_id = c.patient_related_to\n" +
+                "group by p.person_id ) t;";
         cd.setName("contactsListed");
         cd.setQuery(sqlQuery);
         cd.addParameter(new Parameter("startDate", "Start Date", Date.class));
@@ -204,11 +204,11 @@ public class CovidDashboardCohortQueries {
     /*Contacts reached*/
     public CohortDefinition contactsReached(){
         SqlCohortDefinition cd = new SqlCohortDefinition();
-        String sqlQuery = "select id from (select c.id from openmrs.kenyaemr_hiv_testing_patient_contact c\n" +
-                "  inner join openmrs.person p on p.person_id = c.patient_related_to\n" +
-                "  inner join openmrs.kenyaemr_hiv_testing_client_trace t on t.client_id = c.id\n" +
-                "  where t.status = \"Contacted\"\n" +
-                "group by c.id ) t;";
+        String sqlQuery = "select person_id from (select p.person_id from person p\n" +
+                "  inner join kenyaemr_hiv_testing_patient_contact c on p.person_id = c.patient_related_to\n" +
+                "  inner join kenyaemr_hiv_testing_client_trace t on t.client_id = c.id\n" +
+                "where t.status = \"Contacted\"\n" +
+                "group by p.person_id ) t;";
         cd.setName("contactsReached");
         cd.setQuery(sqlQuery);
         cd.addParameter(new Parameter("startDate", "Start Date", Date.class));
