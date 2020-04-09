@@ -222,7 +222,7 @@ public class CovidDashboardCohortQueries {
         SqlCohortDefinition cd = new SqlCohortDefinition();
         String sqlQuery = "select patient_id from\n" +
                 "  (select patient_id,max(visit_date) from kenyaemr_etl.etl_contact_tracing_followup cf\n" +
-                "    inner join openmrs.person p on p.person_id = cf.patient_id\n" +
+                "    inner join person p on p.person_id = cf.patient_id\n" +
                 "  group by cf.patient_id having round(DATEDIFF(max(cf.visit_date),now())) < 14) t;";
         cd.setName("contactsUnderFollowup");
         cd.setQuery(sqlQuery);
