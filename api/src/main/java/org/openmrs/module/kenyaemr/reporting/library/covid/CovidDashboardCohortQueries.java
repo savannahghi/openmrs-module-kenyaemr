@@ -67,7 +67,14 @@ public class CovidDashboardCohortQueries {
     /*Active cases*/
     public CohortDefinition activeCases(){
         SqlCohortDefinition cd = new SqlCohortDefinition();
-        String sqlQuery = ";";
+        String sqlQuery = "select p.person_id\n" +
+                "from(\n" +
+                "select obs.person_id, max(obs.obs_datetime) as confirmation_date from openmrs.obs obs\n" +
+                "        join openmrs.person p on p.person_id=obs.person_id\n" +
+                "        left join (select d.patient_id from kenyaemr_etl.etl_patient_program_discontinuation d where d.program_name in ('COVID-19 Outcome','COVID-19 Quarantine Outcome'))d on obs.person_id = d.patient_id\n" +
+                "where obs.voided=0 and obs.value_coded =703 and obs.order_id is not null and d.patient_id is null\n" +
+                "group by obs.person_id\n" +
+                ")p;";
         cd.setName("activeCases");
         cd.setQuery(sqlQuery);
         cd.addParameter(new Parameter("startDate", "Start Date", Date.class));
