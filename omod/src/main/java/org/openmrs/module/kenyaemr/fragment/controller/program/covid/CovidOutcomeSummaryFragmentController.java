@@ -26,6 +26,7 @@ public class CovidOutcomeSummaryFragmentController {
 			@FragmentParam(value = "encounter", required = false) Encounter encounter,
 			@FragmentParam("showClinicalData") boolean showClinicalData, FragmentModel model) {
 
+		String discontinuationConcept = "161555AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
 		Map<String, Object> dataPoints = new LinkedHashMap<String, Object>();
 
 		dataPoints.put("Completed", enrollment.getDateCompleted());
@@ -37,7 +38,7 @@ public class CovidOutcomeSummaryFragmentController {
 		if (encounter != null) {
 			EncounterWrapper wrapper = new EncounterWrapper(encounter);
 
-			Obs outcomeObs = wrapper.firstObs(Dictionary.getConcept(Dictionary.PATIENT_OUTCOME));
+			Obs outcomeObs = wrapper.firstObs(Dictionary.getConcept(discontinuationConcept));
 			if (outcomeObs != null) {
 				dataPoints.put("Outcome", outcomeObs.getValueCoded());
 			}
