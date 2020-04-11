@@ -67,14 +67,11 @@ public class CovidDashboardCohortQueries {
     /*Active cases*/
     public CohortDefinition activeCases(){
         SqlCohortDefinition cd = new SqlCohortDefinition();
-        String sqlQuery = "select p.person_id\n" +
-                "from(\n" +
-                "select obs.person_id, max(obs.obs_datetime) as confirmation_date from openmrs.obs obs\n" +
-                "        join openmrs.person p on p.person_id=obs.person_id\n" +
-                "        left join (select d.patient_id from kenyaemr_etl.etl_patient_program_discontinuation d where d.program_name in ('COVID-19 Outcome','COVID-19 Quarantine Outcome'))d on obs.person_id = d.patient_id\n" +
-                "where obs.voided=0 and obs.value_coded =703 and obs.order_id is not null and d.patient_id is null\n" +
-                "group by obs.person_id\n" +
-                ")p;";
+
+        String sqlQuery = "select pp.patient_id from patient_program pp \n" +
+                "inner join (select program_id from program where uuid='e7ee7548-6958-4361-bed9-ee2614423947') p on pp.program_id = p.program_id\n" +
+                "where pp.voided=0 and (pp.date_completed is null or date(pp.date_completed) > date(:endDate))";
+
         cd.setName("activeCases");
         cd.setQuery(sqlQuery);
         cd.addParameter(new Parameter("startDate", "Start Date", Date.class));
@@ -89,7 +86,7 @@ public class CovidDashboardCohortQueries {
         SqlCohortDefinition cd = new SqlCohortDefinition();
         String sqlQuery = "select pd.patient_id\n" +
                 " from kenyaemr_etl.etl_patient_program_discontinuation pd\n" +
-                "  inner join openmrs.person p on p.person_id=pd.patient_id\n" +
+                "  inner join person p on p.person_id=pd.patient_id\n" +
                 "where pd.discontinuation_reason = 160034\n" +
                 "group by pd.patient_id;";
         cd.setName("deceased");

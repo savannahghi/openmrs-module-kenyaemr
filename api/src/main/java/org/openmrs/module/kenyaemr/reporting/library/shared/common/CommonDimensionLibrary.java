@@ -195,13 +195,13 @@ public class CommonDimensionLibrary {
         CohortDefinitionDimension dim = new CohortDefinitionDimension();
         dim.setName("standard covid ages between(btw 0 and 9,10 and 19,20 and 29,30 and 39,40 and 49,50 and 59, 60 and 69, 70+");
         dim.addParameter(new Parameter("onDate", "Date", Date.class));
-        dim.addCohortDefinition("0 - 9", map(commonCohortLibrary.agedAtMost(9), "effectiveDate=${onDate}"));
-        dim.addCohortDefinition("10 - 19", map(commonCohortLibrary.agedAtMost(19), "effectiveDate=${onDate}"));
-        dim.addCohortDefinition("20 - 29", map(commonCohortLibrary.agedAtMost(29), "effectiveDate=${onDate}"));
-        dim.addCohortDefinition("30 - 39", map(commonCohortLibrary.agedAtMost(39), "effectiveDate=${onDate}"));
-        dim.addCohortDefinition("40 - 49", map(commonCohortLibrary.agedAtMost(49), "effectiveDate=${onDate}"));
-        dim.addCohortDefinition("50 - 59", map(commonCohortLibrary.agedAtMost(59), "effectiveDate=${onDate}"));
-        dim.addCohortDefinition("60 - 69", map(commonCohortLibrary.agedAtMost(69), "effectiveDate=${onDate}"));
+        dim.addCohortDefinition("0-9", map(commonCohortLibrary.agedAtMost(9), "effectiveDate=${onDate}"));
+        dim.addCohortDefinition("10-19", map(commonCohortLibrary.agedAtLeastAgedAtMost(10, 19), "effectiveDate=${onDate}"));
+        dim.addCohortDefinition("20-29", map(commonCohortLibrary.agedAtLeastAgedAtMost(20, 29), "effectiveDate=${onDate}"));
+        dim.addCohortDefinition("30-39", map(commonCohortLibrary.agedAtLeastAgedAtMost(30, 39), "effectiveDate=${onDate}"));
+        dim.addCohortDefinition("40-49", map(commonCohortLibrary.agedAtLeastAgedAtMost(40, 49), "effectiveDate=${onDate}"));
+        dim.addCohortDefinition("50-59", map(commonCohortLibrary.agedAtLeastAgedAtMost(50, 59), "effectiveDate=${onDate}"));
+        dim.addCohortDefinition("60-69", map(commonCohortLibrary.agedAtLeastAgedAtMost(60, 69), "effectiveDate=${onDate}"));
         dim.addCohortDefinition("70+", map(commonCohortLibrary.agedAtLeast(70), "effectiveDate=${onDate}"));
 
         return dim;
