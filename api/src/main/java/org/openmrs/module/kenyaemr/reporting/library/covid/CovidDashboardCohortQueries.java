@@ -85,10 +85,11 @@ public class CovidDashboardCohortQueries {
     public CohortDefinition deceased(){
         SqlCohortDefinition cd = new SqlCohortDefinition();
         String sqlQuery = "select pd.patient_id\n" +
-                " from kenyaemr_etl.etl_patient_program_discontinuation pd\n" +
+                "from kenyaemr_etl.etl_patient_program_discontinuation pd\n" +
                 "  inner join person p on p.person_id=pd.patient_id\n" +
-                "where pd.discontinuation_reason = 160034\n" +
-                "group by pd.patient_id;";
+                "  inner join patient_program pp on p.person_id=pp.patient_id and pp.program_id = 10\n" +
+                "where pd.discontinuation_reason = 160034  and date(pd.encounter_date) between date(:startDate) and date(:endDate)\n" +
+                "group by pd.patient_id;\n";
         cd.setName("deceased");
         cd.setQuery(sqlQuery);
         cd.addParameter(new Parameter("startDate", "Start Date", Date.class));
@@ -101,15 +102,12 @@ public class CovidDashboardCohortQueries {
     /*Discharged*/
     public CohortDefinition discharged(){
         SqlCohortDefinition cd = new SqlCohortDefinition();
-        String sqlQuery = "select p.person_id\n" +
-                "from(\n" +
-                "    select obs.person_id, max(obs.obs_datetime) as confirmation_date from openmrs.obs obs\n" +
-                "    join openmrs.person p on p.person_id=obs.person_id\n" +
-                "    join  kenyaemr_etl.etl_patient_program_discontinuation d on obs.person_id = d.patient_id\n" +
-                "    where obs.voided=0 and obs.value_coded =703 and obs.order_id is not null and d.program_name in ('COVID-19 Outcome','COVID-19 Quarantine Outcome')\n" +
-                "    and d.discontinuation_reason !=160034\n" +
-                "    group by obs.person_id\n" +
-                "    )p;";
+        String sqlQuery = "select pd.patient_id\n" +
+                "from kenyaemr_etl.etl_patient_program_discontinuation pd\n" +
+                "  inner join openmrs.person p on p.person_id=pd.patient_id\n" +
+                "  inner join openmrs.patient_program pp on p.person_id=pp.patient_id and pp.program_id = 10\n" +
+                "where pd.discontinuation_reason != 160034  and date(pd.encounter_date) between date(:startDate) and date(:endDate)\n" +
+                "group by pd.patient_id;";
         cd.setName("discharged");
         cd.setQuery(sqlQuery);
         cd.addParameter(new Parameter("startDate", "Start Date", Date.class));
