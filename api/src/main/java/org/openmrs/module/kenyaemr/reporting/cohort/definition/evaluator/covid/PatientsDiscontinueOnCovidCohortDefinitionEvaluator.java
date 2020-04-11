@@ -48,10 +48,9 @@ public class PatientsDiscontinueOnCovidCohortDefinitionEvaluator implements Coho
 
 		Cohort newCohort = new Cohort();
 
-		String qry="select pp.patient_id from patient_program pp \n" +
-				"join person p on p.person_id=pp.patient_id\n" +
-				"where pp.date_completed is not null and p.voided=0\n" +
-				"group by pp.patient_id;";
+		String qry = "select pp.patient_id from patient_program pp \n" +
+				"inner join (select program_id from program where uuid='e7ee7548-6958-4361-bed9-ee2614423947') p on pp.program_id = p.program_id\n" +
+				"where pp.voided=0 and pp.date_completed is not null";
 
 		SqlQueryBuilder builder = new SqlQueryBuilder();
 		builder.append(qry);
