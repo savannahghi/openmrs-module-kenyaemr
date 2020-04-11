@@ -104,8 +104,8 @@ public class CovidDashboardCohortQueries {
         SqlCohortDefinition cd = new SqlCohortDefinition();
         String sqlQuery = "select pd.patient_id\n" +
                 "from kenyaemr_etl.etl_patient_program_discontinuation pd\n" +
-                "  inner join openmrs.person p on p.person_id=pd.patient_id\n" +
-                "  inner join openmrs.patient_program pp on p.person_id=pp.patient_id and pp.program_id = 10\n" +
+                "  inner join person p on p.person_id=pd.patient_id\n" +
+                "  inner join patient_program pp on p.person_id=pp.patient_id and pp.program_id = 10\n" +
                 "where pd.discontinuation_reason != 160034  and date(pd.encounter_date) between date(:startDate) and date(:endDate)\n" +
                 "group by pd.patient_id;";
         cd.setName("discharged");
