@@ -45,7 +45,7 @@
 				<ref bean="kenyaemr.covid.report.covidLineList"/>
 				<ref bean="kenyaemr.common.report.pendingLabResults" />
 				<ref bean="kenyaemr.common.report.confirmedPositives" />
-				<ref bean="kenyaemr.common.report.covidDashboardIndicators" />
+				<!--<ref bean="kenyaemr.common.report.covidDashboardIndicators" />-->
 
 				<!--
                                 <ref bean="kenyaemr.covid.report.confirmedCases"/>
@@ -542,8 +542,8 @@
 
 	<bean id="kenyaemr.common.report.deadCovid19Cases" class="org.openmrs.module.kenyacore.report.HybridReportDescriptor">
 		<property name="targetUuid" value="5cf668e0-fcd2-4733-9aaa-2119a8ba26da" />
-		<property name="name" value="Deaths line list" />
-		<property name="description" value="Deaths among confirmed cases" />
+		<property name="name" value="COVID-19 Deaths" />
+		<property name="description" value="Deaths among COVID-19 cases" />
 		<property name="apps"><set><ref bean="kenyaemr.app.reports" /></set></property>
 	</bean>
 	<bean id="kenyaemr.common.report.confirmedPositives" class="org.openmrs.module.kenyacore.report.HybridReportDescriptor">
@@ -571,8 +571,8 @@
 
 	<bean id="kenyaemr.covid.report.enrolledInCovid" class="org.openmrs.module.kenyacore.report.CalculationReportDescriptor">
 		<property name="targetUuid" value="90e6d38a-c146-4a8f-9580-d00bca4e0075" />
-		<property name="name" value="Cases currently under investigation for COVID-19" />
-		<property name="description" value="Cases currently under investigation for COVID-19" />
+		<property name="name" value="COVID-19 Active Cases" />
+		<property name="description" value="COVID-19 Active Cases" />
 		<property name="calculation" value="org.openmrs.module.kenyaemr.calculation.library.covid.OnCovidProgramCalculation" />
 		<property name="apps"><set><ref bean="kenyaemr.app.reports" /></set></property>
 	</bean>

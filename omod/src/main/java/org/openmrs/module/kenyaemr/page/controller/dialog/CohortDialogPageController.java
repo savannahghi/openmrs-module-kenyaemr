@@ -86,27 +86,11 @@ public class CohortDialogPageController {
         Date endDate = (Date) reportRequest.getReportDefinition().getParameterMappings().get("endDate");
         calculationContext.setNow(endDate);
 
-        DateOfEnrollmentArtCalculation dateOfEnrollmentArtCalculation = new DateOfEnrollmentArtCalculation();
-        CalculationResultMap enrollmentDates = dateOfEnrollmentArtCalculation.evaluate(cohort.getMemberIds(), null, calculationContext);
-
-        InitialArtStartDateCalculation initialArtStartDateCalculation = new InitialArtStartDateCalculation();
-        CalculationResultMap artInitializationDates = initialArtStartDateCalculation.evaluate(cohort.getMemberIds(), null, calculationContext);
-
-        LastViralLoadResultCalculation lastVlResultCalculation = new LastViralLoadResultCalculation();
-        CalculationResultMap lastVlResults = lastVlResultCalculation.evaluate(cohort.getMemberIds(), null, calculationContext);
-
-        /*LastCD4ResultCalculation lastCD4ResultCalculation = new LastCD4ResultCalculation();
-        CalculationResultMap lastCD4Results = lastCD4ResultCalculation.evaluate(cohort.getMemberIds(), null, calculationContext);
-*/
 
         model.addAttribute("column", dataSetColumn);
         model.addAttribute("reportRequest", reportRequest);
         model.addAttribute("dataSet", dataSetName);
         model.addAttribute("cohort", cohort);
         model.addAttribute("patients", ui.simplifyCollection(patients));
-        model.addAttribute("enrollmentDates", enrollmentDates);
-        model.addAttribute("artInitializationDates", artInitializationDates);
-        model.addAttribute("lastVlResults", lastVlResults);
-        //model.addAttribute("lastCD4Results", lastCD4Results);
     }
 }

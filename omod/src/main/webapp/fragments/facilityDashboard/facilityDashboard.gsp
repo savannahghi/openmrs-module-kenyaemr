@@ -233,7 +233,7 @@
                             </div>
                         </div>
 
-                        <div id="viral_load_tracker" style="min-width: 450px; height: 300px; margin: 0 auto"></div>
+                        <div id="viral_load_tracker" style="min-width: 700px; height: 350px; margin: 0 auto"></div>
                     </td>
                 </tr>
             </table>
