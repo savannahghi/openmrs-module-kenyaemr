@@ -17,7 +17,6 @@ import org.openmrs.calculation.result.CalculationResultMap;
 import org.openmrs.module.kenyacore.calculation.AbstractPatientCalculation;
 import org.openmrs.module.kenyacore.calculation.BooleanResult;
 import org.openmrs.module.kenyacore.calculation.Filters;
-import org.openmrs.module.kenyacore.calculation.PatientFlagCalculation;
 import org.openmrs.module.kenyaemr.metadata.COVIDMetadata;
 import org.openmrs.module.metadatadeploy.MetadataUtils;
 
@@ -28,15 +27,15 @@ import java.util.Set;
 /**
  * Calculates whether a patient is currently enrolled in Covid program
  */
-public class OnCovidProgramCalculation extends AbstractPatientCalculation{
+public class OnCovidQuarantineCalculation extends AbstractPatientCalculation{
 	
-	protected static final Log log = LogFactory.getLog(OnCovidProgramCalculation.class);
+	protected static final Log log = LogFactory.getLog(OnCovidQuarantineCalculation.class);
 	
 	@Override
 	public CalculationResultMap evaluate(Collection<Integer> cohort, Map<String, Object> parameterValues,
                                          PatientCalculationContext context) {
 		
-		Program covidProgram = MetadataUtils.existing(Program.class, COVIDMetadata._Program.COVID);
+		Program covidProgram = MetadataUtils.existing(Program.class, COVIDMetadata._Program.COVID_QUARANTINE);
 		Set<Integer> alive = Filters.alive(cohort, context);
 		Set<Integer> inCovidProgram = Filters.inProgram(covidProgram, alive, context);
 		
