@@ -16,11 +16,7 @@
 				<th>Name</th>
 				<th>Age</th>
 				<th>Sex</th>
-				<th>Unique Patient Number</th>
-                <th>HIV Enrollment Date</th>
-                <th>ART Start Date</th>
-				<th>Last VL</th>
-				<th>Last VL Date</th>
+				<th>Case Identification</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -34,19 +30,11 @@
 			<tr>
 				<td>
 					<img src="${ ui.resourceLink("kenyaui", "images/glyphs/patient_" + patient.gender.toLowerCase() + ".png") }" class="ke-glyph" />
-					<a href="${ ui.pageLink("kenyaemr", "chart/chartViewPatient", [ patientId: patient.id ]) }">${ patient.name }</a>
+					<a href="${ ui.pageLink("kenyaemr", "surveillance/surveillanceViewPatient", [ patientId: patient.id ]) }">${ patient.name }</a>
 				</td>
 				<td>${ patient.age }</td>
 				<td>${ patient.gender.toUpperCase() }</td>
 				<td>${ patient.identifiers[0].identifier }</td>
-			    <td>${ enrollmentDates.get(patient.id) != null? (enrollmentDates.get(patient.id).value != null ?
-						dateFormat.format(enrollmentDates.get(patient.id).value) : "") : ""  }</td>
-                <td>${ artInitializationDates.get(patient.id) != null ?
-						dateFormat.format(artInitializationDates.get(patient.id).value) : "" }</td>
-				<td>${ lastVlResults.get(patient.id) != null && lastVlResults.get(patient.id).value != null ?
-					lastVlResults.get(patient.id).value.lastVl : "" }</td>
-				<td>${ lastVlResults.get(patient.id) != null && lastVlResults.get(patient.id).value != null ?
-						dateFormat.format(lastVlResults.get(patient.id).value.lastVlDate) : "" }
 			</tr>
 			<% } %>
 		</tbody>
