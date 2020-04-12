@@ -55,7 +55,7 @@ public class ConfirmedCovid19PositivesCohortDefinitionEvaluator implements Cohor
 
         qry = "select e.patient_id \n" +
                 "from etl_covid_19_enrolment e\n" +
-                "inner join etl_laboratory_extract l on l.patient_id=e.patient_id and l.result = 703\n" +
+                "inner join kenyaemr_etl.etl_laboratory_extract l on l.patient_id=e.patient_id and l.result = 703\n" +
                 "where e.voided=0;";
 
         builder.append(qry);

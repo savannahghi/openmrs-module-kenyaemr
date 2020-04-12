@@ -42,10 +42,11 @@
 		<property name="commonReports">
 			<set>
 				<!--<ref bean="kenyaemr.covid.report.enrolledInCovid" />-->
+				<ref bean="kenyaemr.common.report.allPatients"/>
 				<ref bean="kenyaemr.covid.report.covidLineList"/>
 				<ref bean="kenyaemr.common.report.pendingLabResults" />
 				<ref bean="kenyaemr.common.report.confirmedPositives" />
-				<!--<ref bean="kenyaemr.common.report.covidDashboardIndicators" />-->
+				<ref bean="kenyaemr.common.report.covidDashboardIndicators" />
 
 				<!--
                                 <ref bean="kenyaemr.covid.report.confirmedCases"/>
@@ -395,7 +396,7 @@
 		<property name="targetUuid" value="e7736868-125e-11e4-ab7a-a327f879345f" />
 		<property name="name" value="Patients to be marked as deceased" />
 		<property name="calculation" value="org.openmrs.module.kenyaemr.calculation.library.RecordedDeceasedCalculation" />
-		<property name="displayIdentifier" ref="kenyaemr.hiv.identifier.upn" />
+		<property name="displayIdentifier" ref="kenyaemr.common.identifier.passport" />
 		<property name="apps"><set><ref bean="kenyaemr.app.reports" /></set></property>
 	</bean>
 
@@ -403,17 +404,17 @@
 		<property name="targetUuid" value="9e2ed586-130b-11e4-929a-8746415b715a" />
 		<property name="name" value="All Patients List" />
 		<property name="calculation" value="org.openmrs.module.kenyaemr.calculation.library.hiv.AllPatientsCalculation" />
-		<property name="displayIdentifier" ref="kenyaemr.hiv.identifier.upn" />
+		<property name="displayIdentifier" ref="kenyaemr.common.identifier.passport" />
 		<property name="apps"><set><ref bean="kenyaemr.app.reports" /></set></property>
 	</bean>
 
-	<bean id="kenyaemr.covid.report.confirmedCases" class="org.openmrs.module.kenyacore.report.CalculationReportDescriptor">
+	<!--<bean id="kenyaemr.covid.report.confirmedCases" class="org.openmrs.module.kenyacore.report.CalculationReportDescriptor">
 		<property name="targetUuid" value="5956be9b-6b28-43c0-acf9-9a182fa8b55e" />
 		<property name="name" value="Confirmed Covid-19 Cases" />
-		<property name="calculation" value="org.openmrs.module.kenyaemr.calculation.library.hiv.AllPatientsCalculation" />
-		<property name="displayIdentifier" ref="kenyaemr.hiv.identifier.upn" />
+		<property name="calculation" value="org.openmrs.module.kenyaemr.calculation.library.covid..AllPatientsCalculation" />
+		<property name="displayIdentifier" ref="kenyaemr.common.identifier.passport" />
 		<property name="apps"><set><ref bean="kenyaemr.app.reports" /></set></property>
-	</bean>
+	</bean>-->
 
 	<!-- =========================== RDQA Reports =============================-->
 	<bean id="kenyaemr.common.report.rdqaReport" class="org.openmrs.module.kenyacore.report.HybridReportDescriptor">

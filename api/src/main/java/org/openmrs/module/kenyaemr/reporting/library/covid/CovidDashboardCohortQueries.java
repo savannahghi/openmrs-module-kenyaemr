@@ -33,11 +33,11 @@ public class CovidDashboardCohortQueries {
         String sqlQuery = "select patient_id\n" +
                 "from (\n" +
                 "select pp.patient_id,prev_pos.patient_id as prevPos\n" +
-                "from etl_patient_program pp\n" +
-                "inner join etl_laboratory_extract l on l.patient_id=pp.patient_id and l.result = 703\n" +
+                "from kenyaemr_etl.etl_patient_program pp\n" +
+                "inner join kenyaemr_etl.etl_laboratory_extract l on l.patient_id=pp.patient_id and l.result = 703\n" +
                 "left outer join (select l.patient_id\n" +
-                "from etl_patient_program pp\n" +
-                "inner join etl_laboratory_extract l on l.patient_id=pp.patient_id and l.result = 703 and l.order_date < date(:endDate)\n" +
+                "from kenyaemr_etl.etl_patient_program pp\n" +
+                "inner join kenyaemr_etl.etl_laboratory_extract l on l.patient_id=pp.patient_id and l.result = 703 and l.order_date < date(:endDate)\n" +
                 "where pp.program='COVID-19 Case Investigation' and pp.date_completed is null) prev_pos on prev_pos.patient_id = l.patient_id\n" +
                 "where pp.program='COVID-19 Case Investigation' and pp.date_completed is null and l.order_date = date(:endDate)\n" +
                 ") t where prevPos is null;;";
@@ -54,8 +54,8 @@ public class CovidDashboardCohortQueries {
     public CohortDefinition totalConfirmedCases(){
         SqlCohortDefinition cd = new SqlCohortDefinition();
         String sqlQuery = "select pp.patient_id\n" +
-                "from etl_patient_program pp\n" +
-                "inner join etl_laboratory_extract l on l.patient_id=pp.patient_id and l.result = 703\n" +
+                "from kenyaemr_etl.etl_patient_program pp\n" +
+                "inner join kenyaemr_etl.etl_laboratory_extract l on l.patient_id=pp.patient_id and l.result = 703\n" +
                 "where pp.program='COVID-19 Case Investigation'";
         cd.setName("totalConfirmedCases");
         cd.setQuery(sqlQuery);
@@ -71,8 +71,8 @@ public class CovidDashboardCohortQueries {
         SqlCohortDefinition cd = new SqlCohortDefinition();
 
         String sqlQuery = "select pp.patient_id\n" +
-                "from etl_patient_program pp\n" +
-                "inner join etl_laboratory_extract l on l.patient_id=pp.patient_id and l.result = 703\n" +
+                "from kenyaemr_etl.etl_patient_program pp\n" +
+                "inner join kenyaemr_etl.etl_laboratory_extract l on l.patient_id=pp.patient_id and l.result = 703\n" +
                 "where pp.program='COVID-19 Case Investigation' and (pp.date_completed is null or pp.date_completed > date(:endDate))";
 
         cd.setName("activeCases");
@@ -120,7 +120,7 @@ public class CovidDashboardCohortQueries {
     public CohortDefinition personsUnderInvestigation(){
         SqlCohortDefinition cd = new SqlCohortDefinition();
         String sqlQuery = "select patient_id from\n" +
-                "  etl_covid_19_enrolment where voided=0 and date(visit_date) between date(:startDate) and date(:endDate);";
+                "  kenyaemr_etl.etl_covid_19_enrolment where voided=0 and date(visit_date) between date(:startDate) and date(:endDate);";
         cd.setName("personsUnderInvestigation");
         cd.setQuery(sqlQuery);
         cd.addParameter(new Parameter("startDate", "Start Date", Date.class));
@@ -134,8 +134,8 @@ public class CovidDashboardCohortQueries {
     public CohortDefinition personsTested(){
         SqlCohortDefinition cd = new SqlCohortDefinition();
         String sqlQuery = "select e.patient_id \n" +
-                "from etl_covid_19_enrolment e\n" +
-                "inner join etl_laboratory_extract l on l.patient_id=e.patient_id and l.result is not null\n" +
+                "from kenyaemr_etl.etl_covid_19_enrolment e\n" +
+                "inner join kenyaemr_etl.etl_laboratory_extract l on l.patient_id=e.patient_id and l.result is not null\n" +
                 "where e.voided=0 and date(e.visit_date) between date(:startDate) and date(:endDate)";
         cd.setName("personsTested");
         cd.setQuery(sqlQuery);
@@ -150,8 +150,8 @@ public class CovidDashboardCohortQueries {
     public CohortDefinition personsPositive(){
         SqlCohortDefinition cd = new SqlCohortDefinition();
         String sqlQuery = "select e.patient_id \n" +
-                "from etl_covid_19_enrolment e\n" +
-                "inner join etl_laboratory_extract l on l.patient_id=e.patient_id and l.result = 703\n" +
+                "from kenyaemr_etl.etl_covid_19_enrolment e\n" +
+                "inner join kenyaemr_etl.etl_laboratory_extract l on l.patient_id=e.patient_id and l.result = 703\n" +
                 "where e.voided=0 and date(e.visit_date) between date(:startDate) and date(:endDate);";
         cd.setName("personsPositive");
         cd.setQuery(sqlQuery);
@@ -167,11 +167,11 @@ public class CovidDashboardCohortQueries {
         String sqlQuery = "select patient_id\n" +
                 "from (\n" +
                 "select pp.patient_id,prev_pos.patient_id as prevPos\n" +
-                "from etl_patient_program pp\n" +
-                "inner join etl_laboratory_extract l on l.patient_id=pp.patient_id and l.result = 664\n" +
+                "from kenyaemr_etl.etl_patient_program pp\n" +
+                "inner join kenyaemr_etl.etl_laboratory_extract l on l.patient_id=pp.patient_id and l.result = 664\n" +
                 "left outer join (select l.patient_id\n" +
-                "from etl_patient_program pp\n" +
-                "inner join etl_laboratory_extract l on l.patient_id=pp.patient_id and l.result = 703 and l.order_date <= date(:endDate)\n" +
+                "from kenyaemr_etl.etl_patient_program pp\n" +
+                "inner join kenyaemr_etl.etl_laboratory_extract l on l.patient_id=pp.patient_id and l.result = 703 and l.order_date <= date(:endDate)\n" +
                 "where pp.program='COVID-19 Case Investigation' and pp.date_completed is null) prev_pos on prev_pos.patient_id = l.patient_id\n" +
                 "where pp.program='COVID-19 Case Investigation' and pp.date_completed is null and l.order_date <= date(:endDate)\n" +
                 ") t where prevPos is null;";
