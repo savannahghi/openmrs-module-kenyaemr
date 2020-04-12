@@ -46,7 +46,7 @@
 				<ref bean="kenyaemr.covid.report.covidLineList"/>
 				<ref bean="kenyaemr.common.report.pendingLabResults" />
 				<ref bean="kenyaemr.common.report.confirmedPositives" />
-				<ref bean="kenyaemr.common.report.covidDashboardIndicators" />
+				<!--<ref bean="kenyaemr.common.report.covidDashboardIndicators" />-->
 
 				<!--
                                 <ref bean="kenyaemr.covid.report.confirmedCases"/>
