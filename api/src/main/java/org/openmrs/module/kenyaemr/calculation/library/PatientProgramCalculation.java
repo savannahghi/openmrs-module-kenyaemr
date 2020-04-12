@@ -36,51 +36,34 @@ public class PatientProgramCalculation extends AbstractPatientCalculation {
         CalculationResultMap ret = new CalculationResultMap();
         InProgramCohortDefinition cd = new InProgramCohortDefinition();
         List<Program> programs = new ArrayList<Program>();
-        programs.add(Context.getProgramWorkflowService().getProgramByUuid(Metadata.Program.HIV));
-        programs.add(Context.getProgramWorkflowService().getProgramByUuid(Metadata.Program.MCH_CS));
-        programs.add(Context.getProgramWorkflowService().getProgramByUuid(Metadata.Program.MCH_MS));
-        programs.add(Context.getProgramWorkflowService().getProgramByUuid(Metadata.Program.TB));
+        programs.add(Context.getProgramWorkflowService().getProgramByUuid(Metadata.Program.COVID));
+        programs.add(Context.getProgramWorkflowService().getProgramByUuid(Metadata.Program.COVID_QUARANTINE));
         cd.setPrograms(programs);
 
         EvaluatedCohort patientProgramCohort = CalculationUtils.evaluateWithReporting(cd, cohort, null, context);
 
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("program", programs.get(0));
-        CalculationResultMap hivProgram = new InProgramCalculation().evaluate(cohort, params, Context.getService(PatientCalculationService.class).createCalculationContext());
+        CalculationResultMap covidProgram = new InProgramCalculation().evaluate(cohort, params, Context.getService(PatientCalculationService.class).createCalculationContext());
 
         params.put("program", programs.get(1));
-        CalculationResultMap mch_csProgram = new InProgramCalculation().evaluate(cohort, params, Context.getService(PatientCalculationService.class).createCalculationContext());
-
-        params.put("program", programs.get(2));
-        CalculationResultMap mch_msProgram = new InProgramCalculation().evaluate(cohort, params, Context.getService(PatientCalculationService.class).createCalculationContext());
-
-        params.put("program", programs.get(3));
-        CalculationResultMap tbProgram = new InProgramCalculation().evaluate(cohort, params, Context.getService(PatientCalculationService.class).createCalculationContext());
+        CalculationResultMap quarantineProgram = new InProgramCalculation().evaluate(cohort, params, Context.getService(PatientCalculationService.class).createCalculationContext());
 
 
         for(Integer ptId: cohort){
             String patientProgram = "";
             if(patientProgramCohort.contains(ptId)) {
-                if ((Boolean)hivProgram.get(ptId).getValue()) {
-                    patientProgram = "HIV";
+                if ((Boolean)covidProgram.get(ptId).getValue()) {
+                    patientProgram = "COVID-19 Case Investigation";
                 }
 
-                if ((Boolean)tbProgram.get(ptId).getValue()) {
-                    patientProgram = patientProgram.equalsIgnoreCase("")? "TB" : patientProgram+",TB";
+                if ((Boolean)quarantineProgram.get(ptId).getValue()) {
+                    patientProgram = patientProgram.equalsIgnoreCase("")? "COVID-19 Quarantine Program" : patientProgram+",COVID-19 Quarantine Program";
                 }
 
-                if ((Boolean)mch_csProgram.get(ptId).getValue()) {
-                    patientProgram = patientProgram.equalsIgnoreCase("")? "MCH_CS" : patientProgram+",MCH_CS";
-                }
-
-                if ((Boolean)mch_msProgram.get(ptId).getValue()) {
-                    patientProgram = patientProgram.equalsIgnoreCase("")? "MCH_MS" : patientProgram+",MCH_MS";
-                }
             }
             ret.put(ptId, new SimpleResult(patientProgram, this));
         }
-
-        //List<PatientProgram> pp= Context.getProgramWorkflowService().getPatientPrograms(cohort,programs);
         return ret;
     }
 }

@@ -53,11 +53,10 @@ public class ConfirmedCovid19PositivesCohortDefinitionEvaluator implements Cohor
         String qry = "";
         SqlQueryBuilder builder = new SqlQueryBuilder();
 
-        qry = "select e.person_id\n" +
-                "from\n" +
-                "(SELECT ob.person_id,ob.order_id,max(obs_datetime) as results_date FROM openmrs.obs ob \n" +
-                "join openmrs.orders od on od.patient_id = ob.person_id and od.order_id =ob.order_id\n" +
-                "where ob.order_id is not null and ob.value_coded =703 group by ob.person_id)e\n";
+        qry = "select e.patient_id \n" +
+                "from etl_covid_19_enrolment e\n" +
+                "inner join kenyaemr_etl.etl_laboratory_extract l on l.patient_id=e.patient_id and l.result = 703\n" +
+                "where e.voided=0;";
 
         builder.append(qry);
         Date startDate = (Date) context.getParameterValue("startDate");

@@ -54,9 +54,9 @@ public class DeadCovid19CasesCohortDefinitionEvaluator implements CohortDefiniti
         SqlQueryBuilder builder = new SqlQueryBuilder();
 
         qry = "select pd.patient_id from kenyaemr_etl.etl_patient_program_discontinuation pd\n" +
-                "inner join person p on p.person_id=pd.patient_id\n" +
-                "where pd.discontinuation_reason = 160034\n" +
+                "where pd.program_name='COVID-19 Case Investigation' and pd.discontinuation_reason = 160034\n" +
                 "group by pd.patient_id;";
+
 
         builder.append(qry);
         Date startDate = (Date) context.getParameterValue("startDate");
