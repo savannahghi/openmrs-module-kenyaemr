@@ -53,11 +53,11 @@ public class PatientProgramCalculation extends AbstractPatientCalculation {
         for(Integer ptId: cohort){
             String patientProgram = "";
             if(patientProgramCohort.contains(ptId)) {
-                if ((Boolean)covidProgram.get(ptId).getValue()) {
+                if (covidProgram.get(ptId) != null && (Boolean)covidProgram.get(ptId).getValue()) {
                     patientProgram = "COVID-19 Case Investigation";
                 }
 
-                if ((Boolean)quarantineProgram.get(ptId).getValue()) {
+                if (quarantineProgram.get(ptId) != null && (Boolean)quarantineProgram.get(ptId).getValue()) {
                     patientProgram = patientProgram.equalsIgnoreCase("")? "COVID-19 Quarantine Program" : patientProgram+",COVID-19 Quarantine Program";
                 }
 
