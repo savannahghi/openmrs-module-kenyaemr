@@ -35,8 +35,8 @@ public class OutcomeDateDataEvaluator implements PersonDataEvaluator {
     public EvaluatedPersonData evaluate(PersonDataDefinition definition, EvaluationContext context) throws EvaluationException {
         EvaluatedPersonData c = new EvaluatedPersonData(definition, context);
 
-        String qry = "select e.patient_id, max(d.visit_date) as outcome_date from kenyaemr_etl.etl_covid_19_enrolment e left join kenyaemr_etl.etl_patient_program_discontinuation d on e.patient_id = d.patient_id\n" +
-                "where d.program_name='COVID' group by e.patient_id;";
+        String qry = "select e.patient_id, date(max(d.encounter_date)) as outcome_date from kenyaemr_etl.etl_covid_19_enrolment e left join kenyaemr_etl.etl_patient_program_discontinuation d on e.patient_id = d.patient_id\n" +
+                "where d.program_name='COVID-19 Case Investigation' group by e.patient_id;";
 
         SqlQueryBuilder queryBuilder = new SqlQueryBuilder();
         Date startDate = (Date)context.getParameterValue("startDate");
