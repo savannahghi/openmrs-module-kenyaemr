@@ -41,7 +41,7 @@
 	<bean id="kenyaemr.config.report" class="org.openmrs.module.kenyacore.report.ReportConfiguration">
 		<property name="commonReports">
 			<set>
-				<ref bean="kenyaemr.covid.report.enrolledInCovid" />
+				<!--<ref bean="kenyaemr.covid.report.enrolledInCovid" />-->
 				<ref bean="kenyaemr.covid.report.covidLineList"/>
 				<ref bean="kenyaemr.common.report.pendingLabResults" />
 				<ref bean="kenyaemr.common.report.confirmedPositives" />
@@ -562,8 +562,8 @@
 
 	<bean id="kenyaemr.covid.report.covidLineList" class="org.openmrs.module.kenyacore.report.HybridReportDescriptor">
 		<property name="targetUuid" value="a3625ff5-579d-4e13-8ebb-5d08c7cc1dd5" />
-		<property name="name" value="COVID-19 Reported Cases during a period" />
-		<property name="description" value="A linelist of COVID-19 reported cases filtered by period" />
+		<property name="name" value="COVID-19 Linelist" />
+		<property name="description" value="COVID-19 Linelist" />
 		<property name="apps"><set><ref bean="kenyaemr.app.reports" /></set></property>
 		<property name="template" value="kenyaemr:covid/covid_line_list.xls" />
 		<property name="repeatingSection" value="sheet:1,row:2,dataset:CovidLinelist" />
