@@ -66,6 +66,8 @@ public class Covid19DashboardReportBuilder extends AbstractReportBuilder {
             f_20_to_29, m_30_to_39, f_30_to_39, m_40_to_49, f_40_to_49, m_50_to_59, f_50_to_59, m_60_to_69, f_60_to_69, m_70_and_above,
             f_70_and_above, colTotal);
 
+    List<ColumnParameters> covidDisaggregationTotal = Arrays.asList(colTotal);
+
     @Override
     protected List<Parameter> getParameters(ReportDescriptor reportDescriptor) {
         return Arrays.asList(
@@ -106,7 +108,7 @@ public class Covid19DashboardReportBuilder extends AbstractReportBuilder {
         EmrReportingUtils.addRow(cohortDsd, "Persons tested", "Persons tested", ReportUtils.map(covidIndicators.personsTested(), indParams), covidDisaggregationAgeAndSex, Arrays.asList("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17"));
         EmrReportingUtils.addRow(cohortDsd, "Persons positive", "Persons positive", ReportUtils.map(covidIndicators.personsPositive(), indParams), covidDisaggregationAgeAndSex, Arrays.asList("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17"));
         EmrReportingUtils.addRow(cohortDsd, "Persons negative", "Persons negative", ReportUtils.map(covidIndicators.personsNegative(), indParams), covidDisaggregationAgeAndSex, Arrays.asList("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17"));
-        EmrReportingUtils.addRow(cohortDsd, "Contacts listed", "Contacts listed", ReportUtils.map(covidIndicators.contactsListed(), indParams), covidDisaggregationAgeAndSex, Arrays.asList("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17"));
+        EmrReportingUtils.addRow(cohortDsd, "Contacts listed", "Contacts listed", ReportUtils.map(covidIndicators.contactsListed(), indParams), covidDisaggregationTotal, Arrays.asList("01"));
         EmrReportingUtils.addRow(cohortDsd, "Contacts under follow-up", "Contacts under follow-up", ReportUtils.map(covidIndicators.contactsUnderFollowup(), indParams), covidDisaggregationAgeAndSex, Arrays.asList("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17"));
         EmrReportingUtils.addRow(cohortDsd, "Contacts reached", "Contacts reached", ReportUtils.map(covidIndicators.contactsReached(), indParams), covidDisaggregationAgeAndSex, Arrays.asList("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17"));
 
