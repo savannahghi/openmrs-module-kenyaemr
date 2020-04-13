@@ -39,6 +39,7 @@ import org.openmrs.ui.framework.annotation.SpringBean;
 import org.openmrs.ui.framework.page.PageModel;
 import org.openmrs.ui.framework.page.PageRequest;
 import org.openmrs.util.OpenmrsUtil;
+import org.openmrs.util.PrivilegeConstants;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -73,16 +74,13 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Page for viewing ADX message generated for DHIS2
+ * Page for generating ESRIE dashbaord indicators
  */
 public class EsriDashboardViewFragmentController {
 
     private AdministrationService administrationService;
-    private final Integer MOH_731_ID = 1;
     protected final Log log = LogFactory.getLog(getClass());
 
-    private LocationService locationService;
-    public String SERVER_ADDRESS = "http://41.204.187.152:9721/api/";
     DateFormat isoDateTimeFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mmZ");
     DateFormat isoDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -115,8 +113,6 @@ public class EsriDashboardViewFragmentController {
         model.addAttribute("adx", render(reportData));
         model.addAttribute("reportName", definition.getName());
         model.addAttribute("returnUrl", returnUrl);
-        model.addAttribute("serverAddress",  serverAddress != null ? serverAddress : SERVER_ADDRESS);
-        model.addAttribute("serverAddressLength", SERVER_ADDRESS.length());
     }
 
     public String render(ReportData reportData) throws IOException {
@@ -149,6 +145,8 @@ public class EsriDashboardViewFragmentController {
                 "where e.voided=0;";
 
         Map<String, ObjectNode> countyList = new HashMap<String, ObjectNode>();
+        Context.addProxyPrivilege(PrivilegeConstants.SQL_LEVEL_ACCESS);
+
         List<List<Object>> activeList = Context.getAdministrationService().executeSQL(qry, true);
         if (!activeList.isEmpty()) {
             for (List<Object> res : activeList) {
@@ -198,6 +196,8 @@ public class EsriDashboardViewFragmentController {
         payloadNode.put("county", counties);
         Object json = mapper.readValue(payloadNode, Object.class);
         String indented = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(json);
+        Context.removeProxyPrivilege(PrivilegeConstants.SQL_LEVEL_ACCESS);
+
         return indented;
     }
 
@@ -246,104 +246,6 @@ public class EsriDashboardViewFragmentController {
         return resultingString;
     }
 
-    public SimpleObject buildXmlDocument(@RequestParam("request") ReportRequest reportRequest,
-                                          @RequestParam("returnUrl") String returnUrl,
-                                          @SpringBean ReportService reportService) throws ParserConfigurationException, IOException, TransformerException {
-
-        ReportData reportData = reportService.loadReportData(reportRequest);
-        administrationService = Context.getAdministrationService();
-        locationService = Context.getLocationService();
-
-        Date reportDate = (Date) reportData.getContext().getParameterValue("startDate");
-        Date endDate = (Date) reportData.getContext().getParameterValue("endDate");
-
-        Integer locationId = Integer.parseInt(administrationService.getGlobalProperty("kenyaemr.defaultLocation"));
-        String mappingString = administrationService.getGlobalProperty("kenyaemr.adxDatasetMapping");
-        Location location = locationService.getLocation(locationId);
-        ObjectNode mappingDetails = EmrUtils.getDatasetMappingForReport(reportData.getDefinition().getName(), mappingString);
-        String serverAddress = administrationService.getGlobalProperty("ilServer.address");
-
-
-        String mfl = "Unknown";
-        String columnPrefix = mappingDetails.get("prefix").getTextValue();
-
-        if (location != null) {
-            mfl = new Facility(location).getMflCode();
-        }
-
-        DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder documentBuilder = documentFactory.newDocumentBuilder();
-        Document document = documentBuilder.newDocument();
-
-        Element root = document.createElement("adx");
-        root.setAttribute("xmlns", "urn:ihe:qrph:adx:2015");
-        root.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
-        root.setAttribute("xsi:schemaLocation", "urn:ihe:qrph:adx:2015 ../schema/adx_loose.xsd");
-        root.setAttribute("exported", isoDateTimeFormat.format(new Date()));
-
-
-        for (String dsKey : reportData.getDataSets().keySet()) {
-
-            String datasetName = null;
-            if (mappingDetails.get("datasets").getElements() != null) {
-                for (Iterator<JsonNode> it = mappingDetails.get("datasets").iterator(); it.hasNext(); ) {
-                    ObjectNode node = (ObjectNode) it.next();
-                    if (node.get("name").asText().equals(dsKey)) {
-                        datasetName = node.get("dhisName").getTextValue();
-                        break;
-                    }
-                }
-            }
-
-            if (datasetName == null)
-                continue;
-
-            Element eDataset = document.createElement("group");
-            // add group attributes
-            eDataset.setAttribute("orgUnit", mfl);
-            eDataset.setAttribute("period", isoDateFormat.format(reportDate).concat("/P1M"));
-            eDataset.setAttribute("dataSet", datasetName);
-
-
-            DataSet dataset = reportData.getDataSets().get(dsKey);
-            List<DataSetColumn> columns = dataset.getMetaData().getColumns();
-            for (DataSetRow row : dataset) {
-                for (DataSetColumn column : columns) {
-                    String name = column.getName();
-                    Object value = row.getColumnValue(column);
-
-                    // add data values
-                    Element dataValue = document.createElement("dataValue");
-                    dataValue.setAttribute("dataElement", columnPrefix.concat(name));
-                    dataValue.setAttribute("value", value.toString());
-                    eDataset.appendChild(dataValue);
-                }
-            }
-            root.appendChild(eDataset);
-        }
-
-        // add additional MOH 731 indicators for air
-
-        document.appendChild(root);
-
-        // create the xml file
-        //transform the DOM Object to an XML File
-        TransformerFactory transformerFactory = TransformerFactory.newInstance();
-        Transformer transformer = transformerFactory.newTransformer();
-        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
-        DOMSource domSource = new DOMSource(document);
-        ByteArrayOutputStream out= new ByteArrayOutputStream();
-        StreamResult inMemory = new StreamResult(out);
-
-        //transformer.transform(domSource, printOut);
-        transformer.transform(domSource, inMemory);
-        if (serverAddress != null)
-            SERVER_ADDRESS = serverAddress;
-
-        return postAdxToIL(out, SERVER_ADDRESS);
-
-    }
 
     public void saveDashboardPayload(@RequestParam("request") ReportRequest reportRequest,
                                      @RequestParam("returnUrl") String returnUrl,
@@ -353,6 +255,7 @@ public class EsriDashboardViewFragmentController {
         File appDir = new File(OpenmrsUtil.getApplicationDataDirectory());
         File dashboardPayloadFile = new File(appDir.getPath() + File.separator + "covidDashboardPayload.json");
 
+        Context.addProxyPrivilege(PrivilegeConstants.SQL_LEVEL_ACCESS);
         Date reportDate = (Date) reportData.getContext().getParameterValue("startDate");
         Date endDate = (Date) reportData.getContext().getParameterValue("endDate");
 
@@ -427,8 +330,7 @@ public class EsriDashboardViewFragmentController {
             }
         }
         payloadNode.put("county", counties);
-        Object json = mapper.readValue(payloadNode, Object.class);
-       // String indented = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(json);
+
         try {
             FileWriter writer = new FileWriter(dashboardPayloadFile);
             writer.write(payloadNode.toString());
@@ -437,151 +339,10 @@ public class EsriDashboardViewFragmentController {
             e.printStackTrace();
         }
 
-    }
+        Context.removeProxyPrivilege(PrivilegeConstants.SQL_LEVEL_ACCESS);
 
-    private SimpleObject postAdxToIL(ByteArrayOutputStream outStream, String serverAddress) throws IOException {
-
-        //System.out.println("Posting to server at: " + serverAddress);
-        URL url = new URL(serverAddress);
-
-        HttpURLConnection con = (HttpURLConnection) url.openConnection();
-        con.setRequestMethod("POST");
-        con.setRequestProperty("Content-Type", "application/adx+xml");
-        con.setRequestProperty("Content-Length", Integer.toString(outStream.size()));
-        con.setDoOutput(true);
-
-        DataOutputStream out = new DataOutputStream(con.getOutputStream());
-
-
-        out.writeBytes(outStream.toString());
-
-
-        out.flush();
-        out.close();
-
-        //Get Response
-        int responseCode = con.getResponseCode();
-        String httpResponse = null;
-
-        if (responseCode == HttpURLConnection.HTTP_OK) { //success
-            BufferedReader in = new BufferedReader(new InputStreamReader(
-                    con.getInputStream()));
-            String inputLine;
-            StringBuffer response = new StringBuffer();
-
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
-            }
-            in.close();
-            httpResponse = response.toString();
-
-        }
-        return SimpleObject.create("statusCode", String.valueOf(responseCode), "statusMsg", httpResponse);
-    }
-
-    private SimpleObject getDataFromFacilityReportingModule(ByteArrayOutputStream outStream, String serverAddress) throws IOException {
-
-        //System.out.println("Posting to server at: " + serverAddress);
-        URL url = new URL("http://localhost:8080/openmrs/ws/rest/v1/facilityreporting/getreportdata");
-        String params = "{\"REPORTID\":\"1\",\"STARTDATE\":\"2019-01-02\",\"ENDDATE\":\"2019-01-31\",\"ADXORGUNIT\":\"10657\",\"ADXREPORTINGPERIOD\":\"2018-01-01/P1M\"}";
-
-        HttpURLConnection con = (HttpURLConnection) url.openConnection();
-        con.setRequestMethod("POST");
-        con.setRequestProperty("Content-Type", "application/json");
-        con.setRequestProperty("Content-Length", Integer.toString(outStream.size()));
-        con.setDoOutput(true);
-
-        DataOutputStream out = new DataOutputStream(con.getOutputStream());
-
-
-        out.writeBytes(outStream.toString());
-
-
-        out.flush();
-        out.close();
-
-        //Get Response
-        int responseCode = con.getResponseCode();
-        String httpResponse = null;
-
-        if (responseCode == HttpURLConnection.HTTP_OK) { //success
-            BufferedReader in = new BufferedReader(new InputStreamReader(
-                    con.getInputStream()));
-            String inputLine;
-            StringBuffer response = new StringBuffer();
-
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
-            }
-            in.close();
-            httpResponse = response.toString();
-
-        }
-        return SimpleObject.create("statusCode", String.valueOf(responseCode), "statusMsg", httpResponse);
-    }
-
-    private HttpURLConnection getConnection(URL entries) throws InterruptedException, IOException {
-        int retry = 0;
-        boolean delay = false;
-        do {
-            if (delay) {
-                Thread.sleep(5);
-            }
-            HttpURLConnection con = (HttpURLConnection)entries.openConnection();
-            con.setRequestMethod("POST");
-            con.setRequestProperty("Content-Type", "application/adx+xml");
-            //con.setRequestProperty("Content-Length", Integer.toString(outStream.size()));
-            con.setDoOutput(true);
-
-                if (con.getResponseCode() != HttpURLConnection.HTTP_OK) {
-
-                    return con;
-
-                } else if (con.getResponseCode() == HttpURLConnection.HTTP_GATEWAY_TIMEOUT) {
-                    //return null;
-                    System.out.println("Timeout. Retrying");
-                } else if (con.getResponseCode() == HttpURLConnection.HTTP_UNAVAILABLE) {
-                    //return null;
-                    System.out.println("Server unavailable");
-                } else {
-                    //return null;
-                }
-
-
-            // we did not succeed with connection (or we would have returned the connection).
-            con.disconnect();
-            // retry
-            retry++;
-            System.out.println("Failed retry " + retry + "/" );
-            if (retry == 4) {
-                delay = false;
-            } else {
-                delay = true;
-            }
-
-        } while (retry < 4);
-
-        return null;
 
     }
 
-    public SimpleObject saveOrUpdateServerAddress(@RequestParam("newUrl") String newUrl) {
-        administrationService = Context.getAdministrationService();
-        GlobalProperty gp = administrationService.getGlobalPropertyObject("ilServer.address");
-
-       try {
-           if (gp != null) {
-               gp.setPropertyValue(newUrl.trim());
-               administrationService.saveGlobalProperty(gp);
-           } else {
-               GlobalProperty globalProperty = new GlobalProperty();
-               globalProperty.setProperty("ilServer.address");
-               globalProperty.setPropertyValue(newUrl.trim());
-           }
-       } catch (Exception e) {
-           e.printStackTrace();
-       }
-        return SimpleObject.create("statusMgs", "Server address saved successfully");
-    }
 
 }

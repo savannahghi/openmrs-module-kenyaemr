@@ -32,7 +32,7 @@ textarea {
 </div>
 <div class="ke-page-content">
 
-	<h2>ESRI Message for ${ reportName }</h2>
+	<h2>ESRIE Dashboard Payload for ${ reportName }</h2>
 	<fieldset>
 		<legend>Reporting Date</legend>
 		<br/>
@@ -50,7 +50,7 @@ textarea {
 	<br/>
 	<br/>
 	<button id="toggleAdxDiv">Show/Hide Message</button> &nbsp;&nbsp;
-	<button id="post">Submit Message</button>
+	<button id="post">Save Payload</button>
 	<p></p>
 
 	<div id="adxMsg">
