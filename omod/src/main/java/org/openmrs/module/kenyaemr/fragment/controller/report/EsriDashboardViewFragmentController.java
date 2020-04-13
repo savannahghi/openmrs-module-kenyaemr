@@ -38,6 +38,7 @@ import org.openmrs.ui.framework.SimpleObject;
 import org.openmrs.ui.framework.annotation.SpringBean;
 import org.openmrs.ui.framework.page.PageModel;
 import org.openmrs.ui.framework.page.PageRequest;
+import org.openmrs.util.OpenmrsUtil;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -54,6 +55,10 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -63,6 +68,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -132,7 +138,7 @@ public class EsriDashboardViewFragmentController {
                     String name = column.getName();
                     String label = column.getLabel();
                     Object value = row.getColumnValue(column);
-                    payloadNode.put(formatIndicatorName(name), value.toString());
+                    payloadNode.put(formatIndicatorName(name), Integer.parseInt(value.toString()));
                 }
             }
         }
@@ -182,7 +188,10 @@ public class EsriDashboardViewFragmentController {
                 String countyName = entry.getKey();
                 ObjectNode stats = entry.getValue();
                 ObjectNode countyObj = mapper.createObjectNode();
-                countyObj.put(countyName, stats);
+                countyObj.put("name", countyName);
+                countyObj.put("confirmed", stats.get("confirmed").getIntValue());
+                countyObj.put("imported", stats.get("imported").getIntValue());
+                countyObj.put("local", stats.get("local").getIntValue());
                 counties.add(countyObj);
             }
         }
@@ -333,6 +342,100 @@ public class EsriDashboardViewFragmentController {
             SERVER_ADDRESS = serverAddress;
 
         return postAdxToIL(out, SERVER_ADDRESS);
+
+    }
+
+    public void saveDashboardPayload(@RequestParam("request") ReportRequest reportRequest,
+                                     @RequestParam("returnUrl") String returnUrl,
+                                     @SpringBean ReportService reportService) throws IOException {
+
+        ReportData reportData = reportService.loadReportData(reportRequest);
+        File appDir = new File(OpenmrsUtil.getApplicationDataDirectory());
+        File dashboardPayloadFile = new File(appDir.getPath() + File.separator + "covidDashboardPayload.json");
+
+        Date reportDate = (Date) reportData.getContext().getParameterValue("startDate");
+        Date endDate = (Date) reportData.getContext().getParameterValue("endDate");
+
+        ObjectMapper mapper = new ObjectMapper();
+
+        ObjectNode payloadNode = mapper.createObjectNode();
+        ArrayNode counties = mapper.createArrayNode();
+        for (String dsKey : reportData.getDataSets().keySet()) {
+
+            DataSet dataset = reportData.getDataSets().get(dsKey);
+            List<DataSetColumn> columns = dataset.getMetaData().getColumns();
+            for (DataSetRow row : dataset) {
+                for (DataSetColumn column : columns) {
+                    String name = column.getName();
+                    String label = column.getLabel();
+                    Object value = row.getColumnValue(column);
+                    payloadNode.put(formatIndicatorName(name), Integer.parseInt(value.toString()));
+                }
+            }
+        }
+
+        String qry = "select e.patient_id, county, recently_travelled\n" +
+                "from kenyaemr_etl.etl_covid_19_enrolment e\n" +
+                "inner join kenyaemr_etl.etl_laboratory_extract l on l.patient_id=e.patient_id and l.result = 703\n" +
+                "where e.voided=0;";
+
+        Map<String, ObjectNode> countyList = new HashMap<String, ObjectNode>();
+        List<List<Object>> activeList = Context.getAdministrationService().executeSQL(qry, true);
+        if (!activeList.isEmpty()) {
+            for (List<Object> res : activeList) {
+                Integer patientId = (Integer) res.get(0);
+                String county = (String) res.get(1);
+                String traveled = (String) res.get(2);
+
+                if (StringUtils.isBlank(county)) {
+                    continue;
+                }
+
+                if (countyList.containsKey(county)) {
+                    ObjectNode details = countyList.get(county);
+                    details.put("confirmed", details.get("confirmed").getIntValue() + 1);
+                    if (traveled.equals("Yes")) {
+                        details.put("imported", details.get("imported").getIntValue() + 1);
+                    } else {
+                        details.put("local", details.get("local").getIntValue() + 1);
+                    }
+                } else {
+                    ObjectNode countyDetails = mapper.createObjectNode();
+                    countyDetails.put("confirmed", 1);
+                    if (traveled.equals("Yes")) {
+                        countyDetails.put("imported", 1);
+                        countyDetails.put("local", 0);
+                    } else {
+                        countyDetails.put("imported", 0);
+                        countyDetails.put("local", 1);
+                    }
+                    countyList.put(county, countyDetails);
+                }
+            }
+        }
+
+        if (!countyList.keySet().isEmpty()) {
+            for (Map.Entry<String, ObjectNode> entry : countyList.entrySet()) {
+                String countyName = entry.getKey();
+                ObjectNode stats = entry.getValue();
+                ObjectNode countyObj = mapper.createObjectNode();
+                countyObj.put("name", countyName);
+                countyObj.put("confirmed", stats.get("confirmed").getIntValue());
+                countyObj.put("imported", stats.get("imported").getIntValue());
+                countyObj.put("local", stats.get("local").getIntValue());
+                counties.add(countyObj);
+            }
+        }
+        payloadNode.put("county", counties);
+        Object json = mapper.readValue(payloadNode, Object.class);
+       // String indented = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(json);
+        try {
+            FileWriter writer = new FileWriter(dashboardPayloadFile);
+            writer.write(payloadNode.toString());
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
