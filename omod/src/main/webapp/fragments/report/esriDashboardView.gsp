@@ -40,11 +40,7 @@ textarea {
 		<b>End Date:</b> &nbsp;${ endDate }
 	</fieldset>
 	<br/>
-	<fieldset>
-		<legend>Server Settings</legend>
-		<br/>
-		<b>IP Address/URL:</b>	<input type="text" readonly="readonly" size="${serverAddressLength + 4}" style="border:2px inset #eee; margin:-2px;" placeholder="IP Address" value="${serverAddress}">&nbsp;&nbsp; <button id="editServerAddress">Edit</button>
-	</fieldset>
+
 
 	<div id="showStatus">
 		<span id="msgSpan"></span> &nbsp;&nbsp;<img src="${ ui.resourceLink("kenyaui", "images/loader_small.gif") }"/>
@@ -71,25 +67,25 @@ textarea {
         jq("#showStatus").hide();
         jq("#adxMsg").hide();
         jq('#post').click(function() {
-            jq("#msgSpan").text("Sending Message to IL Server .....");
+            jq("#msgSpan").text("Saving report indicators .....");
             jq("#showStatus").show();
             jq("#msg").text("");
 
             jq("#post").prop("disabled", true);
-            jq.getJSON('${ ui.actionLink("buildXmlDocument") }', {
+            jq.getJSON('${ ui.actionLink("saveDashboardPayload") }', {
                 'request': '${ reportRequest.id }',
                 'returnUrl': '${ returnUrl }'
             })
                 .success(function(data) {
                     jq("#showStatus").hide();
                     jq("#msg").addClass("successText");
-                    jq("#msg").text("Message successfully sent");
+                    jq("#msg").text("Report indicators successfully saved");
                     jq("#post").prop("disabled", true);
                 })
                 .error(function(xhr, status, err) {
                     jq("#showStatus").hide();
                     jq("#msg").addClass("errorText");
-                    jq("#msg").text("There was an error sending the message! Please confirm your network status and try again");
+                    jq("#msg").text("There was an error saving the report indicators");
                     jq("#post").prop("disabled", false);
                 })
 
@@ -98,12 +94,6 @@ textarea {
         jq('#toggleAdxDiv').click(function() {
 
             jq("#adxMsg").toggle();
-            /*if(jq('#toggleAdxDiv').is(":visible")){
-                //jq('#toggleAdxDiv').text("Hide Message");
-            }else {
-                //jq('#toggleAdxDiv').text("Preview Message");
-            }*/
-
 		});
 
     });
