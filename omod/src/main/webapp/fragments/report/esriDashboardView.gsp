@@ -85,7 +85,7 @@ textarea {
                 .error(function(xhr, status, err) {
                     jq("#showStatus").hide();
                     jq("#msg").addClass("errorText");
-                    jq("#msg").text("Error saving report indicators: " + err);
+                    jq("#msg").text("Error saving report indicators: " + xhr.responseText);
                     jq("#post").prop("disabled", false);
                 })
 

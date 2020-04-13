@@ -99,7 +99,7 @@
 										<div ng-if="request.hasDataSet">
 											<% if (adxConfigured){ %>
 											<a href="#" ng-click="viewAdxData(request.id)">
-												<img src="${ ui.resourceLink("kenyaui", "images/glyphs/csv.png") }" class="ke-glyph" /> Dashboard Payload
+												<img src="${ ui.resourceLink("kenyaui", "images/glyphs/csv.png") }" class="ke-glyph" /> Save Dashboard Payload
 											</a>
 											<% } %>
 										</div>
