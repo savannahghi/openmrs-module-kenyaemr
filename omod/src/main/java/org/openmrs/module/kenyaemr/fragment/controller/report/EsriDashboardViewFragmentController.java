@@ -402,7 +402,7 @@ public class EsriDashboardViewFragmentController {
                 } else {
                     ObjectNode countyDetails = mapper.createObjectNode();
                     countyDetails.put("confirmed", 1);
-                    if (traveled.equals("Yes")) {
+                    if (StringUtils.isNotBlank(traveled) && traveled.equals("Yes")) {
                         countyDetails.put("imported", 1);
                         countyDetails.put("local", 0);
                     } else {
