@@ -54,6 +54,7 @@
 
                     name: 'Total Reported',
                     y:${reportedCasesofCovid19},
+                    color:"#003f5c"
 
                 }, {
                     name: 'Total Tested',
@@ -220,6 +221,7 @@
                         <div class="ke-panel-frame">
                             <div class="ke-panel-heading"></div>
 
+
                         </div>
 
                         <div id="care_and_treatment_chart" style="min-width: 450px; height: 300px; margin: 0 auto"></div>
@@ -248,7 +250,7 @@
                             <div class="ke-panel-content">
                                 <table class="alignLeft">
                                     <tr>
-                                        <td colspan="3" class="heading2"><strong>Reporting Period: Today</strong></td>
+                                        <td colspan="3" class="heading2"><strong>Reporting Period: To date</strong></td>
                                     </tr>
                                     <tr>
                                         <th>Listed Contacts</th>
@@ -278,7 +280,7 @@
                             <div class="ke-panel-content">
                                 <table class="alignLeft">
                                     <tr>
-                                        <td colspan="3" class="heading2"><strong>Reporting Period: Today</strong></td>
+                                        <td colspan="3" class="heading2"><strong>Reporting Period: To date</strong></td>
                                     </tr>
                                     <tr>
                                         <th>Listed Contacts</th>
