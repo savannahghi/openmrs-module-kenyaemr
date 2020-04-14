@@ -13,7 +13,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.Cohort;
 import org.openmrs.annotation.Handler;
-import org.openmrs.module.kenyaemr.reporting.cohort.definition.ContactsTracedCohortDefinition;
+import org.openmrs.module.kenyaemr.reporting.cohort.definition.ExposureFromLivingTogetherCohortDefinition;
+import org.openmrs.module.kenyaemr.reporting.cohort.definition.UndocumentedExposureCohortDefinition;
 import org.openmrs.module.reporting.cohort.EvaluatedCohort;
 import org.openmrs.module.reporting.cohort.definition.CohortDefinition;
 import org.openmrs.module.reporting.cohort.definition.evaluator.CohortDefinitionEvaluator;
@@ -28,10 +29,10 @@ import java.util.HashSet;
 import java.util.List;
 
 /**
- * Evaluator for IDU contacts tested for HIV
+ * Evaluator for contacts with undocumented exposure
  */
-@Handler(supports = {ContactsTracedCohortDefinition.class})
-public class ContactsTracedCohortDefinitionEvaluator implements CohortDefinitionEvaluator {
+@Handler(supports = {UndocumentedExposureCohortDefinition.class})
+public class UndocumentedExposureCohortDefinitionEvaluator implements CohortDefinitionEvaluator {
 
     private final Log log = LogFactory.getLog(this.getClass());
 	@Autowired
@@ -40,16 +41,17 @@ public class ContactsTracedCohortDefinitionEvaluator implements CohortDefinition
     @Override
     public EvaluatedCohort evaluate(CohortDefinition cohortDefinition, EvaluationContext context) throws EvaluationException {
 
-		ContactsTracedCohortDefinition definition = (ContactsTracedCohortDefinition) cohortDefinition;
+		UndocumentedExposureCohortDefinition definition = (UndocumentedExposureCohortDefinition) cohortDefinition;
 
         if (definition == null)
             return null;
 
 		Cohort newCohort = new Cohort();
 
-		String qry="select p.person_id from person p\n" +
-				" inner join kenyaemr_hiv_testing_patient_contact c on p.person_id = c.patient_id\n" +
-				" where p.voided = 0;";
+		String qry="select c.id\n" +
+				"                from kenyaemr_hiv_testing_patient_contact c \n" +
+				"                where c.voided = 0 and c.pns_approach is null \n" +
+				"                ;";
 
 		SqlQueryBuilder builder = new SqlQueryBuilder();
 		builder.append(qry);

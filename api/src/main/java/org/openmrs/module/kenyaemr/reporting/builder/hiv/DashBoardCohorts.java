@@ -365,11 +365,11 @@ public class DashBoardCohorts {
      * @param context optional (used to return a cached value if possible)
      * @return
      */
-    public static EvaluatedCohort htsTotalPositiveFamily(EvaluationContext context) {
+    public static EvaluatedCohort undocumentedExposure(EvaluationContext context) {
         try {
-            return getService().evaluate(new HTSPositiveFamilyContactsCohortDefinition(), context);
+            return getService().evaluate(new UndocumentedExposureCohortDefinition(), context);
         } catch (EvaluationException e) {
-            throw new IllegalStateException("Error evaluating HTS HIV positive family contacts", e);
+            throw new IllegalStateException("Error evaluating contacts with undocumented exposure", e);
         }
     }
 
