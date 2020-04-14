@@ -202,7 +202,8 @@ public class SecurityMetadata extends AbstractMetadataBundle {
 						app(EmrConstants.APP_REPORTS),
 						app(EmrConstants.APP_DIRECTORY),
 						app(EmrConstants.APP_FACILITIES),
-						app(EmrConstants.APP_FACILITY_DASHBOARD)
+						app(EmrConstants.APP_FACILITY_DASHBOARD),
+						_Privilege.VIEW_LEGACY_INTERFACE
 				)
 		));
 
