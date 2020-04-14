@@ -181,7 +181,8 @@
                     {y:${exposureFromLivingTogether},color:"#444e86"},
                     {y:${coworkerAssociatedExposure},color:"#955196"},
                     {y:${exposureFromTravelingTogether},color:"#dd5182"},
-                    {y:${healthcareAssociatedExposure},color:"#ff6e54"}]
+                    {y:${healthcareAssociatedExposure},color:"#ff6e54"},
+                    {y:${undocumentedExposure},color:"#0d233a"}]
             }],
             xAxis: {
                 categories: [{
@@ -194,6 +195,8 @@
                     name: "Traveled together",
                 }, {
                     name: "Healthcare exposure",
+                }, {
+                    name: "Undocumented exposure",
                 }
                 ]
             },
@@ -258,6 +261,7 @@
                                         <th>Co-workers</th>
                                         <th>Traveled together</th>
                                         <th>Healthcare exposure</th>
+                                        <th>Undocumented exposure</th>
                                     </tr>
 
                                     <tr>
@@ -266,6 +270,7 @@
                                         <td>${coworkerAssociatedExposure}</td>
                                         <td>${exposureFromTravelingTogether}</td>
                                         <td>${healthcareAssociatedExposure}</td>
+                                        <td>${undocumentedExposure}</td>
                                     </tr>
 
                                 </table>

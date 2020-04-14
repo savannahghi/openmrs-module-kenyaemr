@@ -47,10 +47,16 @@ public class ContactsUnderCovid19FollowupCohortDefinitionEvaluator implements Co
 
 		Cohort newCohort = new Cohort();
 
-		String qry="select id from (select c.id\n" +
-				"                from kenyaemr_hiv_testing_patient_contact c inner join patient_program pp on c.patient_id = pp.patient_id\n" +
-				"                where c.voided=0 and pp.voided = 0 \n" +
-				"                group by c.id ) t;";
+		String qry="select patient_id\n" +
+				"from (\n" +
+				"select c.patient_id, self_q.patient_id selfQ, min(self_q.visit_date) first_self_q_followup_date, gov_q.patient_id govQ, min(gov_q.visit_date) first_gov_quarantine_date \n" +
+				"from kenyaemr_hiv_testing_patient_contact c \n" +
+				"inner join kenyaemr_etl.etl_covid_19_enrolment e on e.patient_id = c.patient_related_to\n" +
+				"left join kenyaemr_etl.etl_contact_tracing_followup self_q on self_q.patient_id = c.patient_id\n" +
+				"left join kenyaemr_etl.etl_covid_quarantine_enrolment gov_q on gov_q.patient_id = c.patient_id\n" +
+				"where c.voided=0\n" +
+				"group by c.patient_id\n" +
+				") f where (selfQ is not null and datediff(curdate(),first_self_q_followup_date) < 14) or (govQ is not null and datediff(curdate(), first_gov_quarantine_date) < 14)";;
 
 		SqlQueryBuilder builder = new SqlQueryBuilder();
 		builder.append(qry);

@@ -203,11 +203,9 @@ public class CovidDashboardCohortQueries {
     /*Contacts reached*/
     public CohortDefinition contactsReached(){
         SqlCohortDefinition cd = new SqlCohortDefinition();
-        String sqlQuery = "select person_id from (select p.person_id from person p\n" +
-                "  inner join kenyaemr_hiv_testing_patient_contact c on p.person_id = c.patient_id\n" +
-                "  inner join kenyaemr_hiv_testing_client_trace t on t.client_id = c.id\n" +
-                "where t.status = \"Contacted\"\n" +
-                "group by p.person_id ) t;";
+        String sqlQuery = "select p.person_id from person p\n" +
+                " inner join kenyaemr_hiv_testing_patient_contact c on p.person_id = c.patient_id\n" +
+                " where p.voided = 0;";
         cd.setName("contactsReached");
         cd.setQuery(sqlQuery);
         cd.addParameter(new Parameter("startDate", "Start Date", Date.class));

@@ -39,7 +39,7 @@ public class FacilityDashboardFragmentController {
 
 		Integer reportedCasesofCovid19 = 0,
 				totalContactsListed =0,exposureFromTravelingTogether =0,totalContactsReached =0,coworkerAssociatedExposure = 0,
-				healthcareAssociatedExposure = 0, totalContactsUnderCovid19Followup = 0, exposureFromLivingTogether = 0;
+				healthcareAssociatedExposure = 0, totalContactsUnderCovid19Followup = 0, exposureFromLivingTogether = 0, undocumentedExposure=0;
 		EvaluationContext evaluationContext = new EvaluationContext();
 		Calendar calendar = Calendar.getInstance();
 		int thisMonth = calendar.get(calendar.MONTH);
@@ -83,6 +83,9 @@ public class FacilityDashboardFragmentController {
 		Set<Integer> exposureFromLivingTogetherList = DashBoardCohorts.exposureFromLivingTogether(evaluationContext).getMemberIds();
 		exposureFromLivingTogether = exposureFromLivingTogetherList != null? exposureFromLivingTogetherList.size(): 0;
 
+		Set<Integer> undocumentedExposureList = DashBoardCohorts.undocumentedExposure(evaluationContext).getMemberIds();
+		undocumentedExposure = undocumentedExposureList != null? undocumentedExposureList.size(): 0;
+
 		model.addAttribute("reportedCasesofCovid19", reportedCasesofCovid19);
 		model.addAttribute("reportPeriod", reportingPeriod);
 		model.addAttribute("totalContactsListed", totalContactsListed);
@@ -92,6 +95,7 @@ public class FacilityDashboardFragmentController {
 		model.addAttribute("totalContactsReached", totalContactsReached);
 		model.addAttribute("healthcareAssociatedExposure", healthcareAssociatedExposure);
 		model.addAttribute("exposureFromLivingTogether", exposureFromLivingTogether);
+		model.addAttribute("undocumentedExposure", undocumentedExposure);
 
 
 		return null;
