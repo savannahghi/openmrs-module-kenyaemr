@@ -84,8 +84,10 @@ public class QuarantineFollowupFormFragmentController {
 			} else if (obs.getConcept().getConceptId().equals(symptomsConcept) && obs.getValueCoded().getConceptId().equals(soreThroatConcept)) {
 				soreThroat = "Yes";
 			} else if (obs.getConcept().getConceptId().equals(referralConcept)) {
-				if (obs.getValueCoded().getConceptId().equals(1065)) {
+				if (obs.getValueCoded().getConceptId().equals(140238)) {
 					referredForTreatment = "Yes";
+				} else if (obs.getValueCoded().getConceptId().equals(1066)) {
+					referredForTreatment = "No";
 				} else if (obs.getValueCoded().getConceptId().equals(1175)) {
 					referredForTreatment = "N/A";
 				}
