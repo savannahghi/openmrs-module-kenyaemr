@@ -65,11 +65,11 @@ public class QuarantineFollowupFormFragmentController {
 		int symptomsConcept = 162737;
 		int yesConcept = 1065;
 
-		String soreThroat = "No";
-		String cough = "No";
-		String fever = "No";
-		String difficultyBreathing = "No";
-		String referredForTreatment = "No";
+		String soreThroat = "";
+		String cough = "";
+		String fever = "";
+		String difficultyBreathing = "";
+		String referredForTreatment = "";
 
 		String encDate = e != null ? DATE_FORMAT.format(e.getEncounterDatetime()) : "";
 		

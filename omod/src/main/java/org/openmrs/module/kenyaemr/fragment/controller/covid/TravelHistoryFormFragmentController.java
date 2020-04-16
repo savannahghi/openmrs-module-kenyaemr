@@ -67,11 +67,11 @@ public class TravelHistoryFormFragmentController {
 		int yesConcept = 1065;
 		int destinationConcept = 161550;
 
-		String transportMode = "Uknown";
-		String cough = "No";
-		String fever = "No";
-		String difficultyBreathing = "No";
-		String arrivalDate = "No";
+		String transportMode = "";
+		String cough = "";
+		String fever = "";
+		String difficultyBreathing = "";
+		String arrivalDate = "";
 		String destination = "";
 
 		String encDate = e != null ? DATE_FORMAT.format(e.getEncounterDatetime()) : "";
