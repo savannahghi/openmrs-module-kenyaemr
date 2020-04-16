@@ -48,7 +48,8 @@ public class TotalListedContactsCohortDefinitionEvaluator implements CohortDefin
 		Cohort newCohort = new Cohort();
 
 		String qry="select c.id \n" +
-				"    from kenyaemr_hiv_testing_patient_contact c  where c.voided = 0;";
+				"    from kenyaemr_hiv_testing_patient_contact c  where c.voided = 0" +
+				"	inner join person p on p.person_id=c.patient_related_to and p.voided=0;";
 
 		SqlQueryBuilder builder = new SqlQueryBuilder();
 		builder.append(qry);
