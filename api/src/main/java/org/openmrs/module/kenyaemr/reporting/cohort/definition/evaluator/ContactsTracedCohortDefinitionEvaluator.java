@@ -49,7 +49,7 @@ public class ContactsTracedCohortDefinitionEvaluator implements CohortDefinition
 
 		String qry="select p.person_id from person p\n" +
 				" inner join kenyaemr_hiv_testing_patient_contact c on p.person_id = c.patient_id\n" +
-				" inner join kenyaemr_hiv_testing_patient_contact a on p.person_id = a.patient_related_to\n" +
+				" left join kenyaemr_hiv_testing_patient_contact a on p.person_id = a.patient_related_to\n" +
 				" where p.voided = 0;";
 
 		SqlQueryBuilder builder = new SqlQueryBuilder();
