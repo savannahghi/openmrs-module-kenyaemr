@@ -21,8 +21,14 @@ import org.openmrs.module.kenyaemr.reporting.cohort.definition.covid.PatientsEnr
 import org.openmrs.module.kenyaemr.reporting.data.converter.IdentifierConverter;
 import org.openmrs.module.kenyaemr.reporting.data.converter.definition.covid.CountyDataDefinition;
 import org.openmrs.module.kenyaemr.reporting.data.converter.definition.covid.DateOfQuarantineAdmissionDataDefinition;
+import org.openmrs.module.kenyaemr.reporting.data.converter.definition.covid.DateSampleCollectedDataDefinition;
+import org.openmrs.module.kenyaemr.reporting.data.converter.definition.covid.LabResultDataDefinition;
 import org.openmrs.module.kenyaemr.reporting.data.converter.definition.covid.NameOfQuarantineCenterDataDefinition;
 import org.openmrs.module.kenyaemr.reporting.data.converter.definition.covid.OccupationDataDefinition;
+import org.openmrs.module.kenyaemr.reporting.data.converter.definition.covid.OrderDateDataDefinition;
+import org.openmrs.module.kenyaemr.reporting.data.converter.definition.covid.OrderReasonDataDefinition;
+import org.openmrs.module.kenyaemr.reporting.data.converter.definition.covid.SampleCollectedDataDefinition;
+import org.openmrs.module.kenyaemr.reporting.data.converter.definition.covid.SampleTypeDataDefinition;
 import org.openmrs.module.kenyaemr.reporting.data.converter.definition.covid.SubcountyDataDefinition;
 import org.openmrs.module.kenyaemr.reporting.data.converter.definition.covid.TransferQuarantineFacilityDataDefinition;
 import org.openmrs.module.kenyaemr.reporting.data.converter.definition.covid.TypeOfQuarantineAdmissionDataDefinition;
@@ -126,6 +132,9 @@ public class PatientsEnrolledOnQuarantineReportBuilder extends AbstractHybridRep
         dsd.addColumn("Name of Quarantine Center",new NameOfQuarantineCenterDataDefinition(), "");
         dsd.addColumn("Type of Admission",new TypeOfQuarantineAdmissionDataDefinition(), "");
         dsd.addColumn("Transfer from facility",new TransferQuarantineFacilityDataDefinition(), "");
+        dsd.addColumn("Sample Collected",new SampleCollectedDataDefinition(), "");
+        dsd.addColumn("Date of sample collected",new DateSampleCollectedDataDefinition(), "");
+        dsd.addColumn("Lab result",new LabResultDataDefinition(), "");
 
         return dsd;
     }
