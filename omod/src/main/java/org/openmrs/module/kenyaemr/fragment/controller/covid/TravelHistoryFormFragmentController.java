@@ -65,6 +65,7 @@ public class TravelHistoryFormFragmentController {
 		int referralConcept = 1788;
 		int symptomsConcept = 162737;
 		int yesConcept = 1065;
+		int noConcept = 1066;
 		int destinationConcept = 161550;
 
 		String transportMode = "";
@@ -86,10 +87,16 @@ public class TravelHistoryFormFragmentController {
 				}
 			} else if (obs.getConcept().getConceptId().equals(feverConcept) && obs.getValueCoded().getConceptId().equals(yesConcept)) {
 				fever = "Yes";
+			} else if (obs.getConcept().getConceptId().equals(feverConcept) && obs.getValueCoded().getConceptId().equals(noConcept)) {
+				fever = "No";
 			} else if (obs.getConcept().getConceptId().equals(coughConcept) && obs.getValueCoded().getConceptId().equals(yesConcept)) {
 				cough = "Yes";
+			} else if (obs.getConcept().getConceptId().equals(coughConcept) && obs.getValueCoded().getConceptId().equals(noConcept)) {
+				cough = "No";
 			} else if (obs.getConcept().getConceptId().equals(shortnessOfBreathConcept) && obs.getValueCoded().getConceptId().equals(yesConcept)) {
 				difficultyBreathing = "Yes";
+			} else if (obs.getConcept().getConceptId().equals(shortnessOfBreathConcept) && obs.getValueCoded().getConceptId().equals(noConcept)) {
+				difficultyBreathing = "No";
 			} else if (obs.getConcept().getConceptId().equals(dateOfArrivalConcept)) {
 				arrivalDate = DATE_FORMAT.format(obs.getValueDatetime());
 			} else if (obs.getConcept().getConceptId().equals(destinationConcept)) {
