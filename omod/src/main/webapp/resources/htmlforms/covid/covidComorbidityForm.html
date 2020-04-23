@@ -1,0 +1,192 @@
+<!--
+  ~ The contents of this file are subject to the OpenMRS Public License
+  ~ Version 1.0 (the "License"); you may not use this file except in
+  ~ compliance with the License. You may obtain a copy of the License at
+  ~ http://license.openmrs.org
+  ~
+  ~ Software distributed under the License is distributed on an "AS IS"
+  ~ basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+  ~ License for the specific language governing rights and limitations
+  ~ under the License.
+  ~
+  ~ Copyright (C) OpenMRS, LLC.  All Rights Reserved.
+  -->
+<htmlform>
+
+    <script type="text/javascript" src="../moduleResources/kenyaemr/scripts/moment.js"></script>
+
+    <style>
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+            font: normal 13px Arial, sans-serif;
+        }
+
+        table thead th {
+            background-color: #DDEFEF;
+            color: #336B6B;
+            padding: 7px;
+            text-align: left;
+            text-shadow: 1px 1px 1px #fff;
+        }
+
+        table td {
+            color: #333;
+            padding: 7px;
+            text-shadow: 1px 1px 1px #fff;
+            word-wrap: break-word;
+        }
+
+        fieldset {
+            border: 2px solid #d1d0c9;
+            margin: 3px 0 3px 0;
+            padding: 10px;
+            min-width: auto;
+            margin-top: 10px;
+        }
+    </style>
+    <!-- hide / show additional fields -->
+
+    <div class="ke-form-header">
+           <ifMode mode="EDIT">
+
+                    </ifMode>
+         <table width="70%">
+            <tr>
+                <td align="left">Date of reporting to National Health authority:
+                    <encounterDate id="encounter-date" showTime="true"/>
+                </td>
+                <td>
+                    County: <obs required="true" id="county" conceptId="CIEL:165197"  answers="$countyNames" answerLabels="$countyNames"/>
+
+                </td>
+                <td>
+                    Sub county: <obs conceptId="161551AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"/>
+                </td>
+                <td style="display: none">Reporting health facility:
+                    <encounterLocation default="GlobalProperty:kenyaemr.defaultLocation"/>
+                </td>
+
+            </tr>
+        </table>
+    </div>
+    <div class="ke-form-content">
+
+        <fieldset>
+            <legend>Covid 19 Comorbidity</legend>
+            <includeIf velocityTest="$patient.gender == 'F'">
+            <table id="pregnancy-details">
+                <tr>
+                    <td>Pregnant</td>
+                    <td>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</td>
+                    <td>
+                        <obs conceptId="5272AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" " id="pregnant"
+                             answerConceptIds="1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                             style="radio" answerLabels="Yes,No"/>
+                    </td>
+                </tr>
+                <tr id= "trimester">
+                    <td> Trimester: </td>
+                    <td>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</td>
+                    <td>
+                        <obs conceptId="160665" labelText=" " id="trimester-number"
+                             answerConceptIds="1721,1722,1723"
+                             style="dropdown" answerLabels="First,Second,Third"/>
+                    </td>
+               </tr>
+            </table>
+            </includeIf>
+            <table>
+               <tr>
+                    <td>Any underlying conditions</td>
+                    <td>
+                        <obs conceptId="162747AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" " id="underlying-conditions"
+                             answerConceptIds="1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                             style="radio" answerLabels="Yes,No"/>
+                    </td>
+                </tr>
+            </table>
+            <table id="conditions">
+                <tr>
+                    <td>Cardiovascular disease including hypertension
+                    </td>
+                    <td>
+                        <obs conceptId="119270AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" " id="card"
+                             answerConceptId="1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                             style="checkbox" answerLabel="Yes"/>
+                    </td>
+                    <td>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</td>
+                    <td>Diabetes
+                    </td>
+                    <td>
+                        <obs conceptId="119481AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" " id="diabetes"
+                             answerConceptId="1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                             style="checkbox" answerLabel="Yes"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Liver disease
+                    </td>
+                    <td>
+                        <obs conceptId="6032AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "   id="liver"
+                             answerConceptId="1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                             style="checkbox" answerLabel="Yes"/>
+                    </td>
+                    <td>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</td>
+                    <td>Chronic neurological or neuromascular disease</td>
+                    <td>
+                        <obs conceptId="165646AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "   id="neuro"
+                             answerConceptId="1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                             style="checkbox" answerLabel="Yes"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Post-partum less than 6 weeks</td>
+                    <td>
+                        <obs conceptId="129317AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "         id="partum"
+                             answerConceptId="1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                             style="checkbox" answerLabel="Yes"/>
+                    </td>
+                    <td>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</td>
+                    <td>Immunodeficiency</td>
+                    <td>
+                        <obs conceptId="117277AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "          id="immuno"
+                             answerConceptId="1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                             style="checkbox" answerLabel="Yes"/>
+                    </td>
+                </tr>
+                <tr></tr>
+                <tr>
+                    <td>Renal disease</td>
+                    <td>
+                        <obs conceptId="6033AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "   id="renal"
+                             answerConceptId="1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                             style="checkbox" answerLabel="Yes"/>
+                    </td>
+                    <td>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</td>
+                    <td>Chronic lung disease</td>
+                    <td>
+                        <obs conceptId="155569AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "     id="lung"
+                             answerConceptId="1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                             style="checkbox" answerLabel="Yes"/>
+                    </td>
+                </tr>
+                <tr></tr>
+                <tr>
+                    <td>Malignancy</td>
+                    <td>
+                        <obs conceptId="116031AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "      id="malignancy"
+                             answerConceptId="1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                             style="checkbox" answerLabel="Yes"/>
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+
+
+   </div>
+    <div class="ke-form-footer">
+        <submit/>
+    </div>
+
+</htmlform>
