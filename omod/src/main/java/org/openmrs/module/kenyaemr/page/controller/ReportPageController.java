@@ -9,8 +9,20 @@
  */
 package org.openmrs.module.kenyaemr.page.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.apache.commons.lang.StringUtils;
 import org.codehaus.jackson.node.ObjectNode;
+import org.openmrs.Location;
 import org.openmrs.Role;
+import org.openmrs.User;
 import org.openmrs.api.AdministrationService;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.kenyacore.CoreUtils;
@@ -18,6 +30,7 @@ import org.openmrs.module.kenyacore.report.HybridReportDescriptor;
 import org.openmrs.module.kenyacore.report.IndicatorReportDescriptor;
 import org.openmrs.module.kenyacore.report.ReportDescriptor;
 import org.openmrs.module.kenyacore.report.ReportManager;
+import org.openmrs.module.kenyaemr.metadata.SecurityMetadata;
 import org.openmrs.module.kenyaemr.util.EmrUtils;
 import org.openmrs.module.kenyaui.KenyaUiUtils;
 import org.openmrs.module.kenyaui.annotation.SharedPage;
@@ -32,12 +45,6 @@ import org.openmrs.ui.framework.annotation.SpringBean;
 import org.openmrs.ui.framework.page.PageModel;
 import org.openmrs.ui.framework.page.PageRequest;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Report overview page
@@ -61,6 +68,9 @@ public class ReportPageController {
 		ReportDescriptor report = reportManager.getReportDescriptor(definition);
 		admService = Context.getAdministrationService();
 		CoreUtils.checkAccess(report, kenyaUi.getCurrentApp(pageRequest));
+		User loggedInUser = Context.getUserContext().getAuthenticatedUser();
+		Set<Role> userRoles = loggedInUser.getAllRoles();
+		boolean isSuperUser = loggedInUser.isSuperUser();
 
 		boolean isIndicator = false;
 		if (report instanceof IndicatorReportDescriptor || report instanceof HybridReportDescriptor)
@@ -85,10 +95,10 @@ public class ReportPageController {
 
 		String downloadReportRole = "Download Reports";
 		boolean canDownloadReport = false;
-		if (Context.getAuthenticatedUser().isSuperUser()) {
+		if (isSuperUser) {
 			canDownloadReport = true;
 		} else {
-			for (Role r : Context.getAuthenticatedUser().getAllRoles()) {
+			for (Role r : userRoles) {
 				if (r.getName().equals(downloadReportRole)) {
 					canDownloadReport = true;
 					break;
@@ -120,6 +130,36 @@ public class ReportPageController {
 		model.addAttribute("date", date);
 		model.addAttribute("canDownloadReport", canDownloadReport);
 		model.addAttribute("requests", getRequests(definition, ui, reportService));
+		
+		List<String> countyList = new ArrayList<String>();
+		
+		String userRole = null;
+		for (Role role : userRoles) {
+			if(role.getName().equalsIgnoreCase(SecurityMetadata._Role.SYSTEM_ADMIN)) {
+				userRole ="System Administrator";
+				break;
+
+			}
+		}
+		
+		if (isSuperUser || userRole != null) {
+			List<Location> locationList = Context.getLocationService().getAllLocations();
+			for(Location loc: locationList) {
+				String locationCounty = loc.getCountyDistrict();
+				if(!StringUtils.isEmpty(locationCounty) && !StringUtils.isBlank(locationCounty)) {
+					countyList.add(locationCounty);
+				}
+			}
+		} else {
+			String userCounty = EmrUtils.getUserCounty();
+			if (userCounty != null) {
+				countyList.add(userCounty);
+			}
+		}
+		
+		Set<String> uniqueCountyList = new HashSet<String>(countyList);
+		model.addAttribute("countyList", uniqueCountyList);	
+		
 	}
 
 	/**

@@ -9,13 +9,15 @@
  */
 package org.openmrs.module.kenyaemr.reporting.cohort.definition.evaluator.covid;
 
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.Cohort;
 import org.openmrs.annotation.Handler;
-import org.openmrs.module.kenyaemr.reporting.cohort.definition.OTZRegisterCohortDefinition;
 import org.openmrs.module.kenyaemr.reporting.cohort.definition.covid.PatientsEnrolledOnCovidCohortDefinition;
-import org.openmrs.module.kenyaemr.util.EmrUtils;
 import org.openmrs.module.reporting.cohort.EvaluatedCohort;
 import org.openmrs.module.reporting.cohort.definition.CohortDefinition;
 import org.openmrs.module.reporting.cohort.definition.evaluator.CohortDefinitionEvaluator;
@@ -26,10 +28,6 @@ import org.openmrs.module.reporting.evaluation.querybuilder.SqlQueryBuilder;
 import org.openmrs.module.reporting.evaluation.service.EvaluationService;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-
 /**
  * Evaluator for Covid
  */
@@ -39,7 +37,11 @@ public class PatientsEnrolledOnCovidCohortDefinitionEvaluator implements CohortD
     private final Log log = LogFactory.getLog(this.getClass());
     @Autowired
     EvaluationService evaluationService;
-
+    
+	/**
+	 * @see org.openmrs.module.kenyaemr.reporting.cohort.definition.evaluator.covid#evaluate(org.openmrs.module.reporting.cohort.definition.CohortDefinition, org.openmrs.module.reporting.evaluation.EvaluationContext)
+	 * @should find patients in Covid program filtered by county
+	 */
     @Override
     public EvaluatedCohort evaluate(CohortDefinition cohortDefinition, EvaluationContext context) throws EvaluationException {
 
@@ -54,25 +56,26 @@ public class PatientsEnrolledOnCovidCohortDefinitionEvaluator implements CohortD
 
         String qry = "";
         SqlQueryBuilder builder = new SqlQueryBuilder();
+        
+        String county = (String) context.getParameterValue("county");
 
-        qry = "Select e.patient_id from kenyaemr_etl.etl_covid_19_enrolment e\n" +
-                "group by e.patient_id having date(max(e.visit_date)) between date(:startDate) and date(:endDate);";
-
-        /*if (EmrUtils.getUserCounty() != null) {
-            qry = "Select e.patient_id from kenyaemr_etl.etl_covid_19_enrolment e where e.county=:userCounty\n" +
-                    "group by e.patient_id having date(max(e.visit_date)) between date(:startDate) and date(:endDate);";
-            builder.addParameter("userCounty", EmrUtils.getUserCounty().trim());
+//        qry = "Select e.patient_id from kenyaemr_etl.etl_covid_19_enrolment e\n" +
+//                "group by e.patient_id having date(max(e.visit_date)) between date(:startDate) and date(:endDate);";
+        if (county != null) {
+            qry = "Select e.patient_id from kenyaemr_etl.etl_covid_19_enrolment e where e.county=:county\n" +
+                    "group by e.patient_id having (max(e.visit_date)) between (:startDate) and (:endDate);";
+            builder.addParameter("county", county);
 
         } else {
             qry = "Select e.patient_id from kenyaemr_etl.etl_covid_19_enrolment e\n" +
-                    "group by e.patient_id having date(max(e.visit_date)) between date(:startDate) and date(:endDate);";
-        }*/
+                    "group by e.patient_id having (max(e.visit_date)) between (:startDate) and (:endDate);";
+        }
         builder.append(qry);
         Date startDate = (Date) context.getParameterValue("startDate");
         Date endDate = (Date) context.getParameterValue("endDate");
         builder.addParameter("endDate", endDate);
         builder.addParameter("startDate", startDate);
-
+        
         List<Integer> ptIds = evaluationService.evaluateToList(builder, Integer.class, context);
         newCohort.setMemberIds(new HashSet<Integer>(ptIds));
 

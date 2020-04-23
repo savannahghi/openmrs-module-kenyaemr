@@ -1,0 +1,17 @@
+<!--
+
+    This Source Code Form is subject to the terms of the Mozilla Public License,
+    v. 2.0. If a copy of the MPL was not distributed with this file, You can
+    obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
+    the terms of the Healthcare Disclaimer located at http://openmrs.org/license.
+
+    Copyright (C) OpenMRS Inc. OpenMRS is a registered trademark and the OpenMRS
+    graphic logo is a trademark of OpenMRS Inc.
+
+-->
+<dataset>
+  <etl_patient_demographics patient_id="4" given_name="x" middle_name="Odhis" family_name="Malcom" Gender="M" DOB="1996-06-15" patient_clinic_number="123456" phone_number="0723862718" marital_status="Never married" education_level="Primary school education" dead="0" voided="0"/>
+
+  <etl_covid_19_enrolment uuid="95ab0ce5-ec04-424c-8c92-9f02cf972144" encounter_id="2" patient_id="4" location_id="9218" visit_date="2020-04-08" encounter_provider="1" date_created="2020-04-08" sub_county="embakasi" county="Nairobi" detection_point="Unknown" symptomatic="No" temperature="28" diabetes="No" specify_signs="Student" admitted_to_hospital="No" date_of_isolation="2020-04-07" patient_ventilated="Yes" health_status_at_reporting="Stable" recently_visited_health_facility="Yes" recent_contact_with_infected_person="Yes" recent_contact_with_confirmed_person="Yes" recent_contact_setting="Work place" recent_visit_to_animal_market="No" voided="0"/>
+
+</dataset>
