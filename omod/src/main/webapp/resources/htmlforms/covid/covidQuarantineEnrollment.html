@@ -13,7 +13,9 @@
 
 -->
 <htmlform>
-
+    <macros>
+        <macro key="quarantineCenterNames" value="67 AIRPORT HOTEL ATHI RIVER,BATIANS HOTEL,CLARION HOTEL,COOPERATIVE UNIVERSITY COLLEGE,CORAT AFRICA HOTEL,CROWNE PLAZA JKIA,FOUR POINT SHERATON JKIA,FOUR POINTS SHERATON HURLINGHAM,GRACEHOUSE RESORT,HADASSAH HOTEL,HILLPARK HOTEL,HILTON GARDEN INN,JACARANDA HOTEL,KENYA COMFORT SUITES,KENYA SCHOOL OF GOVERNMENT,KENYA WATER INSTITUTE,KENYATTA UNIVERSITY,KING PREMIER HOTEL,KMTC/KNH,LAMADA HOTEL,LANDMARK SUITES,LENANA SCHOOL,MARSH PARK HOTEL,MOI GIRLS' NAIROBI,MONARCH HOTEL,NAIROBI SCHOOL,NGON'G HILLS HOTEL,PANARI HOTEL,PC KINYANJUI,PRIDE INN AZURE,PRIDE INN LANTANA,PRIDE INN RAPHTA,SAFARI PARK HOTEL,STANDARD LEISURE HOTEL NAIROBI,SWISS LENANA MOUNT HOTEL,THE BOMA HOTEL,THE BOMA INN HOTEL,TRADEMARK HOTEL,UFUNGAMANO HOUSE,WEST WOOD HOTEL"/>
+    </macros>
     <script type="text/javascript" src="../moduleResources/kenyaemr/scripts/moment.js"></script>
     <script>
         var TRANSFER_IN = 160563;
@@ -65,7 +67,7 @@
                 <tr>
                     <td>Name of quarantine center</td>
                     <td>
-                        <obs conceptId="162724AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"/>
+                        <obs id="quarantineCenters" conceptId="CIEL:162724"  answers="$quarantineCenterNames" answerLabels="$quarantineCenterNames"/>
                     </td>
                 </tr>
                 <tr></tr>
@@ -84,7 +86,7 @@
                 <tr>
                     <td>Name of quarantine center transferred from</td>
                     <td>
-                        <obs id="transferFacility" conceptId="161550AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"/>
+                        <obs id="transferFacility" conceptId="CIEL:161550"  answers="$quarantineCenterNames" answerLabels="$quarantineCenterNames"/>
                     </td>
                 </tr>
                 <tr></tr>
