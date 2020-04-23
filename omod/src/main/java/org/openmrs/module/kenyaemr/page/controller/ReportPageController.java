@@ -12,11 +12,12 @@ package org.openmrs.module.kenyaemr.page.controller;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import org.apache.commons.lang.StringUtils;
 import org.codehaus.jackson.node.ObjectNode;
@@ -144,6 +145,7 @@ public class ReportPageController {
 		
 		if (isSuperUser || userRole != null) {
 			List<Location> locationList = Context.getLocationService().getAllLocations();
+			countyList.add("All Counties");
 			for(Location loc: locationList) {
 				String locationCounty = loc.getCountyDistrict();
 				if(!StringUtils.isEmpty(locationCounty) && !StringUtils.isBlank(locationCounty)) {
@@ -157,7 +159,7 @@ public class ReportPageController {
 			}
 		}
 		
-		Set<String> uniqueCountyList = new HashSet<String>(countyList);
+		SortedSet<String> uniqueCountyList = new TreeSet<String>(countyList);
 		model.addAttribute("countyList", uniqueCountyList);	
 		
 	}
