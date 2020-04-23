@@ -9,6 +9,10 @@
  */
 package org.openmrs.module.kenyaemr.reporting.builder.covid;
 
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+
 import org.openmrs.PatientIdentifierType;
 import org.openmrs.PersonAttributeType;
 import org.openmrs.module.kenyacore.report.HybridReportDescriptor;
@@ -16,35 +20,54 @@ import org.openmrs.module.kenyacore.report.ReportDescriptor;
 import org.openmrs.module.kenyacore.report.ReportUtils;
 import org.openmrs.module.kenyacore.report.builder.AbstractHybridReportBuilder;
 import org.openmrs.module.kenyacore.report.builder.Builds;
-import org.openmrs.module.kenyacore.report.data.patient.definition.CalculationDataDefinition;
-import org.openmrs.module.kenyaemr.calculation.library.covid.PersonAddressCountyCalculation;
-import org.openmrs.module.kenyaemr.calculation.library.covid.PersonAddressSubCountyCalculation;
 import org.openmrs.module.kenyaemr.metadata.CommonMetadata;
-import org.openmrs.module.kenyaemr.metadata.HivMetadata;
-import org.openmrs.module.kenyaemr.reporting.calculation.converter.RDQACalculationResultConverter;
 import org.openmrs.module.kenyaemr.reporting.cohort.definition.covid.PatientsEnrolledOnCovidCohortDefinition;
 import org.openmrs.module.kenyaemr.reporting.data.converter.IdentifierConverter;
-import org.openmrs.module.kenyaemr.reporting.data.converter.definition.covid.*;
+import org.openmrs.module.kenyaemr.reporting.data.converter.definition.covid.ClassificationDataDefinition;
+import org.openmrs.module.kenyaemr.reporting.data.converter.definition.covid.CoughDataDefinition;
+import org.openmrs.module.kenyaemr.reporting.data.converter.definition.covid.CountyDataDefinition;
+import org.openmrs.module.kenyaemr.reporting.data.converter.definition.covid.DateOfAdmissionDataDefinition;
+import org.openmrs.module.kenyaemr.reporting.data.converter.definition.covid.DateSampleCollectedDataDefinition;
+import org.openmrs.module.kenyaemr.reporting.data.converter.definition.covid.DifficultyBreathingDataDefinition;
+import org.openmrs.module.kenyaemr.reporting.data.converter.definition.covid.FeverDataDefinition;
+import org.openmrs.module.kenyaemr.reporting.data.converter.definition.covid.HealthFacilityNameDataDefinition;
+import org.openmrs.module.kenyaemr.reporting.data.converter.definition.covid.HospitalVisitDateDataDefinition;
+import org.openmrs.module.kenyaemr.reporting.data.converter.definition.covid.HospitalizedDataDefinition;
+import org.openmrs.module.kenyaemr.reporting.data.converter.definition.covid.LabResultConfirmationDateDataDefinition;
+import org.openmrs.module.kenyaemr.reporting.data.converter.definition.covid.LabResultDataDefinition;
+import org.openmrs.module.kenyaemr.reporting.data.converter.definition.covid.OccupationDataDefinition;
+import org.openmrs.module.kenyaemr.reporting.data.converter.definition.covid.OtherSymptomsDataDefinition;
+import org.openmrs.module.kenyaemr.reporting.data.converter.definition.covid.OutcomeDataDefinition;
+import org.openmrs.module.kenyaemr.reporting.data.converter.definition.covid.OutcomeDateDataDefinition;
+import org.openmrs.module.kenyaemr.reporting.data.converter.definition.covid.PlaceTravelledFromDataDefinition;
+import org.openmrs.module.kenyaemr.reporting.data.converter.definition.covid.RecentContactWithCovidCaseDataDefinition;
+import org.openmrs.module.kenyaemr.reporting.data.converter.definition.covid.RecentTravelDataDefinition;
+import org.openmrs.module.kenyaemr.reporting.data.converter.definition.covid.SampleCollectedDataDefinition;
+import org.openmrs.module.kenyaemr.reporting.data.converter.definition.covid.SubcountyDataDefinition;
+import org.openmrs.module.kenyaemr.reporting.data.converter.definition.covid.SymptomsDataDefinition;
+import org.openmrs.module.kenyaemr.reporting.data.converter.definition.covid.SymptomsOnsetDateDataDefinition;
+import org.openmrs.module.kenyaemr.reporting.data.converter.definition.covid.VisitedHFDataDefinition;
 import org.openmrs.module.metadatadeploy.MetadataUtils;
 import org.openmrs.module.reporting.cohort.definition.CohortDefinition;
-import org.openmrs.module.reporting.common.SortCriteria;
 import org.openmrs.module.reporting.data.DataDefinition;
 import org.openmrs.module.reporting.data.converter.BirthdateConverter;
 import org.openmrs.module.reporting.data.converter.DataConverter;
 import org.openmrs.module.reporting.data.converter.ObjectFormatter;
 import org.openmrs.module.reporting.data.patient.definition.ConvertedPatientDataDefinition;
 import org.openmrs.module.reporting.data.patient.definition.PatientIdentifierDataDefinition;
-import org.openmrs.module.reporting.data.person.definition.*;
+import org.openmrs.module.reporting.data.person.definition.AgeDataDefinition;
+import org.openmrs.module.reporting.data.person.definition.BirthdateDataDefinition;
+import org.openmrs.module.reporting.data.person.definition.ConvertedPersonDataDefinition;
+import org.openmrs.module.reporting.data.person.definition.GenderDataDefinition;
+import org.openmrs.module.reporting.data.person.definition.PersonAttributeDataDefinition;
+import org.openmrs.module.reporting.data.person.definition.PersonIdDataDefinition;
+import org.openmrs.module.reporting.data.person.definition.PreferredNameDataDefinition;
 import org.openmrs.module.reporting.dataset.definition.DataSetDefinition;
 import org.openmrs.module.reporting.dataset.definition.PatientDataSetDefinition;
 import org.openmrs.module.reporting.evaluation.parameter.Mapped;
 import org.openmrs.module.reporting.evaluation.parameter.Parameter;
 import org.openmrs.module.reporting.report.definition.ReportDefinition;
 import org.springframework.stereotype.Component;
-
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
 
 @Component
 @Builds({"kenyaemr.covid.report.covidLineList"})
@@ -60,8 +83,9 @@ public class PatientsEnrolledOnCovidReportBuilder extends AbstractHybridReportBu
         CohortDefinition cd = new PatientsEnrolledOnCovidCohortDefinition();
         cd.addParameter(new Parameter("startDate", "Start Date", Date.class));
         cd.addParameter(new Parameter("endDate", "End Date", Date.class));
+        cd.addParameter(new Parameter("county", "County", String.class));
         cd.setName("CovidPatients");
-        return ReportUtils.map(cd, "startDate=${startDate},endDate=${endDate}");
+        return ReportUtils.map(cd, "startDate=${startDate},endDate=${endDate},county=${county}");
     }
 
     @Override
@@ -72,7 +96,7 @@ public class PatientsEnrolledOnCovidReportBuilder extends AbstractHybridReportBu
         DataSetDefinition covidPatientsDSD = covidPatients;
 
         return Arrays.asList(
-                ReportUtils.map(covidPatientsDSD, "startDate=${startDate},endDate=${endDate}")
+                ReportUtils.map(covidPatientsDSD, "startDate=${startDate},endDate=${endDate},county=${county}")
         );
     }
 
@@ -81,6 +105,7 @@ public class PatientsEnrolledOnCovidReportBuilder extends AbstractHybridReportBu
         return Arrays.asList(
                 new Parameter("startDate", "Start Date", Date.class),
                 new Parameter("endDate", "End Date", Date.class),
+                new Parameter("county", "County", String.class),
                 new Parameter("dateBasedReporting", "", String.class)
         );
     }
@@ -89,16 +114,14 @@ public class PatientsEnrolledOnCovidReportBuilder extends AbstractHybridReportBu
 
         PatientIdentifierType nationalIdType = MetadataUtils.existing(PatientIdentifierType.class, CommonMetadata._PatientIdentifierType.NATIONAL_ID);
         PatientIdentifierType passportNumberType = MetadataUtils.existing(PatientIdentifierType.class, CommonMetadata._PatientIdentifierType.PASSPORT_NUMBER);
-        DataDefinition natIdDef = new ConvertedPatientDataDefinition("identifier", new PatientIdentifierDataDefinition(nationalIdType.getName(), nationalIdType), new IdentifierConverter());
+        new ConvertedPatientDataDefinition("identifier", new PatientIdentifierDataDefinition(nationalIdType.getName(), nationalIdType), new IdentifierConverter());
         DataDefinition passportDef = new ConvertedPatientDataDefinition("identifier", new PatientIdentifierDataDefinition(passportNumberType.getName(), passportNumberType), new IdentifierConverter());
         PersonAttributeType phoneNumber = MetadataUtils.existing(PersonAttributeType.class, CommonMetadata._PersonAttributeType.TELEPHONE_CONTACT);
         String DATE_FORMAT = "dd/MM/yyyy";
         PatientDataSetDefinition dsd = new PatientDataSetDefinition("CovidLinelist");
         dsd.addParameter(new Parameter("startDate", "Start Date", Date.class));
         dsd.addParameter(new Parameter("endDate", "End Date", Date.class));
-        dsd.addParameter(new Parameter("startDate", "Start Date", Date.class));
-        String defParam = "startDate=${startDate}";
-
+        dsd.addParameter(new Parameter("county", "County", String.class));
         PatientIdentifierType upn = MetadataUtils.existing(PatientIdentifierType.class, CommonMetadata._PatientIdentifierType.NATIONAL_ID);
         DataConverter identifierFormatter = new ObjectFormatter("{identifier}");
         DataDefinition identifierDef = new ConvertedPatientDataDefinition("identifier", new PatientIdentifierDataDefinition(upn.getName(), upn), identifierFormatter);
