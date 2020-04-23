@@ -14,8 +14,10 @@
     def addQuarantineFollowupFormLink = ui.pageLink("kenyaemr", "enterForm", [patientId: currentPatient.patientId, formUuid: quarantineFollowpFormUUID, appId:currentApp.id, returnUrl: ui.thisUrl()])
 
     def contactTracingUuid ="37ef8f3c-6cd2-11ea-bc55-0242ac130003";
+    def comorbidityUuid ="dbe0ebd0-853d-11ea-bc55-0242ac130003";
     def addTracingFormLink = ui.pageLink("kenyaemr", "enterForm", [patientId: currentPatient.patientId, formUuid: contactTracingUuid, appId:currentApp.id, returnUrl: ui.thisUrl()])
-
+    def addComorbidityFormLink = ui.pageLink("kenyaemr", "enterForm", [patientId: currentPatient.patientId, formUuid: comorbidityUuid, appId:currentApp.id, returnUrl: ui.thisUrl()])
+    def editComorbidityInfoLink =  ui.pageLink("kenyaemr", "editForm", [ patientId: currentPatient.patientId,encounterId:comorbidity, appId:currentApp.id, returnUrl: ui.thisUrl() ])
 
 %>
 
@@ -42,6 +44,9 @@
     font-size: 1em;
     margin: 0;
 }
+    .cursor{
+        cursor: pointer;
+    }
 </style>
 
 
@@ -72,7 +77,7 @@
                         <i class="fa fa-users fa-2x"></i>
 
                         <h3>Travel History</h3>
-                        <i class="fa fa-plus-square right" style="color: steelblue" title="Add History"
+                        <i class="fa fa-plus-square right cursor" style="color: steelblue" title="Add History"
                            onclick="location.href = '${addTravelHistoryFormLink}'"></i>
                     </div>
                     <div class="info-body">
@@ -109,10 +114,31 @@
             <div class="info-container column">
                 <div class="info-section">
                     <div class="info-header">
+                        <h3>Comorbidities</h3>
+                        <% if (!comorbidity) { %>
+
+                        <i class="fa fa-plus-square right cursor" style="color: steelblue" title="Add Comorbidity"
+                           onclick="location.href = '${addComorbidityFormLink}'"></i>
+                        <% } else { %>
+                        <span class="right">
+                        <i class="fa fa-pencil cursor" style="font-size:20px;color: steelblue"  title="Edit Comorbidity"
+                           onclick="location.href = '${editComorbidityInfoLink}'"></i> </span>
+                        <% } %>
+
+                    </div>
+
+                    <div class="info-body">
+                        ${ ui.includeFragment("kenyaemr", "covid/comorbidityForm", [ patient: currentPatient ]) }
+
+                    </div>
+                </div>
+
+                <div class="info-section">
+                    <div class="info-header">
                         <i class="icon-stethoscope"></i>
 
                         <h3>Tracing/Followup</h3>
-                        <i class="fa fa-plus-square right" style="color: steelblue" title="Add Trace"
+                        <i class="fa fa-plus-square right cursor" style="color: steelblue" title="Add Trace"
                            onclick="location.href = '${addTracingFormLink}'"></i>
                     </div>
 
@@ -123,7 +149,7 @@
 
                 <div class="info-section">
                     <div class="info-header">
-                        <i class="fa fa-plus-square right" style="color: steelblue" title="Record followup"
+                        <i class="fa fa-plus-square right cursor" style="color: steelblue" title="Record followup"
                            onclick="location.href = '${addQuarantineFollowupFormLink}'"></i>
 
                         <h3>Followup at quarantine center</h3>

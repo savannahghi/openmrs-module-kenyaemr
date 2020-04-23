@@ -280,6 +280,21 @@
 		<property name="htmlform" value="kenyaemr:covid/covidQuarantineFollowup.html" />
 		<property name="order" value="201006" />
 	</bean>
+
+	<!-- COVID-19 comorbidity -->
+	<bean id="kenyaemr.common.form.covid_comorbidity" class="org.openmrs.module.kenyacore.form.FormDescriptor">
+		<property name="targetUuid" value="dbe0ebd0-853d-11ea-bc55-0242ac130003" />
+		<property name="apps">
+			<set>
+				<ref bean="kenyaemr.app.registration" />
+				<ref bean="kenyaemr.app.clinician" />
+				<ref bean="kenyaemr.app.surveillance" />
+			</set>
+		</property>
+		<property name="icon" value="kenyaui:forms/generic.png" />
+		<property name="htmlform" value="kenyaemr:covid/covidComorbidityForm.html" />
+		<property name="order" value="201006" />
+	</bean>
 	<!-- ===================== Reports ===================== -->
 
 	<bean id="kenyaemr.common.report.etlMissedAppointments" class="org.openmrs.module.kenyacore.report.HybridReportDescriptor">

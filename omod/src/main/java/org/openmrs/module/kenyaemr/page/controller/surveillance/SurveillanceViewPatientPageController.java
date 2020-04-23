@@ -10,7 +10,7 @@
 package org.openmrs.module.kenyaemr.page.controller.surveillance;
 
 import org.openmrs.Cohort;
-import org.openmrs.Concept;
+import org.openmrs.EncounterType;
 import org.openmrs.Encounter;
 import org.openmrs.Form;
 import org.openmrs.Patient;
@@ -30,6 +30,7 @@ import org.openmrs.module.kenyaemr.util.HtsConstants;
 import org.openmrs.module.kenyaemr.wrapper.PatientWrapper;
 import org.openmrs.module.kenyaui.annotation.AppPage;
 import org.openmrs.module.metadatadeploy.MetadataUtils;
+import org.openmrs.ui.framework.SimpleObject;
 import org.openmrs.ui.framework.UiUtils;
 import org.openmrs.ui.framework.page.PageModel;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -47,6 +48,11 @@ public class SurveillanceViewPatientPageController {
 	public void controller(@RequestParam("patientId") Patient patient, PageModel model) {
 
 		List<Visit> activeVisits = Context.getVisitService().getActiveVisitsByPatient(patient);
+		EncounterType encComorbidityHistory = MetadataUtils.existing(EncounterType.class, CommonMetadata._EncounterType.COVID_19_COMORBIDITY);
+		Form formCormobidityHistory = MetadataUtils.existing(Form.class, CommonMetadata._Form.COVID_19_COMORBIDITY_FORM);
+
+		Encounter enc = EmrUtils.lastEncounter(patient, encComorbidityHistory, formCormobidityHistory);
+
 
 		Visit lastVisit = null;
 		if (activeVisits.size() > 0) {
@@ -54,6 +60,8 @@ public class SurveillanceViewPatientPageController {
 		}
 		model.addAttribute("visit", lastVisit);
 		model.addAttribute("patient", patient);
+		model.addAttribute("patient", patient);
+		model.addAttribute("comorbidity", enc !=null? enc.getEncounterId():"");
 
 	}
 }
