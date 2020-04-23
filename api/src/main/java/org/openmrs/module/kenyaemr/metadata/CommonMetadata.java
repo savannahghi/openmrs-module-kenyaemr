@@ -48,6 +48,7 @@ public class CommonMetadata extends AbstractMetadataBundle {
 		public static final String COVID_QUARANTINE_ENROLLMENT = "33a3a55c-73ae-11ea-bc55-0242ac130003";
 		public static final String COVID_QUARANTINE_OUTCOME = "33a3a7be-73ae-11ea-bc55-0242ac130003";
 		public static final String COVID_QUARANTINE_FOLLOWUP = "33a3a8e0-73ae-11ea-bc55-0242ac130003";
+		public static final String COVID_19_COMORBIDITY = "dbe0e608-853d-11ea-bc55-0242ac130003";
 
 	}
 
@@ -74,6 +75,7 @@ public class CommonMetadata extends AbstractMetadataBundle {
 		public static final String COVID_QUARANTINE_ENROLLMENT = "9a5d57b6-739a-11ea-bc55-0242ac130003";
 		public static final String COVID_QUARANTINE_FOLLOWUP = "33a3aab6-73ae-11ea-bc55-0242ac130003";
 		public static final String COVID_QUARANTINE_OUTCOME = "9a5d58c4-739a-11ea-bc55-0242ac130003";
+		public static final String COVID_19_COMORBIDITY_FORM = "dbe0ebd0-853d-11ea-bc55-0242ac130003";
 
 	}
 
@@ -152,6 +154,7 @@ public class CommonMetadata extends AbstractMetadataBundle {
 		install(encounterType("COVID-19 Quarantine Enrollment", "COVID-19 Quarantine Enrollment", _EncounterType.COVID_QUARANTINE_ENROLLMENT));
 		install(encounterType("COVID-19 Quarantine Followup", "COVID-19 Quarantine Followup", _EncounterType.COVID_QUARANTINE_FOLLOWUP));
 		install(encounterType("COVID-19 Quarantine Outcome", "COVID-19 Quarantine Outcome", _EncounterType.COVID_QUARANTINE_OUTCOME));
+		install(encounterType("COVID-19 Comorbidity", "COVID-19 Comorbidity", _EncounterType.COVID_19_COMORBIDITY));
 
 		install(form("Clinical Encounter", null, _EncounterType.CONSULTATION, "1", _Form.CLINICAL_ENCOUNTER));
 		install(form("Lab Results", null, _EncounterType.LAB_RESULTS, "1", _Form.LAB_RESULTS));
@@ -171,6 +174,7 @@ public class CommonMetadata extends AbstractMetadataBundle {
 		install(form("COVID-19 Case Investigation Form", "A form to record treatment for covid-19 PUI ", _EncounterType.COVID_19_CASE_INVESTIGATION, "1", _Form.COVID_19_CARE_FORM));
 		install(form("COVID-19 Travel History", "A form to record travel history for covid-19 PUI ", _EncounterType.COVID_19_TRAVEL_HISTORY, "1", _Form.COVID_19_TRAVEL_HISTORY));
 		install(form("COVID-19 Monitored Reporting Form", "A form to trace contacts for covid-19 ", _EncounterType.COVID_19_CONTACT_TRACING, "1", _Form.COVID_19_CONTACT_TRACING_FORM));
+		install(form("COVID-19 Comorbidity Form", "A Comorbidity form for covid-19 ", _EncounterType.COVID_19_COMORBIDITY, "1", _Form.COVID_19_COMORBIDITY_FORM));
 
 		install(form("COVID Outcome", "Covid outcome form ", _EncounterType.COVID_OUTCOME, "1", _Form.COVID_OUTCOME));
 		install(form("COVID Quaratine Enrollment", "Covid Quaratine Enrollment form ", _EncounterType.COVID_QUARANTINE_ENROLLMENT, "1", _Form.COVID_QUARANTINE_ENROLLMENT));
