@@ -1,5 +1,6 @@
 <%
 	def appId = "kenyaemr.medicalEncounter"
+	def totalEncounters=encounters.size()
 %>
 
 <script type="text/javascript">
@@ -26,8 +27,8 @@
 .switch {
 	position: relative;
 	display: inline-block;
-	width: 60px;
-	height: 34px;
+	width: 30px;
+	height: 20px;
 }
 
 .switch input {
@@ -51,14 +52,15 @@
 .slider:before {
 	position: absolute;
 	content: "";
-	height: 26px;
-	width: 26px;
+	height: 15px;
+	width: 20px;
 	left: 4px;
 	bottom: 4px;
 	background-color: white;
 	-webkit-transition: .4s;
 	transition: .4s;
 }
+
 
 input:checked + .slider {
 	background-color: #2196F3;
@@ -83,7 +85,7 @@ input:checked + .slider:before {
 	border-radius: 50%;
 }
 .toggle-label {
-	padding-top: 7px;
+	padding-top: 5px;
 	font-weight: bold;
 }
 
@@ -157,12 +159,14 @@ input:checked + .slider:before {
 
 	</div>
 	<div>
+		<% if(totalEncounters >5) { %>
 		<label class="switch">
 			<input type="checkbox" id="toggle">
 			<span class="slider round"></span>
 		</label>
 		<span class="toggle-label" id="label">
-		 Show More
+			Show More
 		</span>
+		<% }%>
 	</div>
 </div>
