@@ -36,7 +36,7 @@ public class ContactsWithPositiveLabResultsDataEvaluator implements PersonDataEv
         EvaluatedPersonData c = new EvaluatedPersonData(definition, context);
 
         String qry = "select c.patient_related_to, count(c.patient_id)\n" +
-                "from openmrs.kenyaemr_hiv_testing_patient_contact c\n" +
+                "from kenyaemr_hiv_testing_patient_contact c\n" +
                 "       inner join kenyaemr_etl.etl_laboratory_extract l on l.patient_id=c.patient_id and l.result = 703\n" +
                 "where c.voided=0 group by c.patient_related_to;";
 

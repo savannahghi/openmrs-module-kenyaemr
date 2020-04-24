@@ -35,7 +35,7 @@ public class NumberContactedTodayDataEvaluator implements PersonDataEvaluator {
     public EvaluatedPersonData evaluate(PersonDataDefinition definition, EvaluationContext context) throws EvaluationException {
         EvaluatedPersonData c = new EvaluatedPersonData(definition, context);
 
-        String qry = "select c.patient_related_to,count(c.id) from openmrs.kenyaemr_hiv_testing_patient_contact c inner join openmrs.kenyaemr_hiv_testing_client_trace t\n" +
+        String qry = "select c.patient_related_to,count(c.id) from kenyaemr_hiv_testing_patient_contact c inner join openmrs.kenyaemr_hiv_testing_client_trace t\n" +
                 "    on c.id= t.client_id where date(t.date_created)= date(curdate()) and t.status in ('Contacted','Contacted and Linked')\n" +
                 "group by c.patient_related_to;";
 

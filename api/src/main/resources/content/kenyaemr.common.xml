@@ -47,7 +47,7 @@
 				<ref bean="kenyaemr.common.report.pendingLabResults" />
 				<ref bean="kenyaemr.common.report.confirmedPositives" />
 				<ref bean="kenyaemr.common.report.covidDashboardIndicators" />
-				<ref bean="kenyaemr.common.report.followupCases" />
+				<ref bean="kenyaemr.common.report.contactTracing" />
 
 				<!--
                                 <ref bean="kenyaemr.covid.report.confirmedCases"/>
@@ -553,13 +553,13 @@
 	<bean id="kenyaemr.common.report.contactTracing" class="org.openmrs.module.kenyacore.report.HybridReportDescriptor">
 		<property name="targetUuid" value="5d8b5170-9a96-4c9d-9714-b77aca0e5c38" />
 		<property name="name" value="Contact Tracing" />
-		<property name="description" value="A summary of covid cases contact tracing" />
+		<property name="description" value="A summary of covid cases contact tracing indicators" />
 		<property name="apps">
 			<set>
 				<ref bean="kenyaemr.app.reports" />
 			</set></property>
 		<property name="template" value="kenyaemr:Covid19-contact-tracing.xls" />
-		<property name="repeatingSection" value="sheet:1,row:8,dataset:covidCases" />
+		<property name="repeatingSection" value="sheet:1,row:2,dataset:covidCases" />
 	</bean>
 
 	<bean id="kenyaemr.common.report.pendingLabResults" class="org.openmrs.module.kenyacore.report.HybridReportDescriptor">

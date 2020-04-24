@@ -40,7 +40,7 @@ public class ContactsDevelopedSignsAndSymptomsDataEvaluator implements PersonDat
                 "     select c.patient_id, self_q.patient_id selfQ,c.patient_related_to case_patient, coalesce(self_q.cough,gov_q.cough) cough, coalesce(self_q.fever, gov_q.fever) fever, coalesce(self_q.difficulty_breathing,gov_q.difficulty_breathing) difficulty_breathing,\n" +
                 "            coalesce(self_q.sore_throat,gov_q.sore_throat) sorethroat,\n" +
                 "            min(self_q.visit_date) first_self_q_followup_date, gov_q.patient_id govQ, min(gov_q.visit_date) first_gov_quarantine_date\n" +
-                "     from openmrs.kenyaemr_hiv_testing_patient_contact c\n" +
+                "     from kenyaemr_hiv_testing_patient_contact c\n" +
                 "            inner join kenyaemr_etl.etl_covid_19_enrolment e on e.patient_id = c.patient_related_to\n" +
                 "            left join kenyaemr_etl.etl_contact_tracing_followup self_q on self_q.patient_id = c.patient_id\n" +
                 "            left join kenyaemr_etl.etl_covid_quarantine_followup gov_q on gov_q.patient_id = c.patient_id\n" +

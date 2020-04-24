@@ -97,7 +97,6 @@ public class Covid19FollowupCasesReportBuilder extends AbstractHybridReportBuild
         dsd.addColumn("Developed signs and symptoms",new ContactsDevelopedSignsAndSymptomsDataDefinition(), "");
         dsd.addColumn("Positive lab results",new ContactsWithPositiveLabResultsDataDefinition(), "");
         dsd.addColumn("County",new CountyDataDefinition(), "");
-        //dsd.addColumn("Comments",new CountyDataDefinition(), "");
         //dsd.addColumn("Status of case Contact tracing",new CountyDataDefinition(), "");
         return dsd;
     }

@@ -38,7 +38,7 @@ public class ContactsConvertedToCasesDataEvaluator implements PersonDataEvaluato
         String qry = "select f.case_patient,count(f.patient_id) from\n" +
                 "(\n" +
                 "select c.patient_id, self_q.patient_id selfQ,c.patient_related_to case_patient, min(self_q.visit_date) first_self_q_followup_date, gov_q.patient_id govQ, min(gov_q.visit_date) first_gov_quarantine_date\n" +
-                "from openmrs.kenyaemr_hiv_testing_patient_contact c\n" +
+                "from kenyaemr_hiv_testing_patient_contact c\n" +
                 "       inner join kenyaemr_etl.etl_covid_19_enrolment e on e.patient_id = c.patient_related_to\n" +
                 "       left join kenyaemr_etl.etl_contact_tracing_followup self_q on self_q.patient_id = c.patient_id\n" +
                 "       left join kenyaemr_etl.etl_covid_quarantine_enrolment gov_q on gov_q.patient_id = c.patient_id\n" +
