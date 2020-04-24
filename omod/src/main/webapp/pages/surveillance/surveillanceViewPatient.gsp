@@ -120,9 +120,9 @@
                         <i class="fa fa-plus-square right cursor" style="color: steelblue" title="Add Comorbidity"
                            onclick="location.href = '${addComorbidityFormLink}'"></i>
                         <% } else { %>
-                        <span class="right">
-                        <i class="fa fa-pencil cursor" style="font-size:20px;color: steelblue"  title="Edit Comorbidity"
-                           onclick="location.href = '${editComorbidityInfoLink}'"></i> </span>
+
+                        <i class="fa fa-pencil right cursor" style="font-size:20px;color: steelblue"  title="Edit Comorbidity"
+                           onclick="location.href = '${editComorbidityInfoLink}'"></i>
                         <% } %>
 
                     </div>
@@ -152,7 +152,7 @@
                         <i class="fa fa-plus-square right cursor" style="color: steelblue" title="Record followup"
                            onclick="location.href = '${addQuarantineFollowupFormLink}'"></i>
 
-                        <h3>Followup at quarantine center</h3>
+                        <h3>Followup at Quarantine center</h3>
                     </div>
                     <div class="info-body">
 

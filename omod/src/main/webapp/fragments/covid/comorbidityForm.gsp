@@ -4,31 +4,13 @@
 <div class="ke-panel-content">
 	<div class="ke-stack-item">
 
-		<% if(encounters) { %>
-		<table>
-			<tr>
+		<% if(conditions) { %>
 
-				<th>Date</th>
-				<% if(gender =="F") { %>
-				<th>Pregnant</th>
-				<% } %>
-				<th>Liver disease</th>
-				<th>Renal disease</th>
-				<th>Diabetes</th>
-			</tr>
-
-		<% encounters.each { %>
-			<tr>
-				<td width="80px">${it.encDate}</td>
-			    <% if(gender =="F") { %>
-				<td>${it.pregnant}</td>
-			    <% } %>
-				<td>${it.liverDisease}</td>
-				<td>${it.renalDisease}</td>
-				<td>${it.diabetes}</td>
-			</tr>
+		<% conditions.conditions.eachWithIndex {it, i -> %>
+		${ ui.includeFragment("kenyaui", "widget/dataPoint", [ label: (i + 1), value: it ]) }
 		<% } %>
-		</table>
+
+
 		<% } else { %>
 
 		No information
