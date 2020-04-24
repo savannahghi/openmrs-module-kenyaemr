@@ -61,7 +61,7 @@ public class PatientsEnrolledOnCovidCohortDefinitionEvaluator implements CohortD
 
 //        qry = "Select e.patient_id from kenyaemr_etl.etl_covid_19_enrolment e\n" +
 //                "group by e.patient_id having date(max(e.visit_date)) between date(:startDate) and date(:endDate);";
-        if (county != null) {
+        if (county != null && !county.equals("All Counties")) {
             qry = "Select e.patient_id from kenyaemr_etl.etl_covid_19_enrolment e where e.county=:county\n" +
                     "group by e.patient_id having (max(e.visit_date)) between (:startDate) and (:endDate);";
             builder.addParameter("county", county);
