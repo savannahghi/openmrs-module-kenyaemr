@@ -558,8 +558,8 @@
 			<set>
 				<ref bean="kenyaemr.app.reports" />
 			</set></property>
-		<property name="template" value="kenyaemr:Covid19-contact-tracing.xls" />
-		<property name="repeatingSection" value="sheet:1,row:2,dataset:covidCases" />
+		<property name="template" value="kenyaemr:covid/Covid19-contact-tracing.xls" />
+		<property name="repeatingSection" value="sheet:1,row:2,dataset:contactTracing" />
 	</bean>
 
 	<bean id="kenyaemr.common.report.pendingLabResults" class="org.openmrs.module.kenyacore.report.HybridReportDescriptor">

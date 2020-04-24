@@ -54,7 +54,7 @@ public class Covid19FollowupCasesCohortDefinitionEvaluator implements CohortDefi
         String qry = "";
         SqlQueryBuilder builder = new SqlQueryBuilder();
 
-        qry = "select patient_id from kenyaemr_etl.etl_covid_19_enrolment where voided=0 and date(visit_date) >= date(:startDate);";
+        qry = "select patient_id from kenyaemr_etl.etl_covid_19_enrolment where voided=0";
 
         builder.append(qry);
         Date startDate = (Date) context.getParameterValue("startDate");

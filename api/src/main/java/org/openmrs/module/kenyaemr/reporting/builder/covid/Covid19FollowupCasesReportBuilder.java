@@ -76,7 +76,7 @@ public class Covid19FollowupCasesReportBuilder extends AbstractHybridReportBuild
         DataDefinition passportDef = new ConvertedPatientDataDefinition("identifier", new PatientIdentifierDataDefinition(passportNumberType.getName(), passportNumberType), new IdentifierConverter());
         PersonAttributeType phoneNumber = MetadataUtils.existing(PersonAttributeType.class, CommonMetadata._PersonAttributeType.TELEPHONE_CONTACT);
         String DATE_FORMAT = "dd/MM/yyyy";
-        PatientDataSetDefinition dsd = new PatientDataSetDefinition("covidCases");
+        PatientDataSetDefinition dsd = new PatientDataSetDefinition("contactTracing");
 
         PatientIdentifierType upn = MetadataUtils.existing(PatientIdentifierType.class, CommonMetadata._PatientIdentifierType.NATIONAL_ID);
         DataConverter identifierFormatter = new ObjectFormatter("{identifier}");
@@ -84,10 +84,18 @@ public class Covid19FollowupCasesReportBuilder extends AbstractHybridReportBuild
 
         DataConverter nameFormatter = new ObjectFormatter("{familyName}, {givenName} {middleName}");
         DataDefinition nameDef = new ConvertedPersonDataDefinition("name", new PreferredNameDataDefinition(), nameFormatter);
+        dsd.addColumn("Unique Patient No", identifierDef, "");
         dsd.addColumn("id", new PersonIdDataDefinition(), "");
-
+        dsd.addColumn("Passport Number", passportDef, "");
         dsd.addColumn("Case Name", nameDef, "");
-        //dsd.addColumn("Case", nameDef, "");
+        dsd.addColumn("Date of Birth", new BirthdateDataDefinition(), "", new BirthdateConverter(DATE_FORMAT));
+        dsd.addColumn("Age", new AgeDataDefinition(), "");
+        dsd.addColumn("Sex", new GenderDataDefinition(), "");
+        dsd.addColumn("Phone Number", new PersonAttributeDataDefinition(phoneNumber), "");
+        dsd.addColumn("Occupation",new OccupationDataDefinition(), "");
+        dsd.addColumn("County",new CountyDataDefinition(), "");
+        dsd.addColumn("SubCounty",new SubcountyDataDefinition(), "");
+
         dsd.addColumn("Contacts identified",new ContactsIdentifiedDataDefinition(), "");
         dsd.addColumn("Contacts converted to cases",new ContactsConvertedToCasesDataDefinition(), "");
         dsd.addColumn("Contacts on followup",new ContactsOnFollowUpDataDefinition(), "");

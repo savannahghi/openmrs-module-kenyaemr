@@ -35,7 +35,7 @@ public class ContactsIdentifiedDataEvaluator implements PersonDataEvaluator {
     public EvaluatedPersonData evaluate(PersonDataDefinition definition, EvaluationContext context) throws EvaluationException {
         EvaluatedPersonData c = new EvaluatedPersonData(definition, context);
 
-        String qry = "select c.patient_related_to,count(id) from kenyaemr_etl.etl_patient_contact c inner join etl_covid_19_enrolment e on c.patient_related_to = e.patient_id where c.voided = 0 group by c.patient_related_to;";
+        String qry = "select c.patient_related_to,count(id) from kenyaemr_etl.etl_patient_contact c inner join kenyaemr_etl.etl_covid_19_enrolment e on c.patient_related_to = e.patient_id where c.voided = 0 group by c.patient_related_to;";
 
         SqlQueryBuilder queryBuilder = new SqlQueryBuilder();
         Date startDate = (Date)context.getParameterValue("startDate");
