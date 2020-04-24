@@ -9,7 +9,12 @@
  */
 package org.openmrs.module.kenyaemr.fragment.controller.covid;
 
-import org.openmrs.*;
+import org.apache.commons.lang3.StringUtils;
+import org.openmrs.Encounter;
+import org.openmrs.EncounterType;
+import org.openmrs.Form;
+import org.openmrs.Obs;
+import org.openmrs.Patient;
 import org.openmrs.module.kenyacore.form.FormManager;
 import org.openmrs.module.kenyaemr.metadata.CommonMetadata;
 import org.openmrs.module.kenyaemr.util.EmrUtils;
@@ -40,58 +45,84 @@ public class ComorbidityFormFragmentController {
 		EncounterType encComorbidityHistory = MetadataUtils.existing(EncounterType.class, CommonMetadata._EncounterType.COVID_19_COMORBIDITY);
 		Form formComorbidityHistory = MetadataUtils.existing(Form.class, CommonMetadata._Form.COVID_19_COMORBIDITY_FORM);
 		
-		List<Encounter> encs = EmrUtils.AllEncounters(patient, encComorbidityHistory, formComorbidityHistory);
-		List<SimpleObject> simplifiedEncData = new ArrayList<SimpleObject>();
-		for (Encounter e : encs) {
-			SimpleObject o = buildEncounterData(e.getObs(), e);
-			simplifiedEncData.add(o);
+		Encounter enc = EmrUtils.lastEncounter(patient, encComorbidityHistory, formComorbidityHistory);
+		SimpleObject simplifiedEncData = null;
+		if (enc != null) {
+			simplifiedEncData = buildEncounterData(enc.getObs(), enc);
 		}
+
 		model.addAttribute("patient", patient);
-		model.addAttribute("encounters", simplifiedEncData);
-		model.addAttribute("gender", patient.getGender());
+		model.addAttribute("conditions", simplifiedEncData);
 	}
 	
 	public static SimpleObject buildEncounterData(Set<Obs> obsList, Encounter e) {
 
 
 		int pregnancyConcept = 5272;
+		int trimesterConcept = 160665;
+		int firstTrimesterConcept = 1721;
+		int secondTrimesterConcept = 1722;
+		int thirdTrimesterConcept = 1723;
+		int cardiovascularDiseaseConcept = 119270;
+		int chronicNeurologicalDiseaseConcept = 165646;
+		int immunodeficiencyConcept = 117277;
+		int postpartumConcept = 129317;
+		int chronicLungDiseaseConcept = 155569;
 		int liverDiseaseConcept = 6032;
+		int malignancyConcept = 116031;
 		int renalConcept = 6033;
 		int diabetesConcept = 119481;
 		int yesConcept = 1065;
-		int noConcept = 1066;
 
-		String renalDisease = "";
-		String liverDisease = "";
-		String diabetes = "";
-		String pregnant = "";
+		boolean pregnant = false;
+		String trimester = null;
 
-		String encDate = e != null ? DATE_FORMAT.format(e.getEncounterDatetime()) : "";
+		List<String> comorbidites = new ArrayList<String>();
 		
 		for (Obs obs : obsList) {
 			
 			if (obs.getConcept().getConceptId().equals(pregnancyConcept) && obs.getValueCoded().getConceptId().equals(yesConcept)) {
-				pregnant = "Yes";
-			} else if (obs.getConcept().getConceptId().equals(pregnancyConcept) && obs.getValueCoded().getConceptId().equals(noConcept)) {
-				pregnant = "No";
+				pregnant = true;
+			} else if (obs.getConcept().getConceptId().equals(trimesterConcept)) {
+				if (obs.getValueCoded().getConceptId().equals(firstTrimesterConcept)) {
+					trimester = "First Trimester";
+				} else if (obs.getValueCoded().getConceptId().equals(secondTrimesterConcept)) {
+					trimester = "Second Trimester";
+				} else if (obs.getValueCoded().getConceptId().equals(thirdTrimesterConcept)) {
+					trimester = "Third Trimester";
+				}
 			} else if (obs.getConcept().getConceptId().equals(liverDiseaseConcept) && obs.getValueCoded().getConceptId().equals(yesConcept)) {
-				liverDisease = "Yes";
-			} else if (obs.getConcept().getConceptId().equals(liverDiseaseConcept) && obs.getValueCoded().getConceptId().equals(noConcept)) {
-				liverDisease = "No";
+				comorbidites.add("Liver Disease");
+			} else if (obs.getConcept().getConceptId().equals(chronicNeurologicalDiseaseConcept) && obs.getValueCoded().getConceptId().equals(yesConcept)) {
+				comorbidites.add("Chronic neurological or neuromascular disease");
 			}  else if (obs.getConcept().getConceptId().equals(renalConcept) && obs.getValueCoded().getConceptId().equals(yesConcept)) {
-				renalDisease = "Yes";
-			} else if (obs.getConcept().getConceptId().equals(renalConcept) && obs.getValueCoded().getConceptId().equals(noConcept)) {
-				renalDisease = "No";
+				comorbidites.add("Renal Disease");
+			} else if (obs.getConcept().getConceptId().equals(chronicLungDiseaseConcept) && obs.getValueCoded().getConceptId().equals(yesConcept)) {
+				comorbidites.add("Chronic lung disease");
+			} else if (obs.getConcept().getConceptId().equals(malignancyConcept) && obs.getValueCoded().getConceptId().equals(yesConcept)) {
+				comorbidites.add("Malignancy");
 			} else if (obs.getConcept().getConceptId().equals(diabetesConcept) && obs.getValueCoded().getConceptId().equals(yesConcept)) {
-				diabetes = "Yes";
-			} else if (obs.getConcept().getConceptId().equals(diabetesConcept) && obs.getValueCoded().getConceptId().equals(noConcept)) {
-				diabetes = "No";
+				comorbidites.add("Diabetes");
+			}  else if (obs.getConcept().getConceptId().equals(immunodeficiencyConcept) && obs.getValueCoded().getConceptId().equals(yesConcept)) {
+				comorbidites.add("Immunodeficiency");
+			}  else if (obs.getConcept().getConceptId().equals(postpartumConcept) && obs.getValueCoded().getConceptId().equals(yesConcept)) {
+				comorbidites.add("Post-partum less than 6 weeks");
+			}  else if (obs.getConcept().getConceptId().equals(cardiovascularDiseaseConcept) && obs.getValueCoded().getConceptId().equals(yesConcept)) {
+				comorbidites.add("Cardiovascular disease including hypertension");
 			}
 		}
+
+		String pregnancy = "";
+
+		if (pregnant && trimester != null) {
+			pregnancy = "Pregnant".concat("(").concat(trimester).concat(")");
+			comorbidites.add(pregnancy);
+		} else if (pregnant) {
+			pregnancy = "Pregnant";
+			comorbidites.add(pregnancy);
+		}
 		
-		return SimpleObject.create("encDate", encDate, "encId", e.getEncounterId(), "renalDisease", renalDisease != null ? renalDisease : "", "pregnant",
-				pregnant != null ? pregnant : "", "liverDisease", liverDisease != null ? liverDisease
-		            : "", "diabetes", diabetes != null ? diabetes : ""
+		return SimpleObject.create("conditions", comorbidites
 		
 		);
 	}
