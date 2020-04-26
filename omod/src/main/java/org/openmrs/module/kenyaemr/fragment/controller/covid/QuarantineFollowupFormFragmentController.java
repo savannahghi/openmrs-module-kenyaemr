@@ -30,6 +30,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * Patient summary fragment
@@ -45,13 +47,29 @@ public class QuarantineFollowupFormFragmentController {
 		Form formtravelHistory = MetadataUtils.existing(Form.class, CommonMetadata._Form.COVID_QUARANTINE_FOLLOWUP);
 		
 		List<Encounter> encs = EmrUtils.AllEncounters(patient, encTravelHistory, formtravelHistory);
+		Collections.sort(encs, new Comparator<Encounter>(){
+			public int compare(Encounter left, Encounter right) {
+				return right.getEncounterDatetime().compareTo(left.getEncounterDatetime());
+			}
+		});
 		List<SimpleObject> simplifiedEncData = new ArrayList<SimpleObject>();
+		List<SimpleObject> lastFiveEncounters = new ArrayList<SimpleObject>();
+
 		for (Encounter e : encs) {
 			SimpleObject o = buildEncounterData(e.getObs(), e);
 			simplifiedEncData.add(o);
 		}
+		for (int i = 0; i < simplifiedEncData.size(); i++) {
+			if (i <5) {
+				lastFiveEncounters.add(simplifiedEncData.get(i));
+			}
+
+		}
+
 		model.addAttribute("patient", patient);
 		model.addAttribute("encounters", simplifiedEncData);
+		model.addAttribute("lastFiveEncounters",lastFiveEncounters );
+
 	}
 	
 	public static SimpleObject buildEncounterData(Set<Obs> obsList, Encounter e) {
