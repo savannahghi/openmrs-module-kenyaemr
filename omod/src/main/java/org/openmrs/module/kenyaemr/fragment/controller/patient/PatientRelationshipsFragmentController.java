@@ -41,6 +41,7 @@ public class PatientRelationshipsFragmentController {
 
 		// Get all relationships as simple objects
 		List<SimpleObject> relationships = new ArrayList<SimpleObject>();
+		List<SimpleObject> firstTwoRelationships = new ArrayList<SimpleObject>();
 		for (Relationship relationship : Context.getPersonService().getRelationshipsByPerson(patient)) {
 			Person person = null;
 			String type = null;
@@ -81,7 +82,15 @@ public class PatientRelationshipsFragmentController {
 			));
 		}
 
+		for (int i = 0; i < relationships.size(); i++) {
+			if (i <2) {
+				firstTwoRelationships.add(relationships.get(i));
+			}
+
+		}
+
 		model.addAttribute("patient", patient);
 		model.addAttribute("relationships", relationships);
+		model.addAttribute("firstTwoRelationships", firstTwoRelationships);
 	}
 }
