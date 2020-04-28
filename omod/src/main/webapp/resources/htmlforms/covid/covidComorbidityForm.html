@@ -14,6 +14,20 @@
 <htmlform>
 
     <script type="text/javascript" src="../moduleResources/kenyaemr/scripts/moment.js"></script>
+    <script type="text/javascript">
+        jq(function () {
+            jq('#pregnant input').change(onPregnantChange);
+        });
+        function onPregnantChange() {
+
+            if (getValue('pregnant.value') == 1065) {
+                jq('#trimester').show();
+            }else{
+                clearHiddenSections(jq('#trimester-number'));
+                jq('#trimester').hide();
+            }
+        }
+    </script>
 
     <style>
         table {
@@ -49,8 +63,22 @@
 
     <div class="ke-form-header">
            <ifMode mode="EDIT">
+               <script type="text/javascript">
+                   jq(function(){
+                       onPregnantChange();
+                   });
+                   function onPregnantChange() {
 
-                    </ifMode>
+                       if (getValue('pregnant.value') == 1065) {
+                           jq('#trimester').show();
+                       }else{
+                           clearHiddenSections(jq('#trimester-number'));
+                           jq('#trimester').hide();
+                       }
+                   }
+               </script>
+
+           </ifMode>
          <table width="70%">
             <tr>
                 <td align="left">Date
@@ -90,16 +118,7 @@
                </tr>
             </table>
             </includeIf>
-            <table>
-               <tr>
-                    <td>Any underlying conditions</td>
-                    <td>
-                        <obs conceptId="162747AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" " id="underlying-conditions"
-                             answerConceptIds="1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-                             style="radio" answerLabels="Yes,No"/>
-                    </td>
-                </tr>
-            </table>
+
             <table id="conditions">
                 <tr>
                     <td>Cardiovascular disease including hypertension

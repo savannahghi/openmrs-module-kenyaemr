@@ -174,7 +174,7 @@
                         <select name="personAddress.country">
                             <option></option>
                             <%countryList.each { %>
-                            <option ${!country? "" : it.trim() == country.trim() ? "selected" : ""} value="${it}">${it}</option>
+                            <option ${!country? "" : it.trim().toLowerCase() == country.trim().toLowerCase() ? "selected" : ""} value="${it}">${it}</option>
                             <%}%>
                         </select>
                     </td>
@@ -197,7 +197,7 @@
                         <select name="personAddress.countyDistrict">
                             <option></option>
                             <%countyList.each { %>
-                            <option ${!countyName? "" : it.trim() == countyName.trim() ? "selected" : ""} value="${it}">${it}</option>
+                            <option ${!countyName? "" : it.trim().toLowerCase() == countyName.trim().toLowerCase() ? "selected" : ""} value="${it}">${it}</option>
                             <%}%>
                         </select>
                     </td>
