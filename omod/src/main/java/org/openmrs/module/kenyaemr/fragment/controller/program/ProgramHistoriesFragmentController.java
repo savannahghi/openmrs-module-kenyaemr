@@ -10,8 +10,11 @@
 package org.openmrs.module.kenyaemr.fragment.controller.program;
 
 import org.openmrs.Patient;
+import org.openmrs.PatientProgram;
+import org.openmrs.Program;
 import org.openmrs.module.kenyacore.program.ProgramDescriptor;
 import org.openmrs.module.kenyacore.program.ProgramManager;
+import org.openmrs.module.kenyaemr.Metadata;
 import org.openmrs.module.kenyaemr.metadata.COVIDMetadata;
 import org.openmrs.ui.framework.annotation.FragmentParam;
 import org.openmrs.ui.framework.annotation.SpringBean;
@@ -33,7 +36,7 @@ public class ProgramHistoriesFragmentController {
 
 		List<ProgramDescriptor> programs = new ArrayList<ProgramDescriptor>();
 
-		if (!patient.isVoided()) {
+		if (!patient.isVoided() && !patient.isDead()) {
 			Collection<ProgramDescriptor> activePrograms = programManager.getPatientActivePrograms(patient);
 			Collection<ProgramDescriptor> eligiblePrograms = programManager.getPatientEligiblePrograms(patient);
 			for (ProgramDescriptor ActiveCovidDescriptor : activePrograms) {
@@ -61,6 +64,16 @@ public class ProgramHistoriesFragmentController {
 
 				}
 			}
+		} else if (patient.isDead()) {
+			Collection<ProgramDescriptor> allProgramsPrograms = programManager.getAllProgramDescriptors();
+			for (ProgramDescriptor descriptor : allProgramsPrograms) {
+				Program program = descriptor.getTarget();
+				List<PatientProgram> prevEnrollments = programManager.getPatientEnrollments(patient, program);
+				if (prevEnrollments.size() > 0) {
+					programs.add(descriptor);
+				}
+			}
+
 		}
 
 		model.addAttribute("patient", patient);
