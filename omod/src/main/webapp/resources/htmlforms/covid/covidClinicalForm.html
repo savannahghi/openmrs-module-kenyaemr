@@ -355,20 +355,23 @@
                             }
                         </script>
                     </ifMode>
-         <table width="70%">
+         <table width="90%">
             <tr>
-                <td align="left" width="40%">Date of reporting to National Health authority:
-                    <encounterDate id="encounter-date" showTime="true"/>
+                <td align="left" width="30%">Date of reporting to National Health authority:
+                    <encounterDate id="encounter-date" showTime="false"/>
                 </td>
-                <td align="left" width="20%">
+                <td align="left" width="15%">
                     County: <obs required="true" id="county" conceptId="CIEL:165197"  answers="$countyNames" answerLabels="$countyNames"/>
 
                 </td>
-                <td align="left" width="20%">
+                <td align="left" width="15%">
                     Sub County: <obs id="subCounty" required="true" conceptId="CIEL:161551" answers="$subCountyList" answerLabels="$subCountyList"/>
                 </td>
                 <td align="left" width="20%">
                     Ward: <obs id="ward" conceptId="CIEL:165195" answers="$wardList" answerLabels="$wardList"/>
+                </td>
+                <td align="left" width="20%">
+                    Health Facility: <obs id="facility" conceptId="161550AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" size="40"/>
                 </td>
 
             </tr>
@@ -819,6 +822,13 @@
                             <obs conceptId="1542AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                                  answerConceptId="164831AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                                  answerLabel="Health laboratory worker" style="checkbox"/>
+                            <br/>
+                            <obs conceptId="1542AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                                 answerConceptId="5622AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                                 answerLabel="Other" style="checkbox"/> &#160;&#160;&#160;&#160;&#160;
+                            <obs conceptId="161011AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                                 size="50"
+                                 answerLabel="Specify"/>
                             <br/>
 
                         </div>
