@@ -15,8 +15,12 @@
     <macros>
       <macro key="countryNames" value="Afghanistan, Äland Islands, Albania, Algeria, American Samoa, Andorra, Angola, Anguilla, Antarctica, Antigua and Barbuda, Argentina, Armenia, Aruba, Australia, Austria, Azerbaijan, Bahamas, Bahrain, Bangladesh, Barbados, Belarus, Belgium, Belize, Benin, Bermuda, Bhutan, Bolivia, Sint Eustatius and Saba Bonaire, Bosnia and Herzegovina, Botswana, Bouvet Island, Brazil, British Indian Ocean Territory, Brunei Darussalam, Bulgaria, Burkina Faso, Burundi, Cabo Verde, Cambodia, Cameroon, Canada, Cayman Islands, Central African Republic, Chad, Chile, China, Christmas Island, Cocos (Keeling) Islands, Colombia, Comoros, Congo, Congo, Democratic Republic of the, Cook Islands, Costa Rica, C√¥te d'Ivoire, Croatia, Cuba, Cura√ßao, Cyprus, Czechia, Denmark, Djibouti, Dominica, Dominican Republic, Ecuador, Egypt, El Salvador, Equatorial Guinea, Eritrea, Estonia, Eswatini, Ethiopia, Falkland Islands (Malvinas), Faroe Islands, Fiji, Finland, France, French Guiana, French Polynesia, French Southern Territories, Gabon, Gambia, Georgia, Germany, Ghana, Gibraltar, Greece, Greenland, Grenada, Guadeloupe, Guam, Guatemala, Guernsey, Guinea, Guinea-Bissau, Guyana, Haiti, Heard Island and McDonald Islands, Holy See, Honduras, Hong Kong, Hungary, Iceland, India, Indonesia, Iran, Iraq, Ireland, Isle of Man, Israel, Italy, Jamaica, Japan, Jersey, Jordan, Kazakhstan, Kenya, Kiribati, Democratic People's Republic of Korea, Republic of Korea, Kuwait, Kyrgyzstan, Lao People's Democratic Republic, Latvia, Lebanon, Lesotho, Liberia, Libya, Liechtenstein, Lithuania, Luxembourg, Macao, Madagascar, Malawi, Malaysia, Maldives, Mali, Malta, Marshall Islands, Martinique, Mauritania, Mauritius, Mayotte, Mexico, Micronesia, Moldova, Monaco, Mongolia, Montenegro, Montserrat, Morocco, Mozambique, Myanmar, Namibia, Nauru, Nepal, Netherlands, New Caledonia, New Zealand, Nicaragua, Niger, Nigeria, Niue, Norfolk Island, North Macedonia, Northern Mariana Islands, Norway, Oman, Pakistan, Palau, Palestine, Panama, Papua New Guinea, Paraguay, Peru, Philippines, Pitcairn, Poland, Portugal, Puerto Rico, Qatar, Réunion, Romania, Russian Federation, Rwanda, Saint Barthélemy, Saint Helena, Ascension and Tristan da Cunha, Saint Kitts and Nevis, Saint Lucia, Saint Martin, Saint Pierre and Miquelon, Saint Vincent and the Grenadines, Samoa, San Marino, Sao Tome and Principe, Saudi Arabia, Senegal, Serbia, Seychelles, Sierra Leone, Singapore, Sint Maarten, Slovakia, Slovenia, Solomon Islands, Somalia, South Africa, South Georgia and the South Sandwich Islands, South Sudan, Spain, Sri Lanka, Sudan, Suriname, Svalbard and Jan Mayen, Sweden, Switzerland, Syrian Arab Republic, Taiwan, Tajikistan, Tanzania, Thailand, Timor-Leste, Togo, Tokelau, Tonga, Trinidad and Tobago, Tunisia, Turkey, Turkmenistan, Turks and Caicos Islands, Tuvalu, Uganda, Ukraine, United Arab Emirates, United Kingdom of Great Britain and Northern Ireland, United States of America, United States Minor Outlying Islands, Uruguay, Uzbekistan, Vanuatu, Venezuela, Viet Nam, Virgin Islands (British), Virgin Islands (U.S.), Wallis and Futuna, Western Sahara, Yemen, Zambia, Zimbabwe"/>
       <macro key="countyNames" value="Nairobi,Mombasa,Kilifi,Kwale,Homa-Bay,Kisumu,Migori,Kisii,Uasin-Gishu,Bomet,Busia,Kiambu,Nyeri,Muranga,Kirinyaga,Nyandarua,Machakos,Kitui,Makueni,Embu,Meru,Isiolo,Marsabit,Turkana,Mandera,Lamu,West Pokot,Bungoma,Vihiga,Kakamega,Siaya,Nyamira,Kericho,Trans Nzoia,Nakuru,Laikipia,Tharaka Nith,Garissa,Taita Taveta,Tana River,Samburu,Elgeyo Marakwet,Nandi,Baringo,Narok,Kajiado,Wajir" />
+      <macro key="subCountyList" value="Select County"/>
+      <macro key="wardList" value="Select Sub-County"/>
+
     </macros>
     <script type="text/javascript" src="../moduleResources/kenyaemr/scripts/moment.js"></script>
+    <script type="text/javascript" src="../moduleResources/kenyaemr/scripts/KenyaAddressHierarchy.js"></script>
     <script type="text/javascript">
         jq(function () {
             jq('#detected-poe input').change(onDetectedAtPOEChange);
@@ -45,6 +49,8 @@
             jq('#contact-confirmed-probable-case-last-14-days input').change(onRecentlyContactedProbableCaseChange);
             jq('#animal-market').hide();
             jq('#visited-animal-market-last-14-days input').change(onRecentlyVisitedAnimalMarketChange);
+            jq('#county select').change(updateSubcounty);
+            jq('#subCounty select').change(updateWard);
 
             //jq('#animal-market-exposure-location').hide();
         });
@@ -187,6 +193,32 @@
             }
         }
 
+        function updateSubcounty() {
+
+            getField('subCounty.value').empty();
+            getField('ward.value').empty();
+            var selectedCounty = getValue('county.value');
+            var scKey;
+            getField('subCounty.value').append(jq("<option></option>").attr("value", "").text(""));
+            for (scKey in kenyaAddressHierarchy[selectedCounty]) {
+                getField('subCounty.value').append(jq("<option></option>").attr("value", scKey).text(scKey));
+
+            }
+        }
+
+        function updateWard() {
+
+            getField('ward.value').empty();
+            var selectedCounty = getValue('county.value');
+            var selectedsubCounty = getValue('subCounty.value');
+            var scKey;
+            getField('ward.value').append(jq("<option></option>").attr("value", "").text(""));
+            for (scKey in kenyaAddressHierarchy[selectedCounty][selectedsubCounty]) {
+                getField('ward.value').append(jq("<option></option>").attr("value", kenyaAddressHierarchy[selectedCounty][selectedsubCounty][scKey].facility).text(kenyaAddressHierarchy[selectedCounty][selectedsubCounty][scKey].facility));
+
+            }
+        }
+
         //Clear hidden sections
         clearHiddenSections = function(parentObj) {
             parentObj.find('input[type=radio]').each(function() {
@@ -325,18 +357,18 @@
                     </ifMode>
          <table width="70%">
             <tr>
-                <td align="left">Date of reporting to National Health authority:
+                <td align="left" width="40%">Date of reporting to National Health authority:
                     <encounterDate id="encounter-date" showTime="true"/>
                 </td>
-                <td>
+                <td align="left" width="20%">
                     County: <obs required="true" id="county" conceptId="CIEL:165197"  answers="$countyNames" answerLabels="$countyNames"/>
 
                 </td>
-                <td>
-                    Sub county: <obs conceptId="161551AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"/>
+                <td align="left" width="20%">
+                    Sub County: <obs id="subCounty" required="true" conceptId="CIEL:161551" answers="$subCountyList" answerLabels="$subCountyList"/>
                 </td>
-                <td style="display: none">Reporting health facility:
-                    <encounterLocation default="GlobalProperty:kenyaemr.defaultLocation"/>
+                <td align="left" width="20%">
+                    Ward: <obs id="ward" conceptId="CIEL:165195" answers="$wardList" answerLabels="$wardList"/>
                 </td>
 
             </tr>
@@ -350,7 +382,7 @@
                         Detection point: &#160;&#160;&#160;&#160;
                     </td>
                     <td>
-                        <obs id="detected-poe" conceptId="161010AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "
+                        <obs required="true" id="detected-poe" conceptId="161010AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "
                              answerConceptIds="165651AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,163488AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1067AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                              style="radio" answerLabels="Point of entry,Detected in Community,Unknown"/>
                     </td>
@@ -374,7 +406,7 @@
                 <tr>
                     <td> Symptomatic:</td>
                     <td>
-                        <obs id="symptomatic" conceptId="1729AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"  labelText=" "
+                        <obs required="true" id="symptomatic" conceptId="1729AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"  labelText=" "
                              answerConceptIds="1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1067AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                              style="radio" answerLabels="Yes,No,Unknown"/>
                     </td>
@@ -391,7 +423,7 @@
                 <tr>
                     <td> Health status at the time of reporting:</td>
                     <td>
-                        <obs id="status-at-reporting" conceptId="159640AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "
+                        <obs required="true" id="status-at-reporting" conceptId="159640AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "
                              answerConceptIds="159405AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,159407AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,160432AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1067AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                              style="radio" answerLabels="Stable,Severly ill,Dead,Unknown"/>
                     </td>
@@ -572,7 +604,7 @@
                     <td>Temperature:
                     </td>
                     <td>
-                        <obs conceptId="5088AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"/> &#176;C
+                        <obs required="true" conceptId="5088AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"/> &#176;C
                     </td>
                 </tr>
                 <tr>
@@ -680,7 +712,7 @@
                <tr>
                     <td>Any underlying conditions</td>
                     <td>
-                        <obs conceptId="162747AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" " id="underlying-conditions"
+                        <obs required="true" conceptId="162747AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" " id="underlying-conditions"
                              answerConceptIds="1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                              style="radio" answerLabels="Yes,No"/>
                     </td>
@@ -795,7 +827,7 @@
                 <tr>
                     <td>
                         Has the patient <b>travelled</b> in the 14 days prior to symptom onset?
-                        <obs id="travelled-last-14-days" conceptId="162619AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                        <obs required="true" id="travelled-last-14-days" conceptId="162619AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                              labelText=" "
                              answerConceptIds="1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1067AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                              style="radio" answerLabels="Yes,No,unknown"/>
@@ -835,7 +867,7 @@
 
                     </td>
                     <td>
-                        <obs id="visited-hf-last-14-days" conceptId="162723AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                        <obs required="true" id="visited-hf-last-14-days" conceptId="162723AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                              labelText=" "
                              answerConceptIds="1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1067AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                              style="radio" answerLabels="Yes,No,unknown"/>
@@ -848,7 +880,7 @@
 
                     </td>
                     <td>
-                        <obs id="contact-with-infected-person-last-14-days"
+                        <obs required="true" id="contact-with-infected-person-last-14-days"
                              conceptId="165850AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "
                              answerConceptIds="1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1067AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                              style="radio" answerLabels="Yes,No,unknown"/>
@@ -876,7 +908,7 @@
 
                     </td>
                     <td>
-                        <obs id="contact-confirmed-probable-case-last-14-days"
+                        <obs required="true" id="contact-confirmed-probable-case-last-14-days"
                              conceptId="162633AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText=" "
                              answerConceptIds="1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1067AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                              style="radio" answerLabels="Yes,No,unknown"/>
