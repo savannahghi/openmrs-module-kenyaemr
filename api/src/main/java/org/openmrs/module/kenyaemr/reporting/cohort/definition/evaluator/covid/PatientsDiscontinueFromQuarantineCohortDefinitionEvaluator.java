@@ -42,7 +42,7 @@ public class PatientsDiscontinueFromQuarantineCohortDefinitionEvaluator implemen
     @Override
     public EvaluatedCohort evaluate(CohortDefinition cohortDefinition, EvaluationContext context) throws EvaluationException {
 
-		PatientsDiscontinuedOnCovidCohortDefinition definition = (PatientsDiscontinuedOnCovidCohortDefinition) cohortDefinition;
+		PatientsDiscontinuedFromQuarantineCohortDefinition definition = (PatientsDiscontinuedFromQuarantineCohortDefinition) cohortDefinition;
 
         if (definition == null)
             return null;
