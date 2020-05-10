@@ -18,7 +18,7 @@ import org.openmrs.module.reporting.evaluation.caching.Caching;
  * Discontinued covid cohort definition
  */
 @Caching(strategy = ConfigurationPropertyCachingStrategy.class)
-@Localized("reporting.PatientsDiscontinuedOnCovidCohortDefinition")
+@Localized("reporting.PatientsDiscontinuedFromQuarantineCohortDefinition")
 public class PatientsDiscontinuedFromQuarantineCohortDefinition extends BaseCohortDefinition {
 
 }
