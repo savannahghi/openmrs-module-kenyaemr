@@ -13,6 +13,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.Cohort;
 import org.openmrs.annotation.Handler;
+import org.openmrs.module.kenyaemr.reporting.cohort.definition.covid.PatientsDiscontinuedFromQuarantineCohortDefinition;
 import org.openmrs.module.kenyaemr.reporting.cohort.definition.covid.PatientsDiscontinuedOnCovidCohortDefinition;
 import org.openmrs.module.reporting.cohort.EvaluatedCohort;
 import org.openmrs.module.reporting.cohort.definition.CohortDefinition;
@@ -30,8 +31,8 @@ import java.util.List;
  * Evaluator for DiscontinuedCohortDefinition
  * Includes patients discontinued
  */
-@Handler(supports = {PatientsDiscontinuedOnCovidCohortDefinition.class})
-public class PatientsDiscontinueOnCovidCohortDefinitionEvaluator implements CohortDefinitionEvaluator {
+@Handler(supports = {PatientsDiscontinuedFromQuarantineCohortDefinition.class})
+public class PatientsDiscontinueFromQuarantineCohortDefinitionEvaluator implements CohortDefinitionEvaluator {
 
     private final Log log = LogFactory.getLog(this.getClass());
 
@@ -50,7 +51,7 @@ public class PatientsDiscontinueOnCovidCohortDefinitionEvaluator implements Coho
 
 		String qry = "select pp.patient_id from patient_program pp \n" +
 				"inner join person ps on pp.patient_id = ps.person_id and ps.voided=0\n" +
-				"inner join (select program_id from program where uuid='e7ee7548-6958-4361-bed9-ee2614423947') p on pp.program_id = p.program_id\n" +
+				"inner join (select program_id from program where uuid='9a5d555e-739a-11ea-bc55-0242ac130003') p on pp.program_id = p.program_id\n" +
 				"where pp.voided=0 and pp.date_completed is not null";
 
 		SqlQueryBuilder builder = new SqlQueryBuilder();

@@ -16,7 +16,7 @@ import org.openmrs.module.kenyacore.report.ReportUtils;
 import org.openmrs.module.kenyacore.report.builder.AbstractHybridReportBuilder;
 import org.openmrs.module.kenyacore.report.builder.Builds;
 import org.openmrs.module.kenyaemr.metadata.CommonMetadata;
-import org.openmrs.module.kenyaemr.reporting.cohort.definition.covid.PatientsDiscontinuedOnCovidCohortDefinition;
+import org.openmrs.module.kenyaemr.reporting.cohort.definition.covid.PatientsDiscontinuedFromQuarantineCohortDefinition;
 import org.openmrs.module.kenyaemr.reporting.data.converter.definition.covid.DateOfQuarantineAdmissionDataDefinition;
 import org.openmrs.module.kenyaemr.reporting.data.converter.definition.covid.DateOfQuarantineDiscontinuationDataDefinition;
 import org.openmrs.module.kenyaemr.reporting.data.converter.definition.covid.NameOfQuarantineCenterDataDefinition;
@@ -46,7 +46,7 @@ import java.util.List;
 
 @Component
 @Builds({"kenyaemr.covid.report.discontinuedOnQuarantine"})
-public class PatientsDiscontinuedOnQuarantineReportBuilder extends AbstractHybridReportBuilder {
+public class PatientsDiscontinuedFromQuarantineReportBuilder extends AbstractHybridReportBuilder {
     public static final String DATE_FORMAT = "dd/MM/yyyy";
 
 
@@ -61,7 +61,7 @@ public class PatientsDiscontinuedOnQuarantineReportBuilder extends AbstractHybri
 
 
     protected Mapped<CohortDefinition> allPatientsCohort() {
-        CohortDefinition cd = new PatientsDiscontinuedOnCovidCohortDefinition();
+        CohortDefinition cd = new PatientsDiscontinuedFromQuarantineCohortDefinition();
         cd.setName("Patients Discontinued");
         return ReportUtils.map(cd, "");
     }
