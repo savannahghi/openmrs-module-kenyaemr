@@ -35,7 +35,7 @@ public class DateOfQuarantineDiscontinuationDataEvaluator implements PersonDataE
     public EvaluatedPersonData evaluate(PersonDataDefinition definition, EvaluationContext context) throws EvaluationException {
         EvaluatedPersonData c = new EvaluatedPersonData(definition, context);
 
-        String qry = "select d.patient_id,d.visit_date from kenyaemr_etl.etl_patient_program_discontinuation d where d.program_name='COVID-19 Quarantine Program' group by d.patient_id;";
+        String qry = "select d.patient_id,date(d.encounter_date) as visit_date from kenyaemr_etl.etl_patient_program_discontinuation d where d.program_name='COVID-19 Quarantine Program' group by d.patient_id;";
 
         SqlQueryBuilder queryBuilder = new SqlQueryBuilder();
         Date startDate = (Date)context.getParameterValue("startDate");
