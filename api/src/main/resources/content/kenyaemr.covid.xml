@@ -55,6 +55,7 @@
 			<set>
 				<ref bean="kenyaemr.covid.report.enrolledInCovidQuarantine" />
 				<ref bean="kenyaemr.covid.report.quarantineLineList" />
+				<ref bean="kenyaemr.covid.report.discontinuedOnQuarantine" />
 
 			</set>
 		</property>
@@ -155,6 +156,12 @@
 		<property name="name" value="Individuals currently in Quarantine" />
 		<property name="description" value="Individuals currently in Quarantine" />
 		<property name="calculation" value="org.openmrs.module.kenyaemr.calculation.library.covid.OnCovidQuarantineCalculation" />
+		<property name="apps"><set><ref bean="kenyaemr.app.reports" /></set></property>
+	</bean>
+	<bean id="kenyaemr.covid.report.discontinuedOnQuarantine" class="org.openmrs.module.kenyacore.report.HybridReportDescriptor">
+		<property name="targetUuid" value="fa6c0f76-90f9-4246-89b2-29330e70b90a" />
+		<property name="name" value="COVID-19 Quarantine Discontinued Patients" />
+		<property name="description" value="Discontinued COVID-19 Quarantine individuals" />
 		<property name="apps"><set><ref bean="kenyaemr.app.reports" /></set></property>
 	</bean>
 </beans>
