@@ -160,8 +160,8 @@
 	</bean>
 	<bean id="kenyaemr.covid.report.discontinuedOnQuarantine" class="org.openmrs.module.kenyacore.report.HybridReportDescriptor">
 		<property name="targetUuid" value="fa6c0f76-90f9-4246-89b2-29330e70b90a" />
-		<property name="name" value="COVID-19 Quarantine Discontinued Patients" />
-		<property name="description" value="Discontinued COVID-19 Quarantine individuals" />
+		<property name="name" value="Individuals discontinued from Quarantine" />
+		<property name="description" value="Individuals discontinued from Quarantine" />
 		<property name="apps"><set><ref bean="kenyaemr.app.reports" /></set></property>
 	</bean>
 </beans>
