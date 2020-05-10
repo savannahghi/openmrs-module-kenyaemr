@@ -35,7 +35,7 @@ public class QuarantineDiscontinuationReasonDataEvaluator implements PersonDataE
     public EvaluatedPersonData evaluate(PersonDataDefinition definition, EvaluationContext context) throws EvaluationException {
         EvaluatedPersonData c = new EvaluatedPersonData(definition, context);
 
-        String qry = "select d.patient_id,(case d.reason_discontinued when 159492 then 'Transferred Out' when 164165 then 'Referred' when 1692 then 'Discharged' else '' end) disReason from kenyaemr_etl.etl_patient_program_discontinuation d where d.program_name='COVID-19 Quarantine Program' group by d.patient_id;";
+        String qry = "select d.patient_id,(case d.discontinuation_reason when 159492 then 'Transferred Out' when 164165 then 'Referred' when 1692 then 'Discharged' else '' end) disReason from kenyaemr_etl.etl_patient_program_discontinuation d where d.program_name='COVID-19 Quarantine Program' group by d.patient_id;";
 
         SqlQueryBuilder queryBuilder = new SqlQueryBuilder();
         Date startDate = (Date)context.getParameterValue("startDate");
