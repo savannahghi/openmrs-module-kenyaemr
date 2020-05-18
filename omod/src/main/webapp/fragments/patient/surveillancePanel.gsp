@@ -75,12 +75,14 @@
 					Register Case
 				</a>
 			</li>
+			<% if(hasCaseEnrollment) { %>
 			<li class="float-left" style="margin-top: 7px">
 				<a href="${ ui.pageLink("kenyaemrorderentry", "labOrders", [patientId: currentPatient]) }" class="float-left">
 					<i class="fa fa-flask fa-2x"></i>
 					Lab Orders
 				</a>
 			</li>
+			<% } %>
 		</ul>
 		<ul class="float-left">
 			<h3>Contacts</h3>

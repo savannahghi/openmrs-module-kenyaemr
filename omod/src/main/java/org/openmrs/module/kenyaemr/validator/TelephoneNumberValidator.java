@@ -33,11 +33,11 @@ public class TelephoneNumberValidator implements Validator {
 		String number = (String) o;
 		number = number.trim();
 
-		if (number.length() != 10) {
+		/*if (number.length() != 10) {
 			errors.rejectValue(null, "Phone numbers must be 10 digits long");
 		}
 		if (!number.matches("\\d{10}")) {
 			errors.rejectValue(null, "Phone numbers must only contain numbers");
-		}
+		}*/
 	}
 }

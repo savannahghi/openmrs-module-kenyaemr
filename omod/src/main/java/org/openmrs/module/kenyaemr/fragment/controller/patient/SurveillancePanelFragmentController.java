@@ -12,7 +12,9 @@ package org.openmrs.module.kenyaemr.fragment.controller.patient;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.Encounter;
+import org.openmrs.EncounterType;
 import org.openmrs.Form;
+import org.openmrs.Patient;
 import org.openmrs.Role;
 import org.openmrs.User;
 import org.openmrs.Visit;
@@ -23,6 +25,7 @@ import org.openmrs.module.kenyacore.form.FormDescriptor;
 import org.openmrs.module.kenyacore.form.FormManager;
 import org.openmrs.module.kenyaemr.EmrConstants;
 import org.openmrs.module.kenyaemr.metadata.CommonMetadata;
+import org.openmrs.module.kenyaemr.util.EmrUtils;
 import org.openmrs.module.kenyaui.KenyaUiUtils;
 import org.openmrs.module.kenyaui.annotation.AppPage;
 import org.openmrs.ui.framework.SimpleObject;
@@ -53,7 +56,7 @@ public class SurveillancePanelFragmentController {
 	protected static final Log log = LogFactory.getLog(SurveillancePanelFragmentController.class);
 	
 	public void controller(FragmentModel model, @FragmentParam(value = "visit", required = false) Visit visit, UiUtils ui,
-                           PageRequest request, PageContext pageContext, @SpringBean FormManager formManager,
+                           PageRequest request, PageContext pageContext, @SpringBean FormManager formManager, @FragmentParam("patient") Patient patient,
                            @SpringBean KenyaUiUtils kenyaUi) {
 		
 		User loggedInUser = Context.getUserContext().getAuthenticatedUser();
@@ -87,6 +90,11 @@ public class SurveillancePanelFragmentController {
 		List<SimpleObject> otherForms = new ArrayList<SimpleObject>();
 
 		List<Encounter> encounters = new ArrayList<Encounter>();
+
+		EncounterType caseInvestigationEncType = Context.getEncounterService().getEncounterTypeByUuid(CommonMetadata._EncounterType.COVID_19_CASE_INVESTIGATION);
+		Form caseInvestigationForm = Context.getFormService().getFormByUuid(CommonMetadata._Form.COVID_19_CARE_FORM);
+		Encounter caseInvestigationEnc = EmrUtils.lastEncounter(patient, caseInvestigationEncType, caseInvestigationForm);
+
 
 		/*Form tracingForm = Context.getFormService().getFormByUuid(CommonMetadata._Form.COVID_19_CONTACT_TRACING_FORM);
 		Form caseInvestigationForm = Context.getFormService().getFormByUuid(CommonMetadata._Form.COVID_19_CARE_FORM);
@@ -167,6 +175,7 @@ public class SurveillancePanelFragmentController {
 		model.addAttribute("clinicalForms", clinicalObj);
 		model.addAttribute("programLevelForms", programLevelObj);
 		model.addAttribute("encounters", encounters);
+		model.addAttribute("hasCaseEnrollment", caseInvestigationEnc != null ? true : false);
 	}
 	
 }
