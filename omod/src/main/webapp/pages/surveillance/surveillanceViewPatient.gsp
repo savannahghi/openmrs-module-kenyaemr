@@ -161,7 +161,7 @@
                 </div>
 
             </div>
-            ${ui.includeFragment("kenyaemr", "patient/surveillancePanel", [visit: visit])}
+            ${ui.includeFragment("kenyaemr", "patient/surveillancePanel", [visit: visit, patient: currentPatient])}
 
         </div>
     </div>
