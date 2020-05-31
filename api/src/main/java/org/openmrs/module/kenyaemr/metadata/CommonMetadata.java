@@ -83,7 +83,6 @@ public class CommonMetadata extends AbstractMetadataBundle {
 		public static final String DRUG = "131168f4-15f5-102d-96e4-000c29c2a5d7";
 	}
 
-
 	public static final class _PatientIdentifierType {
 		public static final String NATIONAL_ID = Metadata.IdentifierType.NATIONAL_ID;
 		public static final String OLD_ID = Metadata.IdentifierType.OLD;
