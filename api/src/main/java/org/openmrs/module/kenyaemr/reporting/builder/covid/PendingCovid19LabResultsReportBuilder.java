@@ -94,11 +94,15 @@ public class PendingCovid19LabResultsReportBuilder extends AbstractHybridReportB
         dsd.addColumn("id", new PersonIdDataDefinition(), "");
 
         dsd.addColumn("Name", nameDef, "");
+        dsd.addColumn("National ID", natIdDef, "");
+        dsd.addColumn("Passport Number", passportDef, "");
         dsd.addColumn("Date of Birth", new BirthdateDataDefinition(), "", new BirthdateConverter(DATE_FORMAT));
         dsd.addColumn("Age", new AgeDataDefinition(), "");
         dsd.addColumn("Sex", new GenderDataDefinition(), "");
         dsd.addColumn("Phone Number", new PersonAttributeDataDefinition(phoneNumber), "");
         dsd.addColumn("County",new CountyDataDefinition(), "");
+        dsd.addColumn("Sub County",new SubcountyDataDefinition(), "");
+        dsd.addColumn("Specimen ID",new SpecimenIdDataDefinition(), "");
         dsd.addColumn("Order Date", new OrderDateDataDefinition(), "",new DateConverter(DATE_FORMAT));
         dsd.addColumn("Order Reason", new OrderReasonDataDefinition(), "");
         dsd.addColumn("Sample Type", new SampleTypeDataDefinition(), "");
