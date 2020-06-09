@@ -73,6 +73,39 @@
 
 
 	<div class="ke-form-header">
+		<ifMode mode="EDIT">
+			<script type="text/javascript">
+                jq(function(){
+                    showHideReferralDetails();
+                    showHideTransferredOutDetails();
+                    showHideDischargedDetails();
+                });
+
+                function showHideReferralDetails() {
+                    if (getValue('discReason.value') == 164165) {
+                        jq('#referred').show();
+                    }else{
+                        jq('#referred').hide();
+                    }
+                }
+
+                function showHideTransferredOutDetails() {
+                    if (getValue('obs-other-symptom.value') == 159492) {
+                        jq('#transferred').show();
+                    }else{
+                        jq('#transferred').hide();
+                    }
+                }
+
+                function showHideDischargedDetails() {
+                    if (getValue('obs-other-symptom.value') == 1692) {
+                        jq('#discharged').show();
+                    }else{
+                        jq('#discharged').hide();
+                    }
+                }
+			</script>
+		</ifMode>
 		<table width="100%">
 			<tr>
 				<td align="left">Date: <encounterDate id="encounter-date" showTime="true" /></td>
