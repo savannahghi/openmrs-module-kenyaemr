@@ -276,7 +276,8 @@
                                 onPregnantChange();
                                 onUnderlyingConditionsChange();
                                 onTravelledRecentlyChange();
-
+                                hospitalAdmission();
+                                otherSymptoms();
                             });
                             function onDetectedAtPOEChange() {
 
@@ -335,6 +336,8 @@
                                     }
                                 }
 
+
+
                                 function onUnderlyingConditionsChange() {
 
                                     if (getValue('underlying-conditions.value') == 1065) {
@@ -353,8 +356,23 @@
                                     }
                                 }
                             }
+                            function hospitalAdmission() {
+                                if (getValue('admission-to-hospital.value') == 1065) {
+                                    jq('#hospital-admission').show();
+                                }else{
+                                    jq('#hospital-admission').hide();
+                                }
+                            }
+
+                            function otherSymptoms() {
+                                if (getValue('obs-other-symptom.value') == 139548) {
+                                    jq('#specify-symptoms').show();
+                                }else{
+                                    jq('#specify-symptoms').hide();
+                                }
+                            }
                         </script>
-                    </ifMode>
+           </ifMode>
          <table width="90%">
             <tr>
                 <td align="left" width="30%">Date of reporting to National Health authority:
