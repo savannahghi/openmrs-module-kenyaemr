@@ -76,8 +76,10 @@ public class ConfirmedCovid19PositivesReportBuilder extends AbstractHybridReport
 
         PatientIdentifierType nationalIdType = MetadataUtils.existing(PatientIdentifierType.class, CommonMetadata._PatientIdentifierType.NATIONAL_ID);
         PatientIdentifierType passportNumberType = MetadataUtils.existing(PatientIdentifierType.class, CommonMetadata._PatientIdentifierType.PASSPORT_NUMBER);
+        PatientIdentifierType caseIdType = MetadataUtils.existing(PatientIdentifierType.class, CommonMetadata._PatientIdentifierType.PATIENT_CLINIC_NUMBER);
         DataDefinition natIdDef = new ConvertedPatientDataDefinition("identifier", new PatientIdentifierDataDefinition(nationalIdType.getName(), nationalIdType), new IdentifierConverter());
         DataDefinition passportDef = new ConvertedPatientDataDefinition("identifier", new PatientIdentifierDataDefinition(passportNumberType.getName(), passportNumberType), new IdentifierConverter());
+        DataDefinition caseIdDef = new ConvertedPatientDataDefinition("identifier", new PatientIdentifierDataDefinition("Case ID", caseIdType), new IdentifierConverter());
         PersonAttributeType phoneNumber = MetadataUtils.existing(PersonAttributeType.class, CommonMetadata._PersonAttributeType.TELEPHONE_CONTACT);
         String DATE_FORMAT = "dd/MM/yyyy";
         PatientDataSetDefinition dsd = new PatientDataSetDefinition("CovidConfirmedPositves");
@@ -95,6 +97,7 @@ public class ConfirmedCovid19PositivesReportBuilder extends AbstractHybridReport
         dsd.addColumn("Age", new AgeDataDefinition(), "");
         dsd.addColumn("Sex", new GenderDataDefinition(), "");
         dsd.addColumn("National ID", natIdDef, "");
+        dsd.addColumn("Case ID", caseIdDef, "");
         dsd.addColumn("Passport Number", passportDef, "");
         dsd.addColumn("Date of Birth", new BirthdateDataDefinition(), "", new BirthdateConverter(DATE_FORMAT));
         dsd.addColumn("Nationality", new CalculationDataDefinition("Nationality", new PersonAddressNationalityCalculation()), "", new RDQACalculationResultConverter());
