@@ -24,7 +24,12 @@ import org.openmrs.module.kenyaemr.reporting.calculation.converter.PatientProgra
 import org.openmrs.module.kenyaemr.reporting.calculation.converter.RDQACalculationResultConverter;
 import org.openmrs.module.kenyaemr.reporting.cohort.definition.covid.ConfirmedCovid19PositivesCohortDefinition;
 import org.openmrs.module.kenyaemr.reporting.data.converter.IdentifierConverter;
-import org.openmrs.module.kenyaemr.reporting.data.converter.definition.covid.*;
+import org.openmrs.module.kenyaemr.reporting.data.converter.definition.covid.CountyDataDefinition;
+import org.openmrs.module.kenyaemr.reporting.data.converter.definition.covid.LabResultDateDataDefinition;
+import org.openmrs.module.kenyaemr.reporting.data.converter.definition.covid.OrderDateDataDefinition;
+import org.openmrs.module.kenyaemr.reporting.data.converter.definition.covid.OrderReasonDataDefinition;
+import org.openmrs.module.kenyaemr.reporting.data.converter.definition.covid.SampleTypeDataDefinition;
+import org.openmrs.module.kenyaemr.reporting.data.converter.definition.covid.SubcountyDataDefinition;
 import org.openmrs.module.metadatadeploy.MetadataUtils;
 import org.openmrs.module.reporting.cohort.definition.CohortDefinition;
 import org.openmrs.module.reporting.data.DataDefinition;
@@ -34,7 +39,13 @@ import org.openmrs.module.reporting.data.converter.DateConverter;
 import org.openmrs.module.reporting.data.converter.ObjectFormatter;
 import org.openmrs.module.reporting.data.patient.definition.ConvertedPatientDataDefinition;
 import org.openmrs.module.reporting.data.patient.definition.PatientIdentifierDataDefinition;
-import org.openmrs.module.reporting.data.person.definition.*;
+import org.openmrs.module.reporting.data.person.definition.AgeDataDefinition;
+import org.openmrs.module.reporting.data.person.definition.BirthdateDataDefinition;
+import org.openmrs.module.reporting.data.person.definition.ConvertedPersonDataDefinition;
+import org.openmrs.module.reporting.data.person.definition.GenderDataDefinition;
+import org.openmrs.module.reporting.data.person.definition.PersonAttributeDataDefinition;
+import org.openmrs.module.reporting.data.person.definition.PersonIdDataDefinition;
+import org.openmrs.module.reporting.data.person.definition.PreferredNameDataDefinition;
 import org.openmrs.module.reporting.dataset.definition.DataSetDefinition;
 import org.openmrs.module.reporting.dataset.definition.PatientDataSetDefinition;
 import org.openmrs.module.reporting.evaluation.parameter.Mapped;
@@ -84,10 +95,6 @@ public class ConfirmedCovid19PositivesReportBuilder extends AbstractHybridReport
         String DATE_FORMAT = "dd/MM/yyyy";
         PatientDataSetDefinition dsd = new PatientDataSetDefinition("CovidConfirmedPositves");
 
-        PatientIdentifierType upn = MetadataUtils.existing(PatientIdentifierType.class, CommonMetadata._PatientIdentifierType.NATIONAL_ID);
-        DataConverter identifierFormatter = new ObjectFormatter("{identifier}");
-        DataDefinition identifierDef = new ConvertedPatientDataDefinition("identifier", new PatientIdentifierDataDefinition(upn.getName(), upn), identifierFormatter);
-
         DataConverter nameFormatter = new ObjectFormatter("{familyName}, {givenName} {middleName}");
         DataDefinition nameDef = new ConvertedPersonDataDefinition("name", new PreferredNameDataDefinition(), nameFormatter);
         dsd.addColumn("id", new PersonIdDataDefinition(), "");
@@ -103,8 +110,8 @@ public class ConfirmedCovid19PositivesReportBuilder extends AbstractHybridReport
         dsd.addColumn("Nationality", new CalculationDataDefinition("Nationality", new PersonAddressNationalityCalculation()), "", new RDQACalculationResultConverter());
         dsd.addColumn("Phone Number", new PersonAttributeDataDefinition(phoneNumber), "");
         dsd.addColumn("Case Reporting Date", new CalculationDataDefinition("Case Reporting Date", new PatientProgramEnrollmentCalculation()), "", new PatientProgramEnrollmentDateConverter());
-        dsd.addColumn("County",new CountyDataDefinition(), "");
-        dsd.addColumn("Sub County",new SubcountyDataDefinition(), "");
+        dsd.addColumn("Reporting County",new CountyDataDefinition(), "");
+        dsd.addColumn("Reporting Sub-County",new SubcountyDataDefinition(), "");
         dsd.addColumn("Order Date", new OrderDateDataDefinition(), "",new DateConverter(DATE_FORMAT));
         dsd.addColumn("Order Reason", new OrderReasonDataDefinition(), "");
         dsd.addColumn("Sample Type", new SampleTypeDataDefinition(), "");
