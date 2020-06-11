@@ -13,8 +13,8 @@
 		</button>
 
 		${ ui.includeFragment("kenyaui", "widget/dataPoint", [ label: "Nationality", value: nationality ]) }
-		${ ui.includeFragment("kenyaui", "widget/dataPoint", [ label: "County", value: county ]) }
-		${ ui.includeFragment("kenyaui", "widget/dataPoint", [ label: "Sub-County", value: subCounty ]) }
+		${ ui.includeFragment("kenyaui", "widget/dataPoint", [ label: "County of Residence", value: county ]) }
+		${ ui.includeFragment("kenyaui", "widget/dataPoint", [ label: "Sub-County of Residence", value: subCounty ]) }
 		${ ui.includeFragment("kenyaui", "widget/dataPoint", [ label: "Address", value: postalAddress ]) }
 
 		<% patient.activeAttributes.each { %>
