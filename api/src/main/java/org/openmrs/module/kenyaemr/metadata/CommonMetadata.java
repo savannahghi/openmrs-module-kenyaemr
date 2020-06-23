@@ -214,7 +214,7 @@ public class CommonMetadata extends AbstractMetadataBundle {
 				LocationBehavior.NOT_USED, false, _PatientIdentifierType.ALIEN_NUMBER));
 
 		install(patientIdentifierType("Passport Number", "Passport Number",
-				".{1,20}", "At most 14 characters long", null,
+				null, "At most 14 characters long", null,
 				LocationBehavior.NOT_USED, false, _PatientIdentifierType.PASSPORT_NUMBER));
 		
 		install(personAttributeType("Telephone contact", "Telephone contact number",
