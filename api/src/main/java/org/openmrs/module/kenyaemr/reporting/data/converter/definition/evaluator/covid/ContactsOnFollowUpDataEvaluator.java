@@ -35,15 +35,17 @@ public class ContactsOnFollowUpDataEvaluator implements PersonDataEvaluator {
     public EvaluatedPersonData evaluate(PersonDataDefinition definition, EvaluationContext context) throws EvaluationException {
         EvaluatedPersonData c = new EvaluatedPersonData(definition, context);
 
-        String qry = "select f.case_patient,count(f.patient_id)\n" +
-                "from (\n" +
-                "     select c.patient_id, self_q.patient_id selfQ,c.patient_related_to case_patient, min(self_q.visit_date) first_self_q_followup_date, gov_q.patient_id govQ, min(gov_q.visit_date) first_gov_quarantine_date\n" +
-                "     from kenyaemr_hiv_testing_patient_contact c\n" +
-                "            inner join kenyaemr_etl.etl_covid_19_enrolment e on e.patient_id = c.patient_related_to\n" +
-                "            left join kenyaemr_etl.etl_contact_tracing_followup self_q on self_q.patient_id = c.patient_id\n" +
-                "            left join kenyaemr_etl.etl_covid_quarantine_enrolment gov_q on gov_q.patient_id = c.patient_id\n" +
-                "     where c.voided=0 and e.voided = 0\n" +
-                "     ) f where (selfQ is not null and datediff(curdate(),first_self_q_followup_date) < 14) or (govQ is not null and datediff(curdate(), first_gov_quarantine_date) < 14) group by f.case_patient;";
+        String qry = "select case_patient, count(*) from (\n" +
+                "select patient_id, case_patient, coalesce(first_gov_quarantine_date, first_gov_quarantine_date) as followupStartDate, coalesce(last_gov_quarantine_date, last_gov_quarantine_date) as followupEndDate from (\n" +
+                "select c.patient_id, c.patient_related_to case_patient, min(self_q.visit_date) first_self_q_followup_date, min(gov_q.visit_date) first_gov_quarantine_date, max(self_q.visit_date) last_self_q_followup_date, max(gov_q.visit_date) last_gov_quarantine_date\n" +
+                "      from kenyaemr_hiv_testing_patient_contact c\n" +
+                "             left join kenyaemr_etl.etl_contact_tracing_followup self_q on self_q.patient_id = c.patient_id\n" +
+                "             left join kenyaemr_etl.etl_covid_quarantine_followup gov_q on gov_q.patient_id = c.patient_id\n" +
+                "      where c.voided=0 and c.patient_id is not null\n" +
+                "      group by c.patient_id\n" +
+                "      ) f \n" +
+                "having datediff(followupEndDate,followupStartDate) < 14 ) a\n" +
+                "group by case_patient ;";
 
         SqlQueryBuilder queryBuilder = new SqlQueryBuilder();
         Date startDate = (Date)context.getParameterValue("startDate");
