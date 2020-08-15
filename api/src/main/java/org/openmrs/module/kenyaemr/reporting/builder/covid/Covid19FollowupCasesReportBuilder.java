@@ -84,10 +84,10 @@ public class Covid19FollowupCasesReportBuilder extends AbstractHybridReportBuild
 
         DataConverter nameFormatter = new ObjectFormatter("{familyName}, {givenName} {middleName}");
         DataDefinition nameDef = new ConvertedPersonDataDefinition("name", new PreferredNameDataDefinition(), nameFormatter);
-        dsd.addColumn("Unique Patient No", identifierDef, "");
         dsd.addColumn("id", new PersonIdDataDefinition(), "");
+        dsd.addColumn("Name", nameDef, "");
+        dsd.addColumn("Unique Patient No", identifierDef, "");
         dsd.addColumn("Passport Number", passportDef, "");
-        dsd.addColumn("Case Name", nameDef, "");
         dsd.addColumn("Date of Birth", new BirthdateDataDefinition(), "", new BirthdateConverter(DATE_FORMAT));
         dsd.addColumn("Age", new AgeDataDefinition(), "");
         dsd.addColumn("Sex", new GenderDataDefinition(), "");
