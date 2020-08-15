@@ -37,7 +37,7 @@ public class ContactsConvertedToCasesDataEvaluator implements PersonDataEvaluato
 
         String qry = "select case_patient, count(*) from (\n" +
                 "(select patient_id, case_patient from (\n" +
-                "select patient_id, case_patient, coalesce(first_gov_quarantine_date, first_gov_quarantine_date) as followupStartDate, coalesce(last_gov_quarantine_date, last_gov_quarantine_date) as followupEndDate from (\n" +
+                "select patient_id, case_patient, coalesce(first_gov_quarantine_date, first_self_q_followup_date) as followupStartDate, coalesce(last_gov_quarantine_date, last_self_q_followup_date) as followupEndDate from (\n" +
                 "select c.patient_id, c.patient_related_to case_patient, min(self_q.visit_date) first_self_q_followup_date, min(gov_q.visit_date) first_gov_quarantine_date, max(self_q.visit_date) last_self_q_followup_date, max(gov_q.visit_date) last_gov_quarantine_date\n" +
                 "      from kenyaemr_hiv_testing_patient_contact c\n" +
                 "             left join kenyaemr_etl.etl_contact_tracing_followup self_q on self_q.patient_id = c.patient_id\n" +
