@@ -51,7 +51,7 @@ public class Covid19FollowupCasesReportBuilder extends AbstractHybridReportBuild
     }
 
     protected Mapped<CohortDefinition> covidContactsFollowupCohort() {
-        CohortDefinition cd = new Covid19FollowupCasesCohortDefinition();
+        CohortDefinition cd = new ConfirmedCovid19PositivesCohortDefinition();
         cd.setName("covidCases");
         return ReportUtils.map(cd, "");
     }
@@ -104,7 +104,6 @@ public class Covid19FollowupCasesReportBuilder extends AbstractHybridReportBuild
         //dsd.addColumn("Response rate",new ResponseRateDataDefinition(), "");
         dsd.addColumn("Developed signs and symptoms",new ContactsDevelopedSignsAndSymptomsDataDefinition(), "");
         dsd.addColumn("Positive lab results",new ContactsWithPositiveLabResultsDataDefinition(), "");
-        dsd.addColumn("County",new CountyDataDefinition(), "");
         //dsd.addColumn("Status of case Contact tracing",new CountyDataDefinition(), "");
         return dsd;
     }
