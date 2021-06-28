@@ -100,7 +100,6 @@ public class ETLOtzIndicatorLibrary {
     public CohortIndicator patientsWithValidVLLess1000(Integer month) {
         return cohortIndicator("Valid VL Less 1000 on reporting month", ReportUtils.<CohortDefinition>map(new OTZPatientsWithValidVLLess1000CohortDefinition(month), ""));
 
-
     }
 
     public CohortIndicator patientsWithValidVLLess400(Integer month) {
