@@ -41,6 +41,7 @@ public class OTZPatientAge20To24InProgramCohortDefinitionEvaluator implements Co
 
         OTZPatinetAged20To24StillinProgramCohortDefinition definition = (OTZPatinetAged20To24StillinProgramCohortDefinition) cohortDefinition;
         Integer month = definition.getMonth();
+
         CohortDefinition cd = otzCohortLibrary.numberOfAdolescentsInotzProgram();
 
         Calendar calendar = Calendar.getInstance();
