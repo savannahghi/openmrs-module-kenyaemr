@@ -624,7 +624,7 @@
             var action = jq('.action-taken select').val('');
 
             if (val == "false" || val == 1066){
-               // jq('.medicine-causing :input').prop('disabled', true);
+                jq('.medicine-causing :input').prop('disabled', true);
                 jq('.reaction :input').prop('disabled', true);
                 jq('.severity :input').prop('disabled', true);
                 jq('.adverse-events-onset-date :input').prop('disabled', true);
