@@ -731,6 +731,39 @@ public class DatimIndicatorLibrary {
         return cohortIndicator("Newly Started ART While Confirmed TB and / or TB Treated", ReportUtils.<CohortDefinition>map(datimCohorts.newlyStartedARTByAgeSex(),
                 "startDate=${startDate},endDate=${endDate}"));
     }
+
+    /**
+     * TX_NEW PWID
+     * @return the indicator
+     */
+    public CohortIndicator newlyStartedARTPWID(KPTypeDataDefinition pwid) {
+        return cohortIndicator("PWID New on ART", ReportUtils.map(datimCohorts.newlyStartedARTKP(pwid), "startDate=${startDate},endDate=${endDate}"));
+    }
+
+    /**
+     * TX_NEW MSM
+     * @return the indicator
+     */
+    public CohortIndicator newlyStartedARTMSM(KPTypeDataDefinition msm) {
+        return cohortIndicator("MSM New on ART", ReportUtils.map(datimCohorts.newlyStartedARTKP(msm), "startDate=${startDate},endDate=${endDate}"));
+    }
+
+    /**
+     * TX_NEW TG
+     * @return the indicator
+     */
+    public CohortIndicator newlyStartedARTTG(KPTypeDataDefinition tg) {
+        return cohortIndicator("TG New on ART", ReportUtils.map(datimCohorts.newlyStartedARTKP(tg), "startDate=${startDate},endDate=${endDate}"));
+    }
+
+    /**
+     * TX_NEW FSW
+     * @return the indicator
+     */
+    public CohortIndicator newlyStartedARTFSW(KPTypeDataDefinition fsw) {
+        return cohortIndicator("FSW New on ART", ReportUtils.map(datimCohorts.newlyStartedARTKP(fsw), "startDate=${startDate},endDate=${endDate}"));
+    }
+
     /*Annual Cohort Indicators*/
     /**
      * PMTCT_FO Number of HIV-exposed infants who were born 24 months prior to the reporting period

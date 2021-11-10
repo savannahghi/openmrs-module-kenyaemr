@@ -432,6 +432,16 @@ public class DatimReportBuilder extends AbstractReportBuilder {
         //Newly Started ART While BreastFeeding
         cohortDsd.addColumn("TX_New_BF", "Newly Started ART While Breastfeeding", ReportUtils.map(datimIndicators.newlyStartedARTWhileBF(), indParams), "");
 
+        //PWID Newly Started ART
+        cohortDsd.addColumn("TX_New_PWID", "PWID Newly Started ART", ReportUtils.map(datimIndicators.newlyStartedARTPWID(mapKPType("PWID", PWID_CONCEPT)), indParams), "");
+        //MSM Newly Started ART
+        cohortDsd.addColumn("TX_New_MSM", "MSM Newly Started ART", ReportUtils.map(datimIndicators.newlyStartedARTMSM(mapKPType("MSM", MSM_CONCEPT)), indParams), "");
+        //TG Newly Started ART
+        cohortDsd.addColumn("TX_New_TG", "TG Newly Started ART", ReportUtils.map(datimIndicators.newlyStartedARTTG(mapKPType("TG", TG_CONCEPT)), indParams), "");
+        //FSW Newly Started ART
+        cohortDsd.addColumn("TX_New_FSW", "FSW Newly Started ART", ReportUtils.map(datimIndicators.newlyStartedARTFSW(mapKPType("FSW", FSW_CONCEPT)), indParams), "");
+        //Prisons and other closed settings Newly Started ART
+
         //TX_CURR
 
         //Number of Adults and Children with HIV infection receiving ART By Age/Sex Disagreggation
