@@ -15,6 +15,7 @@ import static org.openmrs.module.kenyaemr.reporting.EmrReportingUtils.cohortIndi
 import org.openmrs.module.reporting.indicator.CohortIndicator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.openmrs.module.kenyacore.report.ReportUtils;
 
 @Component
 public class Moh745IndicatorLibrary {
@@ -22,94 +23,45 @@ public class Moh745IndicatorLibrary {
     @Autowired
     private Moh745CohortLibrary Moh745CohortLibrary;
 
-    /*Received VIA or VIA/ VILI Screening*/
-    public CohortIndicator receivedVIAScreening() {
+    /*Received Screening*/
+    public CohortIndicator receivedScreening(String[] indicatorVal, String visitType) {
 
-        return cohortIndicator("Received VIA or VIA/ VILI Screening",map(Moh745CohortLibrary.receivedVIAScreeningCl(), "startDate=${startDate},endDate=${endDate}")
+        return cohortIndicator("Received Screening", ReportUtils.map(Moh745CohortLibrary.receivedScreeningCl(indicatorVal , visitType), "startDate=${startDate},endDate=${endDate}")
         );
     }
 
-    /*Received Pap smear Screening*/
-    public CohortIndicator receivedPapSmearScreening() {
+    /*Received Positive Screening Result*/
+    public CohortIndicator receivedPositiveScreening(String[] indicatorVal, String visitType) {
 
-        return cohortIndicator("Received Pap Smear Screening",map(Moh745CohortLibrary.receivedPapSmearScreeningCl(), "startDate=${startDate},endDate=${endDate}")
+        return cohortIndicator("Received Positive Screening", ReportUtils.map(Moh745CohortLibrary.receivedPositiveScreeningCl(indicatorVal, visitType), "startDate=${startDate},endDate=${endDate}")
         );
     }
 
-    /*Received HPV Test*/
-    public CohortIndicator receivedHPVTest() {
+    /*Suspicious Screening Result*/
+    public CohortIndicator receivedSuspiciousScreening(String result, String visitType) {
 
-        return cohortIndicator("Positive VIA or VIA/VILI Result", map(Moh745CohortLibrary.receivedHPVTestCl(), "startDate=${startDate},endDate=${endDate}")
+        return cohortIndicator("Received Positive Screening", ReportUtils.map(Moh745CohortLibrary.suspiciousScreeningCl( result, visitType), "startDate=${startDate},endDate=${endDate}")
         );
     }
 
-    /*Positive VIA or VIA/VILI result*/
-    public CohortIndicator positiveVIAresult() {
+    /*Treatment Method */
+    public CohortIndicator treatedMethod(String[] treatmentMethod, String visitType) {
 
-        return cohortIndicator("Positive VIA or VIA/VILI Result",map(Moh745CohortLibrary.positiveVIAresultCl(), "startDate=${startDate},endDate=${endDate}")
-        );
-    }
-
-    /*Positive Cytology result*/
-    public CohortIndicator positiveCytologyResult() {
-
-        return cohortIndicator("Positive Cytology result",map(Moh745CohortLibrary.positiveCytologyResultCl(), "startDate=${startDate},endDate=${endDate}")
-        );
-    }
-
-    /*Positive HPV*/
-    public CohortIndicator positiveHPV() {
-
-        return cohortIndicator("Positive HPV Result",map(Moh745CohortLibrary.positiveHPVResultCl(), "startDate=${startDate},endDate=${endDate}")
-        );
-    }
-
-    /*Suspicious cancer lesions*/
-    public CohortIndicator suspiciousCancerLesions() {
-
-        return cohortIndicator("Have Suspicious Cancer Lesions",map(Moh745CohortLibrary.suspiciousCancerLesionsCl(), "startDate=${startDate},endDate=${endDate}")
-        );
-    }
-
-    /*Treated Using Cryotherapy*/
-    public CohortIndicator treatedUsingCryotherapy() {
-
-        return cohortIndicator("Treated Using Cryotherapy",map(Moh745CohortLibrary.treatedUsingCryotherapyCl(), "startDate=${startDate},endDate=${endDate}")
-        );
-    }
-
-    /*Treated Using Thermocoagulation*/
-    public CohortIndicator treatedUsingThermocoagulation() {
-
-        return cohortIndicator("Treated Using Thermocoagulation",map(Moh745CohortLibrary.treatedUsingThermocoagulationCl(), "startDate=${startDate},endDate=${endDate}")
-        );
-    }
-
-    /*Treated using LEEP*/
-    public CohortIndicator treatedUsingLEEP() {
-
-        return cohortIndicator("Treated using LEEP",map(Moh745CohortLibrary.treatedUsingLEEPCl(), "startDate=${startDate},endDate=${endDate}")
-        );
-    }
-
-    /*Other Treatment Given*/
-    public CohortIndicator otherTreatmentGiven() {
-
-        return cohortIndicator("Other Treatment Given",map(Moh745CohortLibrary.otherTreatmentGivenCl(), "startDate=${startDate},endDate=${endDate}")
+        return cohortIndicator("Received Positive Screening", ReportUtils.map(Moh745CohortLibrary.treatmentMethodCl(treatmentMethod, visitType), "startDate=${startDate},endDate=${endDate}")
         );
     }
 
     /*HIV Positive Clients Screened*/
-    public CohortIndicator HIVPositiveClientsScreened() {
+    public CohortIndicator HIVPositiveClientsScreened(String visitType) {
 
-        return cohortIndicator("HIV Positive Clients Screened",map(Moh745CohortLibrary.HIVPositiveClientsScreenedCl(), "startDate=${startDate},endDate=${endDate}")
+        return cohortIndicator("HIV Positive Clients Screened",map(Moh745CohortLibrary.HIVPositiveClientsScreenedCl(visitType), "startDate=${startDate},endDate=${endDate}")
         );
     }
 
     /*HIV Positive With Positive Screening Results*/
-    public CohortIndicator HIVPositiveClientsScreenedWithResults() {
+    public CohortIndicator HIVPositiveClientsScreenedWithResults(String visitType) {
 
-        return cohortIndicator("HIV Positive With Positive Screening Results",map(Moh745CohortLibrary.HIVPositiveClientsScreenedWithResultsCl(), "startDate=${startDate},endDate=${endDate}")
+        return cohortIndicator("HIV Positive With Positive Screening Results",map(Moh745CohortLibrary.HIVPositiveClientsScreenedWithResultsCl(visitType), "startDate=${startDate},endDate=${endDate}")
         );
     }
 

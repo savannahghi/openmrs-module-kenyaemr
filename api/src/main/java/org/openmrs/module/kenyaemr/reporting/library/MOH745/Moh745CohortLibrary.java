@@ -9,189 +9,141 @@
  */
 package org.openmrs.module.kenyaemr.reporting.library.MOH745;
 
+import org.openmrs.module.kenyacore.report.ReportUtils;
+import org.openmrs.module.kenyaemr.reporting.data.converter.definition.KPTypeDataDefinition;
 import org.openmrs.module.reporting.cohort.definition.CohortDefinition;
+import org.openmrs.module.reporting.cohort.definition.CompositionCohortDefinition;
 import org.openmrs.module.reporting.cohort.definition.SqlCohortDefinition;
 import org.openmrs.module.reporting.evaluation.parameter.Parameter;
 import org.springframework.stereotype.Component;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
 
 @Component
 public class Moh745CohortLibrary {
 
+    protected static final Log log = LogFactory.getLog(Moh745CohortLibrary.class);
 
-    public Moh745CohortLibrary() {
-        // TODO Auto-generated constructor stub
-    }
 
-    //Queries for Moh745
-    /*Received VIA or VIA/ VILI Screening */
-    public CohortDefinition receivedVIAScreeningCl() {
+    public CohortDefinition patientVisitType(String visitType) {
+
+        String sqlQuery = "select i.patient_id from kenyaemr_etl.etl_cervical_cancer_screening i where i.visit_type = '"+visitType+"' and  i.visit_date between date(:startDate) and date(:endDate) group by i.patient_id;";
         SqlCohortDefinition cd = new SqlCohortDefinition();
-        String sqlQuery = "select i.patient_id from kenyaemr_etl.etl_cervical_cancer_screening i where (i.screening_method = 'VIA' or i.screening_method = 'VILI') and visit_date between date(:startDate) and date(:endDate) group by i.patient_id;";
-
-        cd.setName("VIA/VILI");
+        cd.setName("patientVisitType");
         cd.setQuery(sqlQuery);
         cd.addParameter(new Parameter("startDate", "Start Date", Date.class));
         cd.addParameter(new Parameter("endDate", "End Date", Date.class));
-        cd.setDescription("Received VIA or VIA/ VILI Screening");
-
+        cd.setDescription("Cervical Cancer Patients Visit Type");
         return cd;
     }
 
-    /*Received Pap smear Screening*/
-    public CohortDefinition receivedPapSmearScreeningCl() {
-        SqlCohortDefinition cd = new SqlCohortDefinition();
-        String sqlQuery = "select i.patient_id from kenyaemr_etl.etl_cervical_cancer_screening i where i.screening_method = 'Pap Smear' and visit_date between date(:startDate) and date(:endDate) group by i.patient_id;";
+    public CohortDefinition patientScreeningMethod(String[] indicatorVal) {
 
-        cd.setName("PAP SMEAR");
+        String val = StringUtils.join(indicatorVal,"','");
+
+        String sqlQuery = "select i.patient_id from kenyaemr_etl.etl_cervical_cancer_screening i where i.screening_method IN ('"+val+"') and i.visit_date between date(:startDate) and date(:endDate) group by i.patient_id;";
+        log.warn("sql query executing" +sqlQuery + " here");
+        SqlCohortDefinition cd = new SqlCohortDefinition();
+        cd.setName("patientScreeningMethod");
         cd.setQuery(sqlQuery);
         cd.addParameter(new Parameter("startDate", "Start Date", Date.class));
         cd.addParameter(new Parameter("endDate", "End Date", Date.class));
-        cd.setDescription("Received Pap Smear Screening");
-
+        cd.setDescription("Cervical Cancer Screening Method");
         return cd;
     }
 
-    /*Received HPV Test*/
-    public CohortDefinition receivedHPVTestCl() {
-        SqlCohortDefinition cd = new SqlCohortDefinition();
-        String sqlQuery = "select i.patient_id from kenyaemr_etl.etl_cervical_cancer_screening i where i.screening_method = 'HPV Test' and visit_date between date(:startDate) and date(:endDate) group by i.patient_id;";
-
-        cd.setName("HPV Test");
-        cd.setQuery(sqlQuery);
+    public CohortDefinition receivedScreeningCl(String[] indicatorVal, String visitType) {
+        CompositionCohortDefinition cd = new CompositionCohortDefinition();
         cd.addParameter(new Parameter("startDate", "Start Date", Date.class));
         cd.addParameter(new Parameter("endDate", "End Date", Date.class));
-        cd.setDescription("Received HPV Test");
-
+        cd.addSearch("patientScreeningMethod", ReportUtils.map(patientScreeningMethod(indicatorVal), "startDate=${startDate},endDate=${endDate}"));
+        cd.addSearch("patientVisitType", ReportUtils.map(patientVisitType(visitType), "startDate=${startDate},endDate=${endDate}"));
+        cd.setCompositionString("patientScreeningMethod AND patientVisitType");
         return cd;
     }
 
-    /*Positive VIA or VIA/VILI result*/
-    public CohortDefinition positiveVIAresultCl() {
-        SqlCohortDefinition cd = new SqlCohortDefinition();
-        String sqlQuery = "select i.patient_id from kenyaemr_etl.etl_cervical_cancer_screening i " +
-                "where (i.screening_method = 'VIA' or i.screening_method = 'VILI') and i.screening_result = 'Positive'" +
-                "and visit_date between date(:startDate) and date(:endDate) group by i.patient_id;";
+    public CohortDefinition patientPositiveScreening(String[] indicatorVal) {
 
-        cd.setName("Positive VIA or VIA/VILI");
+        String val = StringUtils.join(indicatorVal,"','");
+
+        String sqlQuery = "select i.patient_id from kenyaemr_etl.etl_cervical_cancer_screening i where i.screening_method IN ('"+val+"') and i.visit_date between date(:startDate) and date(:endDate) group by i.patient_id;";
+        SqlCohortDefinition cd = new SqlCohortDefinition();
+        cd.setName("patientPositiveScreeningMethod");
         cd.setQuery(sqlQuery);
         cd.addParameter(new Parameter("startDate", "Start Date", Date.class));
         cd.addParameter(new Parameter("endDate", "End Date", Date.class));
-        cd.setDescription("Positive VIA or VIA/VILI Result");
-
+        cd.setDescription("Cervical Cancer Positive Screening Method");
         return cd;
     }
 
-    /*Positive Cytology result*/
-    public CohortDefinition positiveCytologyResultCl() {
-        SqlCohortDefinition cd = new SqlCohortDefinition();
-        String sqlQuery = "select i.patient_id from kenyaemr_etl.etl_cervical_cancer_screening i where i.screening_method = 'Pap Smear'" +
-                " and i.screening_result = 'Positive' and visit_date between date(:startDate) and date(:endDate) group by i.patient_id;";
-
-        cd.setName("Positive Cytology");
-        cd.setQuery(sqlQuery);
+    public CohortDefinition receivedPositiveScreeningCl(String[] indicatorVal, String visitType) {
+        CompositionCohortDefinition cd = new CompositionCohortDefinition();
         cd.addParameter(new Parameter("startDate", "Start Date", Date.class));
         cd.addParameter(new Parameter("endDate", "End Date", Date.class));
-        cd.setDescription("Positive Cytology Result");
-
+        cd.addSearch("receivedPositiveScreening", ReportUtils.map(patientPositiveScreening(indicatorVal), "startDate=${startDate},endDate=${endDate}"));
+        cd.addSearch("patientVisitType", ReportUtils.map(patientVisitType(visitType), "startDate=${startDate},endDate=${endDate}"));
+        cd.setCompositionString("receivedPositiveScreening AND patientVisitType");
         return cd;
     }
 
-    /*Positive HPV result*/
-    public CohortDefinition positiveHPVResultCl() {
-        SqlCohortDefinition cd = new SqlCohortDefinition();
-        String sqlQuery = "select i.patient_id from kenyaemr_etl.etl_cervical_cancer_screening i where i.screening_method = 'HPV Test' " +
-                "and i.screening_result = 'Positive' and visit_date between date(:startDate) and date(:endDate) group by i.patient_id;";
+    public CohortDefinition patientScreeningResult(String result) {
 
-        cd.setName("Positive HPV");
+        String sqlQuery = "select i.patient_id from kenyaemr_etl.etl_cervical_cancer_screening i where i.screening_result = '"+result+"' and i.visit_date between date(:startDate) and date(:endDate) group by i.patient_id;";
+        SqlCohortDefinition cd = new SqlCohortDefinition();
+        cd.setName("patientScreeningResult");
         cd.setQuery(sqlQuery);
         cd.addParameter(new Parameter("startDate", "Start Date", Date.class));
         cd.addParameter(new Parameter("endDate", "End Date", Date.class));
-        cd.setDescription("Positive HPV Result");
-
+        cd.setDescription("Cervical Cancer Screening Result");
         return cd;
     }
 
-    /*Suspicious cancer lesions*/
-    public CohortDefinition suspiciousCancerLesionsCl() {
-        SqlCohortDefinition cd = new SqlCohortDefinition();
-        String sqlQuery = "select i.patient_id from kenyaemr_etl.etl_cervical_cancer_screening i where i.screening_result = 'Positive' or i.screening_result = 'Presumed' and visit_date between date(:startDate) and date(:endDate) group by i.patient_id;";
-
-        cd.setName("Suspicious Cancer Lesions");
-        cd.setQuery(sqlQuery);
+    public CohortDefinition suspiciousScreeningCl(String result, String visitType) {
+        CompositionCohortDefinition cd = new CompositionCohortDefinition();
         cd.addParameter(new Parameter("startDate", "Start Date", Date.class));
         cd.addParameter(new Parameter("endDate", "End Date", Date.class));
-        cd.setDescription("Have Suspicious Cancer Lesions");
-
+        cd.addSearch("receivedResult", ReportUtils.map(patientScreeningResult(result), "startDate=${startDate},endDate=${endDate}"));
+        cd.addSearch("patientVisitType", ReportUtils.map(patientVisitType(visitType), "startDate=${startDate},endDate=${endDate}"));
+        cd.setCompositionString("receivedResult AND patientVisitType");
         return cd;
     }
 
-    /*Treated Using Cryotherapy*/
-    public CohortDefinition treatedUsingCryotherapyCl() {
-        SqlCohortDefinition cd = new SqlCohortDefinition();
-        String sqlQuery = "select i.patient_id from kenyaemr_etl.etl_cervical_cancer_screening i where i.screening_result = 'Positive'" +
-                " and i.treatment_method = 'Cryotherapy postponed' or i.treatment_method = 'Cryotherapy performed (single Visit)' " +
-                "or i.treatment_method = 'Cryotherapy performed' and visit_date between date(:startDate) and date(:endDate) group by i.patient_id;";
+    public CohortDefinition patientTreatment(String[] treatmentMethod) {
 
-        cd.setName("Cryotherapy Treatment");
+        String val = StringUtils.join(treatmentMethod,"','");
+
+        String sqlQuery = "select i.patient_id from kenyaemr_etl.etl_cervical_cancer_screening i where " +
+                " i.treatment_method IN ('"+val+"') and visit_date between date(:startDate) and date(:endDate) group by i.patient_id;";
+        SqlCohortDefinition cd = new SqlCohortDefinition();
+        cd.setName("patientTreatmentMethod");
         cd.setQuery(sqlQuery);
         cd.addParameter(new Parameter("startDate", "Start Date", Date.class));
         cd.addParameter(new Parameter("endDate", "End Date", Date.class));
-        cd.setDescription("Treated Using Cryotherapy");
-
+        cd.setDescription("Cervical Cancer Treatment Method");
         return cd;
     }
 
-    /*Treated Using Thermocoagulation*/
-    public CohortDefinition treatedUsingThermocoagulationCl() {
-        SqlCohortDefinition cd = new SqlCohortDefinition();
-        String sqlQuery = "select i.patient_id from kenyaemr_etl.etl_cervical_cancer_screening i where i.screening_result = 'Positive'" +
-                " and i.treatment_method = 'Thermocoagulation'  and visit_date between date(:startDate) and date(:endDate) group by i.patient_id;";
-
-        cd.setName("Thermocoagulation Treatment");
-        cd.setQuery(sqlQuery);
+    public CohortDefinition treatmentMethodCl(String[] treatmentMethod, String visitType) {
+        CompositionCohortDefinition cd = new CompositionCohortDefinition();
         cd.addParameter(new Parameter("startDate", "Start Date", Date.class));
         cd.addParameter(new Parameter("endDate", "End Date", Date.class));
-        cd.setDescription("Treated Using Thermocoagulation");
-
-        return cd;
-    }
-
-    /*Treated using LEEP*/
-    public CohortDefinition treatedUsingLEEPCl() {
-        SqlCohortDefinition cd = new SqlCohortDefinition();
-        String sqlQuery = "select i.patient_id from kenyaemr_etl.etl_cervical_cancer_screening i where i.screening_result = 'Positive'" +
-                " and i.treatment_method = 'LEEP' and visit_date between date(:startDate) and date(:endDate) group by i.patient_id;";
-
-        cd.setName("LEEP Treatment");
-        cd.setQuery(sqlQuery);
-        cd.addParameter(new Parameter("startDate", "Start Date", Date.class));
-        cd.addParameter(new Parameter("endDate", "End Date", Date.class));
-        cd.setDescription("Treated using LEEP");
-
-        return cd;
-    }
-
-    /*Other Treatment Given*/
-    public CohortDefinition otherTreatmentGivenCl() {
-        SqlCohortDefinition cd = new SqlCohortDefinition();
-        String sqlQuery = "select i.patient_id from kenyaemr_etl.etl_cervical_cancer_screening i where i.screening_result = 'Positive'" +
-                " and i.treatment_method = 'Other' and visit_date between date(:startDate) and date(:endDate) group by i.patient_id;";
-
-        cd.setName("Other Treatment");
-        cd.setQuery(sqlQuery);
-        cd.addParameter(new Parameter("startDate", "Start Date", Date.class));
-        cd.addParameter(new Parameter("endDate", "End Date", Date.class));
-        cd.setDescription("Other Treatment Given");
-
+        cd.addSearch("receivedPositiveScreening", ReportUtils.map(patientTreatment(treatmentMethod), "startDate=${startDate},endDate=${endDate}"));
+        cd.addSearch("patientVisitType", ReportUtils.map(patientVisitType(visitType), "startDate=${startDate},endDate=${endDate}"));
+        cd.setCompositionString("receivedPositiveScreening AND patientVisitType");
         return cd;
     }
 
     /*HIV Positive Clients Screened*/
-    public CohortDefinition HIVPositiveClientsScreenedCl() {
+    public CohortDefinition HIVPositiveClientsScreenedCl(String visitType) {
         SqlCohortDefinition cd = new SqlCohortDefinition();
-        String sqlQuery = "select i.patient_id from kenyaemr_etl.etl_cervical_cancer_screening i inner join kenyaemr_etl.etl_hts_test t on t.patient_id = i.patient_id where t.final_test_result = 'Positive' and date(:startDate) and date(:endDate) group by i.patient_id;";
+        String sqlQuery = "select i.patient_id from kenyaemr_etl.etl_cervical_cancer_screening i left join kenyaemr_etl.etl_hiv_enrollment h on" +
+                " h.patient_id = i.patient_id left join kenyaemr_etl.etl_hts_test t on t.patient_id = i.patient_id where t.final_test_result = 'Positive'" +
+                " and i.visit_type = '"+visitType+"' and i.visit_date between date(:startDate) and date(:endDate) group by i.patient_id;";
 
         cd.setName("HIV Positive Clients Screened");
         cd.setQuery(sqlQuery);
@@ -203,9 +155,11 @@ public class Moh745CohortLibrary {
     }
 
     /*HIV Positive With Positive Screening Results*/
-    public CohortDefinition HIVPositiveClientsScreenedWithResultsCl() {
+    public CohortDefinition HIVPositiveClientsScreenedWithResultsCl(String visitType) {
         SqlCohortDefinition cd = new SqlCohortDefinition();
-        String sqlQuery = "select i.patient_id from kenyaemr_etl.etl_cervical_cancer_screening i inner join kenyaemr_etl.etl_hts_test t on t.patient_id = i.patient_id where t.final_test_result = 'Positive' and i.screening_result = 'Positive' and date(:startDate) and date(:endDate) group by i.patient_id;";
+        String sqlQuery = "select i.patient_id from kenyaemr_etl.etl_cervical_cancer_screening i left join kenyaemr_etl.etl_hiv_enrollment h on h.patient_id = i.patient_id " +
+                "left join kenyaemr_etl.etl_hts_test t on t.patient_id = i.patient_id where t.final_test_result = 'Positive' and i.screening_result = 'Positive' and " +
+                "i.visit_type = '"+visitType+"' and i.visit_date between date(:startDate) and date(:endDate) group by i.patient_id;";
 
         cd.setName("HIV Positive With Positive Screening Results");
         cd.setQuery(sqlQuery);
