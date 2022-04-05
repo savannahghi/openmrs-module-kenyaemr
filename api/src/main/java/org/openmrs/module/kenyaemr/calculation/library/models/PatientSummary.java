@@ -1,500 +1,147 @@
-    /**
-     * This Source Code Form is subject to the terms of the Mozilla Public License,
-     * v. 2.0. If a copy of the MPL was not distributed with this file, You can
-     * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
-     * the terms of the Healthcare Disclaimer located at http://openmrs.org/license.
-     *
-     * Copyright (C) OpenMRS Inc. OpenMRS is a registered trademark and the OpenMRS
-     * graphic logo is a trademark of OpenMRS Inc.
-     */
-    package org.openmrs.module.kenyaemr.calculation.library.models;
-
-    import org.openmrs.PersonName;
-
-    import java.util.List;
-    import java.util.Set;
-
-    /**
-     * Created by codehub on 11/2/15.
-     * a model class that hold the basics of a patient
-     */
-    public class PatientSummary {
-
-        private Set<PersonName> names;
-        private String upn;
-        private String birthDate;
-        private Integer age;
-        private String maritalStatus;
-        private String hivConfrimedDate;
-        private String firstCd4;
-        private String firstCd4Date;
-        private String dateEnrolledIntoCare;
-        private String dateEnrolledInTb;
-        private String dateCompletedInTb;
-        private String whoStagingAtEnrollment;
-        private String patientEntryPoint;
-        private String dateEntryPoint;
-        private String transferInFacility;
-        private String transferInDate;
-        private String nameOfTreatmentSupporter;
-        private String tbScreeningOutcome;
-        private String stiScreeningOutcome;
-        private String caxcScreeningOutcome;
-        private String pulseRate;
-        private String respiratoryRate;
-        private String bloodPressure;
-        private String oxygenSaturation;
-        private String lmp;
-        private String bmi;
-        private String kDoDNumber;
-        private String kDoDUnit;
-        private String kDoDCadre;
-        private String kDoDRank;
-        private String relationshipToTreatmentSupporter;
-        private String contactOfTreatmentSupporter;
-        private String drigAllergies;
-        private String previousArt;
-        private String dateStartedArt;
-        private String artPurpose;
-        private String clinicalStageAtArtStart;
-        private String currentCd4;
-        private String purposeDrugs;
-        private String purposeDate;
-        private String weightAtArtStart;
-        private String heightAtArtStart;
-        private String familyProtection;
-        private String currentRegimen;
-        private List<String> ois;
-        private String dateOfReport;
-        private String clinicName;
-        private String mflCode;
-        private String gender;
-        private String firstRegimen;
-        private String cd4AtArtStart;
-        private String currentArtRegimen;
-        private String currentWhoStaging;
-        private String onCtx;
-        private String dapsone;
-        private String onIpt;
-        private String clinicsEnrolled;
-        private String mostRecentCd4;
-        private String mostRecentCd4Date;
-        private String mostRecentVl;
-        private String mostRecentVlDate;
-        private String artInterruptions;
-        private String artInterruptionReason;
-        private String artInterruptionDate;
-        private String substitutionWithFirstLine;
-        private String substitutionWithFirstLineReason;
-        private String substitutionWithFirstLineDate;
-        private String switchToSecondLineRegimen;
-        private String switchToSecondLineRegimenReason;
-        private String switchToSecondLineRegimenDate;
-        private String transferOutDate;
-        private String deathDate;
-        private String nextAppointmentDate;
-
-        public PatientSummary() {
-        }
-
-        public PatientSummary(Set<PersonName> names, String upn, String birthDate, Integer age, String maritalStatus, String hivConfrimedDate, String firstCd4, String firstCd4Date,String dateEnrolledInTb,String dateCompletedInTb, String dateEnrolledIntoCare, String whoStagingAtEnrollment, String patientEntryPoint, String dateEntryPoint, String transferInStatus,String tbScreeningOutcome, String stiScreeningOutcome, String kDoDCadre,String kDoDUnit ,String kDoDNumber,String kDoDRank, String caxcScreeningOutcome ,String transferInDate,String pulseRate,String bmi,String lmp, String nameOfTreatmentSupporter, String relationshipToTreatmentSupporter, String contactOfTreatmentSupporter, String drigAllergies, String previousArt, String dateStartedArt, String artPurpose, String clinicalStageAtArtStart, String currentCd4, String purposeDrugs, String purposeDate, String weightAtArtStart,String familyProtection, String heightAtArtStart, String currentRegimen, List<String> ois, String dateOfReport, String clinicName, String mflCode, String gender, String firstRegimen, String cd4AtArtStart, String currentArtRegimen, String currentWhoStaging, String onCtx, String dapsone, String onIpt, String clinicsEnrolled, String mostRecentCd4, String mostRecentCd4Date, String mostRecentVl, String mostRecentVlDate, String artInterruptions, String artInterruptionReason, String artInterruptionDate, String substitutionWithFirstLine, String substitutionWithFirstLineReason, String substitutionWithFirstLineDate, String switchToSecondLineRegimen, String switchToSecondLineRegimenReason, String switchToSecondLineRegimenDate, String transferOutDate, String deathDate, String nextAppointmentDate, String bloodPressure,String respiratoryRate,String oxygenSaturation) {
-            this.names = names;
-            this.upn = upn;
-            this.birthDate = birthDate;
-            this.age = age;
-            this.maritalStatus = maritalStatus;
-            this.hivConfrimedDate = hivConfrimedDate;
-            this.firstCd4 = firstCd4;
-            this.kDoDCadre = kDoDCadre;
-            this.kDoDUnit = kDoDUnit;
-            this.kDoDNumber = kDoDNumber;
-            this.kDoDRank = kDoDRank;
-            this.firstCd4Date = firstCd4Date;
-            this.dateEnrolledIntoCare = dateEnrolledIntoCare;
-            this.dateEnrolledInTb = dateEnrolledInTb;
-            this.dateCompletedInTb = dateCompletedInTb;
-            this.whoStagingAtEnrollment = whoStagingAtEnrollment;
-            this.patientEntryPoint = patientEntryPoint;
-            this.dateEntryPoint = dateEntryPoint;
-            this.transferInFacility = transferInStatus;
-            this.transferInDate = transferInDate;
-            this.nameOfTreatmentSupporter = nameOfTreatmentSupporter;
-            this.bloodPressure = bloodPressure;
-            this.respiratoryRate = respiratoryRate;
-            this.oxygenSaturation = oxygenSaturation;
-            this.pulseRate = pulseRate;
-            this.tbScreeningOutcome = tbScreeningOutcome;
-            this.stiScreeningOutcome = stiScreeningOutcome;
-            this.caxcScreeningOutcome = caxcScreeningOutcome;
-            this.lmp = lmp;
-            this.bmi = bmi;
-            this.relationshipToTreatmentSupporter = relationshipToTreatmentSupporter;
-            this.contactOfTreatmentSupporter = contactOfTreatmentSupporter;
-            this.drigAllergies = drigAllergies;
-            this.previousArt = previousArt;
-            this.dateStartedArt = dateStartedArt;
-            this.artPurpose = artPurpose;
-            this.clinicalStageAtArtStart = clinicalStageAtArtStart;
-            this.currentCd4 = currentCd4;
-            this.purposeDrugs = purposeDrugs;
-            this.purposeDate = purposeDate;
-            this.weightAtArtStart = weightAtArtStart;
-            this.heightAtArtStart = heightAtArtStart;
-            this.familyProtection = familyProtection;
-            this.currentRegimen = currentRegimen;
-            this.ois = ois;
-            this.dateOfReport = dateOfReport;
-            this.clinicName = clinicName;
-            this.mflCode = mflCode;
-            this.gender = gender;
-            this.firstRegimen = firstRegimen;
-            this.cd4AtArtStart = cd4AtArtStart;
-            this.currentArtRegimen = currentArtRegimen;
-            this.currentWhoStaging = currentWhoStaging;
-            this.onCtx = onCtx;
-            this.dapsone = dapsone;
-            this.onIpt = onIpt;
-            this.clinicsEnrolled = clinicsEnrolled;
-            this.mostRecentCd4 = mostRecentCd4;
-            this.mostRecentCd4Date = mostRecentCd4Date;
-
-            this.mostRecentVl = mostRecentVl;
-            this.mostRecentVlDate = mostRecentVlDate;
-            this.artInterruptions = artInterruptions;
-            this.artInterruptionReason = artInterruptionReason;
-            this.artInterruptionDate = artInterruptionDate;
-            this.substitutionWithFirstLine = substitutionWithFirstLine;
-            this.substitutionWithFirstLineReason = substitutionWithFirstLineReason;
-            this.substitutionWithFirstLineDate = substitutionWithFirstLineDate;
-            this.switchToSecondLineRegimen = switchToSecondLineRegimen;
-            this.switchToSecondLineRegimenReason = switchToSecondLineRegimenReason;
-            this.switchToSecondLineRegimenDate = switchToSecondLineRegimenDate;
-            this.transferOutDate = transferOutDate;
-            this.deathDate = deathDate;
-            this.nextAppointmentDate = nextAppointmentDate;
-        }
-
-        public String getFirstCd4() {
-            return firstCd4;
-        }
-
-        public void setFirstCd4(String firstCd4) {
-            this.firstCd4 = firstCd4;
-        }
-
-        public Set<PersonName> getNames() {
-            return names;
-        }
-
-        public void setNames(Set<PersonName> names) {
-            this.names = names;
-        }
-
-        public String getUpn() {
-            return upn;
-        }
-
-        public void setUpn(String upn) {
-            this.upn = upn;
-        }
-
-        public String getBirthDate() {
-            return birthDate;
-        }
-
-        public void setBirthDate(String birthDate) {
-            this.birthDate = birthDate;
-        }
-
-        public Integer getAge() {
-            return age;
-        }
-
-        public void setAge(Integer age) {
-            this.age = age;
-        }
-
-        public String getMaritalStatus() {
-            return maritalStatus;
-        }
-
-        public void setMaritalStatus(String maritalStatus) {
-            this.maritalStatus = maritalStatus;
-        }
-
-        public String getHivConfrimedDate() {
-            return hivConfrimedDate;
-        }
-
-        public void setHivConfrimedDate(String hivConfrimedDate) {
-            this.hivConfrimedDate = hivConfrimedDate;
-        }
-
-        public String getFirstCd4Date() {
-            return firstCd4Date;
-        }
-
-        public void setFirstCd4Date(String firstCd4Date) {
-            this.firstCd4Date = firstCd4Date;
-        }
-
-        public String getDateEnrolledIntoCare() {
-            return dateEnrolledIntoCare;
-        }
-
-        public void setDateEnrolledIntoCare(String dateEnrolledIntoCare) {
-            this.dateEnrolledIntoCare = dateEnrolledIntoCare;
-        }
-
-        public String getDateEnrolledInTb() {
-            return dateEnrolledInTb;
-        }
-
-        public void setDateEnrolledInTb(String dateEnrolledInTb) {
-            this.dateEnrolledInTb = dateEnrolledInTb;
-        }
-        public String getDateCompletedInTb() {
-            return dateCompletedInTb;
-        }
-
-        public void setDateCompletedInTb(String dateCompletedInTb) {
-            this.dateCompletedInTb = dateCompletedInTb;
-        }
-
-        public String getWhoStagingAtEnrollment() {
-            return whoStagingAtEnrollment;
-        }
-
-        public void setWhoStagingAtEnrollment(String whoStagingAtEnrollment) {
-            this.whoStagingAtEnrollment = whoStagingAtEnrollment;
-        }
-
-        public String getPatientEntryPoint() {
-            return patientEntryPoint;
-        }
-
-        public void setPatientEntryPoint(String patientEntryPoint) {
-            this.patientEntryPoint = patientEntryPoint;
-        }
-
-        public String getDateEntryPoint() {
-            return dateEntryPoint;
-        }
-
-        public void setDateEntryPoint(String dateEntryPoint) {
-            this.dateEntryPoint = dateEntryPoint;
-        }
-
-        public String getTransferInFacility() {
-            return transferInFacility;
-        }
-
-        public void setTransferInFacility(String transferInFacility) {
-            this.transferInFacility = transferInFacility;
-        }
-
-        public String getTransferInDate() {
-            return transferInDate;
-        }
-
-        public void setTransferInDate(String transferInDate) {
-            this.transferInDate = transferInDate;
-        }
-
-        public String getNameOfTreatmentSupporter() {
-            return nameOfTreatmentSupporter;
-        }
-
-        public void setNameOfTreatmentSupporter(String nameOfTreatmentSupporter) {
-            this.nameOfTreatmentSupporter = nameOfTreatmentSupporter;
-        }
-
-        public String getNameTbScreeningOutcome() {
-            return tbScreeningOutcome;
-        }
-
-        public void setTbScreeningOutcome(String tbScreeningOutcome) {
-            this.tbScreeningOutcome = tbScreeningOutcome;
-        }
-        public String getStiScreeningOutcome() {
-            return stiScreeningOutcome;
-        }
-
-        public void setStiScreeningOutcome(String stiScreeningOutcome) {
-            this.stiScreeningOutcome = stiScreeningOutcome;
-        }
-        public String getCaxcScreeningOutcome() {
-            return caxcScreeningOutcome;
-        }
-
-        public void setCaxcScreeningOutcome(String caxcScreeningOutcome) {
-            this.caxcScreeningOutcome = caxcScreeningOutcome;
-        }
-        public String getPulseRate() {
-            return pulseRate;
-        }
-
-        public void setPulseRate(String pulseRate) {
-            this.pulseRate = pulseRate;
-        }
-
-        public String getLmp() {
-            return lmp;
-        }
-
-        public void setLmp(String lmp) {
-            this.lmp = lmp;
-        }
-
-        public String getBmi() {
-            return bmi;
-        }
-        public void setBmi(String bmi) {
-            this.bmi = bmi;
-        }
-
-
-        public String getKdodCadre() {
-            return kDoDCadre;
-        }
-        public void setKdodCadre(String kDoDCadre) {
-            this.kDoDCadre = kDoDCadre;
-        }
-
-        public String getKdodUnit() {
-            return kDoDUnit;
-        }
-        public void setKdodUnit(String kDoDUnit) {
-            this.kDoDUnit = kDoDUnit;
-        }
-
-        public String getKdodNumber() {
-            return kDoDNumber;
-        }
-        public void setKdodNumber(String kDoDNumber) {
-            this.kDoDNumber = kDoDNumber;
-        }
-
-        public String getKdodRank() {
-            return kDoDRank;
-        }
-        public void setKdodRank(String kDoDRank) {
-            this.kDoDRank = kDoDRank;
-        }
-
-        public String getBloodPressure() {
-            return bloodPressure;
-        }
-
-        public void setBloodPressure(String bloodPressure) {
-            this.bloodPressure = bloodPressure;
-        }
-        public String getRespiratoryRate() {
-            return respiratoryRate;
-        }
-
-        public void setRespiratoryRate(String respiratoryRate) {
-            this.respiratoryRate = respiratoryRate;
-        }
-        public String getOxygenSaturation() {
-            return oxygenSaturation;
-        }
-
-        public void setOxygenSaturation(String oxygenSaturation) {
-            this.oxygenSaturation = oxygenSaturation;
-        }
-
-        public String getRelationshipToTreatmentSupporter() {
-            return relationshipToTreatmentSupporter;
-        }
-
-        public void setRelationshipToTreatmentSupporter(String relationshipToTreatmentSupporter) {
-            this.relationshipToTreatmentSupporter = relationshipToTreatmentSupporter;
-        }
-
-        public String getContactOfTreatmentSupporter() {
-            return contactOfTreatmentSupporter;
-        }
-
-        public void setContactOfTreatmentSupporter(String contactOfTreatmentSupporter) {
-            this.contactOfTreatmentSupporter = contactOfTreatmentSupporter;
-        }
-
-        public String getDrigAllergies() {
-            return drigAllergies;
-        }
-
-        public void setDrigAllergies(String drigAllergies) {
-            this.drigAllergies = drigAllergies;
-        }
-
-        public String getPreviousArt() {
-            return previousArt;
-        }
-
-        public void setPreviousArt(String previousArt) {
-            this.previousArt = previousArt;
-        }
-
-        public String getDateStartedArt() {
-            return dateStartedArt;
-        }
-
-        public void setDateStartedArt(String dateStartedArt) {
-            this.dateStartedArt = dateStartedArt;
-        }
-
-        public String getArtPurpose() {
-            return artPurpose;
-        }
-
-        public void setArtPurpose(String artPurpose) {
-            this.artPurpose = artPurpose;
-        }
-
-        public String getClinicalStageAtArtStart() {
-            return clinicalStageAtArtStart;
-        }
-
-        public void setClinicalStageAtArtStart(String clinicalStageAtArtStart) {
-            this.clinicalStageAtArtStart = clinicalStageAtArtStart;
-        }
-
-        public String getCurrentCd4() {
-            return currentCd4;
-        }
-
-        public void setCurrentCd4(String currentCd4) {
-            this.currentCd4 = currentCd4;
-        }
-
-        public String getPurposeDrugs() {
-            return purposeDrugs;
-        }
-
-        public void setPurposeDrugs(String purposeDrugs) {
-            this.purposeDrugs = purposeDrugs;
-        }
-
-        public String getPurposeDate() {
-            return purposeDate;
-        }
-
-        public void setPurposeDate(String purposeDate) {
-            this.purposeDate = purposeDate;
-        }
-
-        public String getWeightAtArtStart() {
-            return weightAtArtStart;
-        }
-
-        public void setWeightAtArtStart(String weightAtArtStart) {
-            this.weightAtArtStart = weightAtArtStart;
-        }
-
-        public String getFamilyProtection() {
-            return familyProtection;
-        }
+/**
+ * This Source Code Form is subject to the terms of the Mozilla Public License,
+ * v. 2.0. If a copy of the MPL was not distributed with this file, You can
+ * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
+ * the terms of the Healthcare Disclaimer located at http://openmrs.org/license.
+ *
+ * Copyright (C) OpenMRS Inc. OpenMRS is a registered trademark and the OpenMRS
+ * graphic logo is a trademark of OpenMRS Inc.
+ */
+package org.openmrs.module.kenyaemr.calculation.library.models;
+
+import org.openmrs.PersonName;
+
+import java.util.List;
+import java.util.Set;
+
+/**
+ * Created by codehub on 11/2/15.
+ * a model class that hold the basics of a patient
+ */
+public class PatientSummary {
+
+    private Set<PersonName> names;
+    private String upn;
+    private String birthDate;
+    private Integer age;
+    private String maritalStatus;
+    private String hivConfrimedDate;
+    private String firstCd4;
+    private String firstCd4Date;
+    private String dateEnrolledIntoCare;
+    private String whoStagingAtEnrollment;
+    private String patientEntryPoint;
+    private String dateEntryPoint;
+    private String transferInFacility;
+    private String transferInDate;
+    private String nameOfTreatmentSupporter;
+    private String relationshipToTreatmentSupporter;
+    private String contactOfTreatmentSupporter;
+    private String drigAllergies;
+    private String previousArt;
+    private String dateStartedArt;
+    private String artPurpose;
+    private String clinicalStageAtArtStart;
+    private String currentCd4;
+    private String purposeDrugs;
+    private String purposeDate;
+    private String weightAtArtStart;
+    private String heightAtArtStart;
+    private String bmi;
+    private String currentRegimen;
+    private List<String> ois;
+    private String dateOfReport;
+    private String clinicName;
+    private String mflCode;
+    private String gender;
+    private String firstRegimen;
+    private String cd4AtArtStart;
+    private String currentArtRegimen;
+    private String currentWhoStaging;
+    private String onCtx;
+    private String dapsone;
+    private String onIpt;
+    private String clinicsEnrolled;
+    private String mostRecentCd4;
+    private String mostRecentCd4Date;
+    private String mostRecentVl;
+    private String mostRecentVlDate;
+    private String artInterruptions;
+    private String artInterruptionReason;
+    private String artInterruptionDate;
+    private String substitutionWithFirstLine;
+    private String substitutionWithFirstLineReason;
+    private String substitutionWithFirstLineDate;
+    private String switchToSecondLineRegimen;
+    private String switchToSecondLineRegimenReason;
+    private String switchToSecondLineRegimenDate;
+    private String transferOutDate;
+    private String deathDate;
+    private String nextAppointmentDate;
+
+    public PatientSummary() {
+    }
+
+    public PatientSummary(Set<PersonName> names, String upn, String birthDate, Integer age, String maritalStatus, String hivConfrimedDate, String firstCd4, String firstCd4Date, String dateEnrolledIntoCare, String whoStagingAtEnrollment, String patientEntryPoint, String dateEntryPoint, String transferInStatus, String transferInDate, String nameOfTreatmentSupporter, String relationshipToTreatmentSupporter, String contactOfTreatmentSupporter, String drigAllergies, String previousArt, String dateStartedArt, String artPurpose, String clinicalStageAtArtStart, String currentCd4, String purposeDrugs, String purposeDate, String weightAtArtStart,String bmi, String heightAtArtStart, String currentRegimen, List<String> ois, String dateOfReport, String clinicName, String mflCode, String gender, String firstRegimen, String cd4AtArtStart, String currentArtRegimen, String currentWhoStaging, String onCtx, String dapsone, String onIpt, String clinicsEnrolled, String mostRecentCd4, String mostRecentCd4Date, String mostRecentVl, String mostRecentVlDate, String artInterruptions, String artInterruptionReason, String artInterruptionDate, String substitutionWithFirstLine, String substitutionWithFirstLineReason, String substitutionWithFirstLineDate, String switchToSecondLineRegimen, String switchToSecondLineRegimenReason, String switchToSecondLineRegimenDate, String transferOutDate, String deathDate, String nextAppointmentDate) {
+        this.names = names;
+        this.upn = upn;
+        this.birthDate = birthDate;
+        this.age = age;
+        this.maritalStatus = maritalStatus;
+        this.hivConfrimedDate = hivConfrimedDate;
+        this.firstCd4 = firstCd4;
+        this.firstCd4Date = firstCd4Date;
+        this.dateEnrolledIntoCare = dateEnrolledIntoCare;
+        this.whoStagingAtEnrollment = whoStagingAtEnrollment;
+        this.patientEntryPoint = patientEntryPoint;
+        this.dateEntryPoint = dateEntryPoint;
+        this.transferInFacility = transferInStatus;
+        this.transferInDate = transferInDate;
+        this.nameOfTreatmentSupporter = nameOfTreatmentSupporter;
+        this.relationshipToTreatmentSupporter = relationshipToTreatmentSupporter;
+        this.contactOfTreatmentSupporter = contactOfTreatmentSupporter;
+        this.drigAllergies = drigAllergies;
+        this.previousArt = previousArt;
+        this.dateStartedArt = dateStartedArt;
+        this.artPurpose = artPurpose;
+        this.clinicalStageAtArtStart = clinicalStageAtArtStart;
+        this.currentCd4 = currentCd4;
+        this.purposeDrugs = purposeDrugs;
+        this.purposeDate = purposeDate;
+        this.weightAtArtStart = weightAtArtStart;
+        this.heightAtArtStart = heightAtArtStart;
+        this.bmi = bmi;
+        this.currentRegimen = currentRegimen;
+        this.ois = ois;
+        this.dateOfReport = dateOfReport;
+        this.clinicName = clinicName;
+        this.mflCode = mflCode;
+        this.gender = gender;
+        this.firstRegimen = firstRegimen;
+        this.cd4AtArtStart = cd4AtArtStart;
+        this.currentArtRegimen = currentArtRegimen;
+        this.currentWhoStaging = currentWhoStaging;
+        this.onCtx = onCtx;
+        this.dapsone = dapsone;
+        this.onIpt = onIpt;
+        this.clinicsEnrolled = clinicsEnrolled;
+        this.mostRecentCd4 = mostRecentCd4;
+        this.mostRecentCd4Date = mostRecentCd4Date;
+        this.mostRecentVl = mostRecentVl;
+        this.mostRecentVlDate = mostRecentVlDate;
+        this.artInterruptions = artInterruptions;
+        this.artInterruptionReason = artInterruptionReason;
+        this.artInterruptionDate = artInterruptionDate;
+        this.substitutionWithFirstLine = substitutionWithFirstLine;
+        this.substitutionWithFirstLineReason = substitutionWithFirstLineReason;
+        this.substitutionWithFirstLineDate = substitutionWithFirstLineDate;
+        this.switchToSecondLineRegimen = switchToSecondLineRegimen;
+        this.switchToSecondLineRegimenReason = switchToSecondLineRegimenReason;
+        this.switchToSecondLineRegimenDate = switchToSecondLineRegimenDate;
+        this.transferOutDate = transferOutDate;
+        this.deathDate = deathDate;
+        this.nextAppointmentDate = nextAppointmentDate;
+    }
 
         public void setFamilyProtection(String familyProtection) {
             this.familyProtection = familyProtection;
@@ -552,7 +199,23 @@
             return gender;
         }
 
-<<<<<<< HEAD
+    public String getBmi() {
+        return bmi;
+    }
+
+    public void setBmi(String bmi) {
+        this.bmi = bmi;
+    }
+
+    public String getHeightAtArtStart() {
+        return heightAtArtStart;
+    }
+
+    public void setHeightAtArtStart(String heightAtArtStart) {
+        this.heightAtArtStart = heightAtArtStart;
+    }
+
+>>>>>>> a4f757435... created height field
     public String getCurrentRegimen() {
         return currentRegimen;
     }

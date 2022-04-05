@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class BMICalculation extends AbstractPatientCalculation {
+public class HeightAtArtInitiationCalculation extends AbstractPatientCalculation {
 
     /**
      * @see org.openmrs.calculation.patient.PatientCalculation#evaluate(Collection, Map, PatientCalculationContext)
@@ -35,24 +35,24 @@ public class BMICalculation extends AbstractPatientCalculation {
     @Override
     public CalculationResultMap evaluate(Collection<Integer> cohort, Map<String, Object> parameterValues, PatientCalculationContext context) {
 
-        Concept currentBMI = Dictionary.getConcept(Dictionary.HEIGHT_CM);
+        Concept currentHeight = Dictionary.getConcept(Dictionary.HEIGHT_CM);
         CalculationResultMap artStartDates = calculate(new InitialArtStartDateCalculation(), cohort, context);
-        CalculationResultMap bmiObss = Calculations.allObs(currentBMI, cohort, context);
+        CalculationResultMap heightObss = Calculations.allObs(currentHeight, cohort, context);
 
         CalculationResultMap ret = new CalculationResultMap();
         for (Integer ptId : cohort) {
             SimpleResult result = null;
             Date artStartDate = EmrCalculationUtils.datetimeResultForPatient(artStartDates, ptId);
-            ListResult bmiObsResult = (ListResult) bmiObss.get(ptId);
+            ListResult heightObsResult = (ListResult) heightObss.get(ptId);
 
-            if (artStartDate != null && bmiObsResult != null && !bmiObsResult.isEmpty()) {
-                List<Obs> bmi = CalculationUtils.extractResultValues(bmiObsResult);
-                Obs lastBeforeArtStart = EmrCalculationUtils.findLastOnOrBefore(bmi, artStartDate);
+            if (artStartDate != null && heightObsResult != null && !heightObsResult.isEmpty()) {
+                List<Obs> height = CalculationUtils.extractResultValues(heightObsResult);
+                Obs lastBeforeArtStart = EmrCalculationUtils.findLastOnOrBefore(height, artStartDate);
 
                 if (lastBeforeArtStart != null) {
-                    Double bmiValue = lastBeforeArtStart.getValueNumeric();
-                    if (bmiValue != null) {
-                        result = new SimpleResult(bmiValue, this);
+                    Double heightValue = lastBeforeArtStart.getValueNumeric();
+                    if (heightValue != null) {
+                        result = new SimpleResult(heightValue, this);
                     }
                 }
             }

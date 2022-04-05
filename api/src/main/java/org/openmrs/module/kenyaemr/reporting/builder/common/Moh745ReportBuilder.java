@@ -11,10 +11,7 @@ package org.openmrs.module.kenyaemr.reporting.builder.common;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-<<<<<<< HEAD
-=======
 import org.openmrs.module.kenyacore.report.ReportUtils;
->>>>>>> 871939fec... KHP3-793 Add CaCx MOH 745 Report in KenyaEMR
 import org.openmrs.PatientIdentifierType;
 import org.openmrs.module.kenyacore.report.ReportDescriptor;
 import org.openmrs.module.kenyacore.report.ReportUtils;
