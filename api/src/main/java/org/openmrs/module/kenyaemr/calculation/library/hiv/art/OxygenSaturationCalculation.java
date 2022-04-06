@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class BMICalculation extends AbstractPatientCalculation {
+public class OxygenSaturationCalculation extends AbstractPatientCalculation {
 
     /**
      * @see org.openmrs.calculation.patient.PatientCalculation#evaluate(Collection, Map, PatientCalculationContext)
@@ -35,24 +35,24 @@ public class BMICalculation extends AbstractPatientCalculation {
     @Override
     public CalculationResultMap evaluate(Collection<Integer> cohort, Map<String, Object> parameterValues, PatientCalculationContext context) {
 
-        Concept currentBMI = Dictionary.getConcept(Dictionary.HEIGHT_CM);
+        Concept currentOxygenSaturation = Dictionary.getConcept(Dictionary.OXYGEN_SATURATION);
         CalculationResultMap artStartDates = calculate(new InitialArtStartDateCalculation(), cohort, context);
-        CalculationResultMap bmiObss = Calculations.allObs(currentBMI, cohort, context);
+        CalculationResultMap oxygenSaturationObss = Calculations.allObs(currentOxygenSaturation, cohort, context);
 
         CalculationResultMap ret = new CalculationResultMap();
         for (Integer ptId : cohort) {
             SimpleResult result = null;
             Date artStartDate = EmrCalculationUtils.datetimeResultForPatient(artStartDates, ptId);
-            ListResult bmiObsResult = (ListResult) bmiObss.get(ptId);
+            ListResult oxygenSaturationObsResult = (ListResult) oxygenSaturationObss.get(ptId);
 
-            if (artStartDate != null && bmiObsResult != null && !bmiObsResult.isEmpty()) {
-                List<Obs> bmi = CalculationUtils.extractResultValues(bmiObsResult);
-                Obs lastBeforeArtStart = EmrCalculationUtils.findLastOnOrBefore(bmi, artStartDate);
+            if (artStartDate != null && oxygenSaturationObsResult != null && !oxygenSaturationObsResult.isEmpty()) {
+                List<Obs> oxygenSaturation = CalculationUtils.extractResultValues(oxygenSaturationObsResult);
+                Obs lastBeforeArtStart = EmrCalculationUtils.findLastOnOrBefore(oxygenSaturation, artStartDate);
 
                 if (lastBeforeArtStart != null) {
-                    Double bmiValue = lastBeforeArtStart.getValueNumeric();
-                    if (bmiValue != null) {
-                        result = new SimpleResult(bmiValue, this);
+                    Double oxygenSaturationValue = lastBeforeArtStart.getValueNumeric();
+                    if (oxygenSaturationValue != null) {
+                        result = new SimpleResult(oxygenSaturationValue, this);
                     }
                 }
             }

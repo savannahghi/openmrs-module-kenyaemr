@@ -35,6 +35,12 @@ public class PatientSummary {
     private String transferInFacility;
     private String transferInDate;
     private String nameOfTreatmentSupporter;
+    private String pulseRate;
+    private String respiratoryRate;
+    private String bloodPressure;
+    private String oxygenSaturation;
+    private String lmp;
+
     private String relationshipToTreatmentSupporter;
     private String contactOfTreatmentSupporter;
     private String drigAllergies;
@@ -82,7 +88,7 @@ public class PatientSummary {
     public PatientSummary() {
     }
 
-    public PatientSummary(Set<PersonName> names, String upn, String birthDate, Integer age, String maritalStatus, String hivConfrimedDate, String firstCd4, String firstCd4Date, String dateEnrolledIntoCare, String whoStagingAtEnrollment, String patientEntryPoint, String dateEntryPoint, String transferInStatus, String transferInDate, String nameOfTreatmentSupporter, String relationshipToTreatmentSupporter, String contactOfTreatmentSupporter, String drigAllergies, String previousArt, String dateStartedArt, String artPurpose, String clinicalStageAtArtStart, String currentCd4, String purposeDrugs, String purposeDate, String weightAtArtStart,String bmi, String heightAtArtStart, String currentRegimen, List<String> ois, String dateOfReport, String clinicName, String mflCode, String gender, String firstRegimen, String cd4AtArtStart, String currentArtRegimen, String currentWhoStaging, String onCtx, String dapsone, String onIpt, String clinicsEnrolled, String mostRecentCd4, String mostRecentCd4Date, String mostRecentVl, String mostRecentVlDate, String artInterruptions, String artInterruptionReason, String artInterruptionDate, String substitutionWithFirstLine, String substitutionWithFirstLineReason, String substitutionWithFirstLineDate, String switchToSecondLineRegimen, String switchToSecondLineRegimenReason, String switchToSecondLineRegimenDate, String transferOutDate, String deathDate, String nextAppointmentDate) {
+    public PatientSummary(Set<PersonName> names, String upn, String birthDate, Integer age, String maritalStatus, String hivConfrimedDate, String firstCd4, String firstCd4Date, String dateEnrolledIntoCare, String whoStagingAtEnrollment, String patientEntryPoint, String dateEntryPoint, String transferInStatus, String transferInDate,String pulseRate,String lmp, String nameOfTreatmentSupporter, String relationshipToTreatmentSupporter, String contactOfTreatmentSupporter, String drigAllergies, String previousArt, String dateStartedArt, String artPurpose, String clinicalStageAtArtStart, String currentCd4, String purposeDrugs, String purposeDate, String weightAtArtStart,String bmi, String heightAtArtStart, String currentRegimen, List<String> ois, String dateOfReport, String clinicName, String mflCode, String gender, String firstRegimen, String cd4AtArtStart, String currentArtRegimen, String currentWhoStaging, String onCtx, String dapsone, String onIpt, String clinicsEnrolled, String mostRecentCd4, String mostRecentCd4Date, String mostRecentVl, String mostRecentVlDate, String artInterruptions, String artInterruptionReason, String artInterruptionDate, String substitutionWithFirstLine, String substitutionWithFirstLineReason, String substitutionWithFirstLineDate, String switchToSecondLineRegimen, String switchToSecondLineRegimenReason, String switchToSecondLineRegimenDate, String transferOutDate, String deathDate, String nextAppointmentDate, String bloodPressure,String respiratoryRate,String oxygenSaturation) {
         this.names = names;
         this.upn = upn;
         this.birthDate = birthDate;
@@ -98,6 +104,11 @@ public class PatientSummary {
         this.transferInFacility = transferInStatus;
         this.transferInDate = transferInDate;
         this.nameOfTreatmentSupporter = nameOfTreatmentSupporter;
+        this.bloodPressure = bloodPressure;
+        this.respiratoryRate = respiratoryRate;
+        this.oxygenSaturation = oxygenSaturation;
+        this.pulseRate = pulseRate;
+        this.lmp = lmp;
         this.relationshipToTreatmentSupporter = relationshipToTreatmentSupporter;
         this.contactOfTreatmentSupporter = contactOfTreatmentSupporter;
         this.drigAllergies = drigAllergies;
@@ -175,9 +186,129 @@ public class PatientSummary {
             return dateOfReport;
         }
 
-        public void setDateOfReport(String dateOfReport) {
-            this.dateOfReport = dateOfReport;
-        }
+    public void setTransferInFacility(String transferInFacility) {
+        this.transferInFacility = transferInFacility;
+    }
+
+    public String getTransferInDate() {
+        return transferInDate;
+    }
+
+    public void setTransferInDate(String transferInDate) {
+        this.transferInDate = transferInDate;
+    }
+
+    public String getNameOfTreatmentSupporter() {
+        return nameOfTreatmentSupporter;
+    }
+
+    public void setNameOfTreatmentSupporter(String nameOfTreatmentSupporter) {
+        this.nameOfTreatmentSupporter = nameOfTreatmentSupporter;
+    }
+    public String getPulseRate() {
+        return pulseRate;
+    }
+
+    public void setPulseRate(String pulseRate) {
+        this.pulseRate = pulseRate;
+    }
+
+    public String getLmp() {
+        return lmp;
+    }
+
+    public void setLmp(String lmp) {
+        this.lmp = lmp;
+    }
+    public String getBloodPressure() {
+        return bloodPressure;
+    }
+
+    public void setBloodPressure(String bloodPressure) {
+        this.bloodPressure = bloodPressure;
+    }
+    public String getRespiratoryRate() {
+        return respiratoryRate;
+    }
+
+    public void setRespiratoryRate(String respiratoryRate) {
+        this.respiratoryRate = respiratoryRate;
+    }
+    public String getOxygenSaturation() {
+        return oxygenSaturation;
+    }
+
+    public void setOxygenSaturation(String oxygenSaturation) {
+        this.oxygenSaturation = oxygenSaturation;
+    }
+
+    public String getRelationshipToTreatmentSupporter() {
+        return relationshipToTreatmentSupporter;
+    }
+
+    public void setRelationshipToTreatmentSupporter(String relationshipToTreatmentSupporter) {
+        this.relationshipToTreatmentSupporter = relationshipToTreatmentSupporter;
+    }
+
+    public String getContactOfTreatmentSupporter() {
+        return contactOfTreatmentSupporter;
+    }
+
+    public void setContactOfTreatmentSupporter(String contactOfTreatmentSupporter) {
+        this.contactOfTreatmentSupporter = contactOfTreatmentSupporter;
+    }
+
+    public String getDrigAllergies() {
+        return drigAllergies;
+    }
+
+    public void setDrigAllergies(String drigAllergies) {
+        this.drigAllergies = drigAllergies;
+    }
+
+    public String getPreviousArt() {
+        return previousArt;
+    }
+
+    public void setPreviousArt(String previousArt) {
+        this.previousArt = previousArt;
+    }
+
+    public String getDateStartedArt() {
+        return dateStartedArt;
+    }
+
+    public void setDateStartedArt(String dateStartedArt) {
+        this.dateStartedArt = dateStartedArt;
+    }
+
+    public String getArtPurpose() {
+        return artPurpose;
+    }
+
+    public void setArtPurpose(String artPurpose) {
+        this.artPurpose = artPurpose;
+    }
+
+    public String getClinicalStageAtArtStart() {
+        return clinicalStageAtArtStart;
+    }
+
+    public void setClinicalStageAtArtStart(String clinicalStageAtArtStart) {
+        this.clinicalStageAtArtStart = clinicalStageAtArtStart;
+    }
+
+    public String getCurrentCd4() {
+        return currentCd4;
+    }
+
+    public void setCurrentCd4(String currentCd4) {
+        this.currentCd4 = currentCd4;
+    }
+
+    public String getPurposeDrugs() {
+        return purposeDrugs;
+    }
 
         public String getClinicName() {
             return clinicName;
@@ -215,11 +346,10 @@ public class PatientSummary {
         this.heightAtArtStart = heightAtArtStart;
     }
 
->>>>>>> a4f757435... created height field
     public String getCurrentRegimen() {
         return currentRegimen;
     }
-=======
+
         public void setGender(String gender) {
             this.gender = gender;
         }
