@@ -103,7 +103,7 @@ Green Card follow-up visit form
         var pAge = parseInt('<lookup expression="patient.age"/>');
         var pgender = "<lookup expression="patient.gender" />";
         var ctxPath = typeof openmrsContextPath === 'string' ? openmrsContextPath : OPENMRS_CONTEXT_PATH;
-
+        var IS_KDoD_SITE = <lookup expression="kenyaemr.getFacilityType()" />;
 
         //Start on jq onready
         jq(function() {
@@ -156,7 +156,11 @@ Green Card follow-up visit form
             jq("#tbl-chronic-illness").hide();
             jq('input[type=radio].chronic-illness').prop("checked", false);
             jq("#key-population").hide();
+            jq('input[type=radio].key-population').prop("checked", false);
+            jq('input[type=radio].priority-population').prop("checked", false);
+            jq("#priority-population").hide();
             jq('#nutritional-status input[type=radio]').attr("style", "pointer-events:none;");
+            jq('#tbl-other-complaint').hide();
 //default on patient presence
             jq('.patient-details :input').prop('disabled', true);
             jq('#person-present input').click(onPersonPresentChange);
@@ -195,6 +199,15 @@ Green Card follow-up visit form
             jq("#wants-pregnancy").hide();
             jq("#tb-screening-tab").hide();
             jq("#tbl-ever-on-ipt").hide();
+//KDOD SITE
+            if(IS_KDoD_SITE==false)
+            {
+                jq('#dodOnly').hide();
+            }
+            else
+            {
+                jq('#dodOnly').show();
+            }
 //TPT OUTCOME
 
 
@@ -241,6 +254,8 @@ Green Card follow-up visit form
             jq('#systems-review :input[type=radio]').change(systemsReviewSelected);   //non-bool
             jq('#chronic-illness :input[type=radio]').change(chronicIllnessesSelected);
             jq('#population-type :input[type=radio]').change(populationTypeSelected);
+            jq("#complaint-field select").change(otherComplaintSelected);
+
 //Stability assessment
             jq("#stability").change(stabilitySelected);       //boolean
             jq("#returnVisitReason select").change(returnReasonSelected);       //non boolean
@@ -616,7 +631,7 @@ Green Card follow-up visit form
             });
         });   //End of JQuery onReady function
 
-
+      
         // get count of patients booked on a date
         function getPatientsBookedOnDate() {
             var tca_date = jq('#returnVisitDate input[type=hidden]').val();
@@ -818,6 +833,12 @@ Green Card follow-up visit form
             var heightM = ("<lookup expression="fn.latestObs(5090).valueNumeric"/>")/100
             var bmi = '';
             var recent_bmi ='';
+   //If client is > 19 years prepopluate height
+            if (pAge &gt; 19 &amp;&amp; heightM !="") {
+                getField('height.value').val(heightM*100);
+            }else{
+                getField('height.value').val("");
+            }
             if (pAge &gt; 14) {
                 if (weightKg >0 &amp;&amp; heightM >0) {
                     bmi = weightKg / (heightM * heightM);
@@ -1029,6 +1050,7 @@ Green Card follow-up visit form
                 jq('#resp input').val('');
                 jq('#oxygen input').val('');
                 jq('#tbrxdate input').val('');
+                jq('#obs-other-complaint input').val('');
             }
         }
         function onVisitScheduledChange() {
@@ -1075,6 +1097,14 @@ Green Card follow-up visit form
                 getField('complaint-field.error').html('Please specify the complaints.').hide();
             }else {
                 jq("#tbl-complaints-today").show();
+            }
+        }
+        var otherComplaintSelected = function () {
+            var selectedComplaint = getField('complaint-field.value').val();
+            if (selectedComplaint == 5622){
+                jq('#tbl-other-complaint').show();
+            }else{
+                jq('#tbl-other-complaint').hide();
             }
         }
         var complaintDurationInput = function() {
@@ -1282,12 +1312,20 @@ Green Card follow-up visit form
         var populationTypeSelected = function () {
             var val = jq(this).val();
             var keypop = jq('#key-population');
+            var pripop = jq('#priority-population');
             if (val == 164929 ){
                 jq("#key-population").show();
+                jq("#priority-population").hide();
+            }
+            if (val == 138643 ){
+                jq("#priority-population").show();
+                jq("#key-population").hide();
             }
             if(val == 164928){
                 jq("#key-population").hide();
-                clearHiddenSections([keypop]);
+                jq("#priority-population").hide();
+                clearHiddenSections(keypop);
+                clearHiddenSections(pripop);
             }
         }
         //Resulting TB status for Ordered test
@@ -1865,6 +1903,8 @@ Green Card follow-up visit form
             var recentWHO = "<lookup expression="fn.latestObs(5356).getValueCoded()"/>";
             var personPresent =getValue('person-present.value');
             var visit_scheduled =getValue('visit-scheduled.value');
+            var patientWeight =getValue('weight.value');
+            var patientHeight =getValue('height.value');
             var populationType =getValue('population-type.value');
             var adultWhoStage =getField('whoStage-adult.value').val();
             var childWhoStage =getField('whoStage-child.value').val();
@@ -1882,6 +1922,20 @@ Green Card follow-up visit form
                 return false;
             }else{
                 getField('person-present.error').html('Please specify person present').hide();
+            }
+            if (patientWeight == false &amp;&amp; personPresent == SELF) {
+                jq('#greencard').smartWizard('setError', {stepnum: 1, iserror: true});
+                getField('weight.error').html('Please specify patient weight').show();
+                return false;
+            }else{
+                getField('weight.error').html('Please specify patient weight').hide();
+            }
+            if (patientHeight == false &amp;&amp; personPresent == SELF) {
+                jq('#greencard').smartWizard('setError', {stepnum: 1, iserror: true});
+                getField('height.error').html('Please specify patient height').show();
+                return false;
+            }else{
+                getField('height.error').html('Please specify patient height').hide();
             }
             if (populationType == false &amp;&amp; personPresent == SELF) {
                 jq('#greencard').smartWizard('setError', {stepnum: 1, iserror: true});
@@ -2392,6 +2446,7 @@ Management<br />
                             var keypop = getValue('population-type.value');
                             var everOnIPT = getValue('ever-on-ipt.value');
                             var complaintsToday = getValue('complaints-today.value');
+                            var selectedComplaint = getField('complaint-field.value').val();
                             var knownAllergies = getValue('known-allergies.value');
                             var chronicIllness = getValue('chronic-illness.value');   //non boolean
                             var adverseReactions = getValue('adverse-reactions.value');   // boolean
@@ -2450,10 +2505,14 @@ Management<br />
                                 jq('#greencard').smartWizard('goToStep', 4);
                                 jq('#greencard').smartWizard('enableFinish', true);
                             }
-//if key pop show which type
-                            if (keypop == 164929 ){
-                                jq("#key-population").show();
-                            }else{
+                            //if key pop show which type
+                            var popTypeSelected = getValue('population-type.value');
+                            if (popTypeSelected == 164929 ){
+                                    jq("#key-population").show();
+                                    jq("#priority-population").hide();
+                            }
+                            if (popTypeSelected == 138643 ){
+                                jq("#priority-population").show();
                                 jq("#key-population").hide();
                             }
 //If any checked  complaints allergies chronic illness and adverse events
@@ -2461,6 +2520,11 @@ Management<br />
                                 jq("#tbl-complaints-today").show();
                             }else{
                                 jq("#tbl-complaints-today").hide();
+                            }
+                            if (selectedComplaint == 5622){
+                                jq("#tbl-other-complaint").show();
+                            }else{
+                                jq("#tbl-other-complaint").hide();
                             }
                             if (knownAllergies == 'true'){
                                 jq("#tbl-known-allergies").show();
@@ -2656,6 +2720,7 @@ Management<br />
                             <td>
                                 <obs id="weight" conceptId="5089AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"/>
                                 kg
+                                <span style="color:red;"><strong>*</strong></span>
                             </td>
                             <td><span class="value"><recentObs conceptId="5089AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"/></span></td>
                             <td rowspan="4">
@@ -2673,6 +2738,7 @@ Management<br />
                             <td>
                                 <obs id="height" conceptId="5090AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"/>
                                 cm
+                                <span style="color:red;"><strong>*</strong></span>
                             </td>
                             <td><span class="value"><recentObs conceptId="5090AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"/></span></td>
                         </tr>
@@ -2698,8 +2764,8 @@ Management<br />
                     <div>
                         Population type :  <span style="color:red;"><strong>*</strong></span> &#160;&#160;
                         <obs conceptId="164930"
-                             answerConceptIds="164928,164929"
-                             answerLabels="General Population,Key Population" id="population-type"
+                             answerConceptIds="164928,164929,138643"
+                             answerLabels="General Population,Key Population,Priority Population" id="population-type"
                              style="radio" />
                     </div>
                     <table id="key-population">
@@ -2722,6 +2788,27 @@ Management<br />
                             </td>
                         </tr>
                     </table>
+                    <table id="priority-population">
+                     <tr>
+                      <td>
+                        <obs conceptId="160581AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" answerConceptId="159674AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                             answerLabel="Fisher folk" style="checkbox" /><br/>
+                            <obs conceptId="160581AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" answerConceptId="162198AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                                 answerLabel="Truck driver" style="checkbox" /><br/>
+                        <includeIf velocityTest="$patient.gender == 'F'">
+                            <obs conceptId="160581AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" answerConceptId="160549AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                                 answerLabel="Adolescent and young girls" style="checkbox" id="adyg" /><br/>
+                        </includeIf>
+                            <obs conceptId="160581AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" answerConceptId="162277AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                             answerLabel="Prisoner" style="checkbox" /><br/>
+                        <obs conceptId="160581AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" answerConceptId="1175AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                             answerLabel="Not applicable" style="checkbox" id="other" /><br/>
+                        <obs conceptId="160581AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" answerConceptId="165192"
+                             answerLabel="Military and other uniformed services" style="checkbox" id="dodOnly" /><br/>
+
+                    </td>
+                   </tr>
+                   </table>
                 </fieldset>
                 <!-- WHO staging -->
                 <fieldset class="patient-details">
@@ -2800,6 +2887,16 @@ Management<br />
                             <render n="4" concept="complaint"/>
                             <render n="5" concept="complaint"/>
                         </repeat>
+                    </table>
+                    <table id="tbl-other-complaint">
+                        <tr>
+                            <th  style="color: #888" >Specify other complaints</th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <obs conceptId="165250" rows="3" cols="80" id="obs-other-complaint"/>
+                            </td>
+                        </tr>
                     </table>
                     <table>
                         <tr>

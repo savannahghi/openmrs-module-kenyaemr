@@ -106,6 +106,8 @@ public class CommonDimensionLibrary {
 
         dim.addCohortDefinition("<15", map(commonCohortLibrary.agedAtMost(14), "effectiveDate=${onDate}"));
         dim.addCohortDefinition("15+", map(commonCohortLibrary.agedAtLeast(15), "effectiveDate=${onDate}"));
+        //Age group in days
+        dim.addCohortDefinition("0-60", map(commonCohortLibrary.agedAtLeastAgedAtMostDays(0, 60),"effectiveDate=${onDate}"));
 
         return dim;
     }
@@ -161,6 +163,20 @@ public class CommonDimensionLibrary {
         dim.addCohortDefinition(">=1", map(commonCohortLibrary.agedAtLeast(1), "effectiveDate=${onDate}"));
         dim.addCohortDefinition("18-24", map(commonCohortLibrary.agedAtLeastAgedAtMostInMonths(18, 24), "effectiveDate=${onDate}"));
         dim.addCohortDefinition(">2", map(commonCohortLibrary.agedAtLeast(2), "effectiveDate=${onDate}"));
+        return dim;
+    }
+
+    /**
+     * Dimension of age between
+     * @return Dimension
+     */
+    public CohortDefinitionDimension moh745AgeGroups() {
+        CohortDefinitionDimension dim = new CohortDefinitionDimension();
+        dim.setName("age between(<25,>=50)");
+        dim.addParameter(new Parameter("onDate", "Date", Date.class));
+        dim.addCohortDefinition("<25", map(commonCohortLibrary.agedAtMost(24), "effectiveDate=${onDate}"));
+        dim.addCohortDefinition("25-49", map(commonCohortLibrary.agedAtLeastAgedAtMost(25, 49), "effectiveDate=${onDate}"));
+        dim.addCohortDefinition(">=50", map(commonCohortLibrary.agedAtLeast(50), "effectiveDate=${onDate}"));
         return dim;
     }
 
