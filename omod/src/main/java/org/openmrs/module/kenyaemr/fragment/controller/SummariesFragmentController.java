@@ -420,7 +420,6 @@ public class SummariesFragmentController {
             patientSummary.setHeightAtArtStart("");
         }
 
->>>>>>> a4f757435... created height field
         //first regimen for the patient
         CalculationResult firstRegimenResults = EmrCalculationUtils.evaluateForPatient(InitialArtRegimenCalculation.class, null, patient);
         String firstRegimen;
@@ -500,7 +499,6 @@ public class SummariesFragmentController {
             else {
                 patientSummary.setBmi("");
             }
->>>>>>> ea2c57842... KHP3-285: KNH/KDO patient summary
 
             //height at art initiation
             CalculationResult heightAtArtStartResults = EmrCalculationUtils.evaluateForPatient(HeightAtArtInitiationCalculation.class, null,patient);

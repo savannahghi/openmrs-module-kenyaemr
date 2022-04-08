@@ -158,18 +158,6 @@ public class PatientSummary {
             this.familyProtection = familyProtection;
         }
 
-        public String getHeightAtArtStart() {
-            return heightAtArtStart;
-        }
-
-        public void setHeightAtArtStart(String heightAtArtStart) {
-            this.heightAtArtStart = heightAtArtStart;
-        }
-
-        public String getCurrentRegimen() {
-            return currentRegimen;
-        }
-
         public void setCurrentRegimen(String currentRegimen) {
             this.currentRegimen = currentRegimen;
         }
@@ -369,7 +357,6 @@ public class PatientSummary {
         public void setCd4AtArtStart(String cd4AtArtStart) {
             this.cd4AtArtStart = cd4AtArtStart;
         }
->>>>>>> ea2c57842... KHP3-285: KNH/KDO patient summary
 
         public String getCurrentArtRegimen() {
             return currentArtRegimen;
