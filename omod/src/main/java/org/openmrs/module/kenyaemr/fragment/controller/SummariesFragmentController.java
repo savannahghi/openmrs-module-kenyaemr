@@ -7,88 +7,110 @@
  * Copyright (C) OpenMRS Inc. OpenMRS is a registered trademark and the OpenMRS
  * graphic logo is a trademark of OpenMRS Inc.
  */
-package org.openmrs.module.kenyaemr.fragment.controller;
+    /**
+     * This Source Code Form is subject to the terms of the Mozilla Public License,
+     * v. 2.0. If a copy of the MPL was not distributed with this file, You can
+     * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
+     * the terms of the Healthcare Disclaimer located at http://openmrs.org/license.
+     *
+     * Copyright (C) OpenMRS Inc. OpenMRS is a registered trademark and the OpenMRS
+     * graphic logo is a trademark of OpenMRS Inc.
+     */
+    package org.openmrs.module.kenyaemr.fragment.controller;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.joda.time.DateTime;
-import org.joda.time.Years;
-import org.openmrs.Concept;
-import org.openmrs.Obs;
-import org.openmrs.Patient;
-import org.openmrs.PatientIdentifier;
-import org.openmrs.PatientIdentifierType;
-import org.openmrs.PatientProgram;
-import org.openmrs.PersonName;
-import org.openmrs.Program;
-import org.openmrs.api.PatientService;
-import org.openmrs.api.context.Context;
-import org.openmrs.calculation.patient.PatientCalculationContext;
-import org.openmrs.calculation.patient.PatientCalculationService;
-import org.openmrs.calculation.result.CalculationResult;
-import org.openmrs.calculation.result.CalculationResultMap;
-import org.openmrs.calculation.result.ListResult;
-import org.openmrs.module.kenyacore.calculation.CalculationUtils;
-import org.openmrs.module.kenyacore.calculation.Calculations;
-import org.openmrs.module.kenyaemr.Dictionary;
-import org.openmrs.module.kenyaemr.api.KenyaEmrService;
-import org.openmrs.module.kenyaemr.calculation.EmrCalculationUtils;
-import org.openmrs.module.kenyaemr.calculation.library.hiv.LastReturnVisitDateCalculation;
-import org.openmrs.module.kenyaemr.calculation.library.hiv.LastWhoStageCalculation;
-import org.openmrs.module.kenyaemr.calculation.library.hiv.art.*;
-import org.openmrs.module.kenyaemr.calculation.library.models.PatientSummary;
-import org.openmrs.module.kenyaemr.calculation.library.rdqa.DateOfDeathCalculation;
-import org.openmrs.module.kenyaemr.calculation.library.rdqa.PatientProgramEnrollmentCalculation;
-import org.openmrs.module.kenyaemr.metadata.HivMetadata;
-import org.openmrs.module.metadatadeploy.MetadataUtils;
-import org.openmrs.ui.framework.annotation.FragmentParam;
-import org.openmrs.ui.framework.fragment.FragmentModel;
+    import org.apache.commons.logging.Log;
+    import org.apache.commons.logging.LogFactory;
+    import org.joda.time.DateTime;
+    import org.joda.time.Years;
+    import org.openmrs.Concept;
+    import org.openmrs.Obs;
+    import org.openmrs.Patient;
+    import org.openmrs.PatientIdentifier;
+    import org.openmrs.PatientIdentifierType;
+    import org.openmrs.PatientProgram;
+    import org.openmrs.PersonName;
+    import org.openmrs.Program;
+    import org.openmrs.api.AdministrationService;
+    import org.openmrs.api.PatientService;
+    import org.openmrs.api.context.Context;
+    import org.openmrs.calculation.patient.PatientCalculationContext;
+    import org.openmrs.calculation.patient.PatientCalculationService;
+    import org.openmrs.calculation.result.CalculationResult;
+    import org.openmrs.calculation.result.CalculationResultMap;
+    import org.openmrs.calculation.result.ListResult;
+    import org.openmrs.module.kenyacore.calculation.CalculationUtils;
+    import org.openmrs.module.kenyacore.calculation.Calculations;
+    import org.openmrs.module.kenyaemr.Dictionary;
+    import org.openmrs.module.kenyaemr.api.KenyaEmrService;
+    import org.openmrs.module.kenyaemr.calculation.EmrCalculationUtils;
+    import org.openmrs.module.kenyaemr.calculation.library.hiv.LastReturnVisitDateCalculation;
+    import org.openmrs.module.kenyaemr.calculation.library.hiv.LastWhoStageCalculation;
+    import org.openmrs.module.kenyaemr.calculation.library.hiv.art.*;
+    import org.openmrs.module.kenyaemr.calculation.library.models.PatientSummary;
+    import org.openmrs.module.kenyaemr.calculation.library.rdqa.DateOfDeathCalculation;
+    import org.openmrs.module.kenyaemr.calculation.library.rdqa.PatientProgramEnrollmentCalculation;
+    import org.openmrs.module.kenyaemr.metadata.HivMetadata;
+    import org.openmrs.module.kenyaemr.metadata.TbMetadata;
+    import org.openmrs.module.kenyaemr.wrapper.PatientWrapper;
+    import org.openmrs.module.metadatadeploy.MetadataUtils;
+    import org.openmrs.ui.framework.annotation.FragmentParam;
+    import org.openmrs.ui.framework.fragment.FragmentModel;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+    import java.text.DateFormat;
+    import java.text.SimpleDateFormat;
+    import java.util.ArrayList;
+    import java.util.Arrays;
+    import java.util.Calendar;
+    import java.util.Collections;
+    import java.util.Date;
+    import java.util.HashMap;
+    import java.util.HashSet;
+    import java.util.List;
+    import java.util.Map;
+    import java.util.Set;
 
-/**
- * Created by codehub on 10/30/15.
- * A fragment controller for a patient summary details
- */
-public class SummariesFragmentController {
-    protected static final Log log = LogFactory.getLog(SummariesFragmentController.class);
+    /**
+     * Created by codehub on 10/30/15.
+     * A fragment controller for a patient summary details
+     */
+    public class SummariesFragmentController {
+        protected static final Log log = LogFactory.getLog(SummariesFragmentController.class);
+        private AdministrationService administrationService = Context.getAdministrationService();
+        final String isKDoD = (administrationService.getGlobalProperty("kenyaemr.isKDoD"));
+        public void controller(@FragmentParam("patient") Patient patient,
+                               FragmentModel model){
+            PatientWrapper wrapper = new PatientWrapper(patient);
 
-    public void controller(@FragmentParam("patient") Patient patient,
-                           FragmentModel model){
-        PatientSummary patientSummary = new PatientSummary();
-        PatientService patientService = Context.getPatientService();
-        KenyaEmrService kenyaEmrService = Context.getService(KenyaEmrService.class);
-        Program hivProgram = MetadataUtils.existing(Program.class, HivMetadata._Program.HIV);
-        Date artStartDate = null;
+            PatientSummary patientSummary = new PatientSummary();
+            PatientService patientService = Context.getPatientService();
+            KenyaEmrService kenyaEmrService = Context.getService(KenyaEmrService.class);
+            Program hivProgram = MetadataUtils.existing(Program.class, HivMetadata._Program.HIV);
 
-        patientSummary.setDateOfReport(formatDate(new Date()));
-        patientSummary.setClinicName(kenyaEmrService.getDefaultLocation().getName());
-        patientSummary.setMflCode(kenyaEmrService.getDefaultLocationMflCode());
-        //find the names
-        patientSummary.setNames(patient.getNames());
-        //age
-        patientSummary.setAge(age(new Date(), patient.getBirthdate()));
-        //birthdate
-        patientSummary.setBirthDate(formatDate(patient.getBirthdate()));
-        //gender
-        patientSummary.setGender(patient.getGender());
 
-        PatientIdentifierType type = MetadataUtils.existing(PatientIdentifierType.class, HivMetadata._PatientIdentifierType.UNIQUE_PATIENT_NUMBER);
-        List<PatientIdentifier> upn = patientService.getPatientIdentifiers(null, Arrays.asList(type), null, Arrays.asList(patient), false);
-        if(upn.size() > 0){
-            patientSummary.setUpn(upn.get(0).getIdentifier());
-        }
+            Date artStartDate = null;
+
+            String kDoDServiceNumber;
+            String kDoDCadre;
+            String kDoDRank;
+            String kDoDUnit;
+            String uniquePatientNumber;
+            patientSummary.setDateOfReport(formatDate(new Date()));
+            patientSummary.setClinicName(kenyaEmrService.getDefaultLocation().getName());
+            patientSummary.setMflCode(kenyaEmrService.getDefaultLocationMflCode());
+            //find the names
+            patientSummary.setNames(patient.getNames());
+            //age
+            patientSummary.setAge(age(new Date(), patient.getBirthdate()));
+            //birthdate
+            patientSummary.setBirthDate(formatDate(patient.getBirthdate()));
+            //gender
+            patientSummary.setGender(patient.getGender());
+
+            PatientIdentifierType type = MetadataUtils.existing(PatientIdentifierType.class, HivMetadata._PatientIdentifierType.UNIQUE_PATIENT_NUMBER);
+            List<PatientIdentifier> upn = patientService.getPatientIdentifiers(null, Arrays.asList(type), null, Arrays.asList(patient), false);
+            if(upn.size() > 0){
+                patientSummary.setUpn(upn.get(0).getIdentifier());
+            }
 
             PatientCalculationContext context = Context.getService(PatientCalculationService.class).createCalculationContext();
             context.setNow(new Date());
@@ -365,85 +387,6 @@ public class SummariesFragmentController {
             else {
                 patientSummary.setCd4AtArtStart("");
             }
-
-        //pulse rate
-        CalculationResult pulseRate = EmrCalculationUtils.evaluateForPatient(PulseRateCalculation.class, null,patient);
-        if(pulseRate != null){
-            patientSummary.setPulseRate(pulseRate.getValue().toString());
-        }
-        else {
-            patientSummary.setPulseRate("");
-        }
-
-        //Blood Pressure
-        CalculationResult bloodPressure = EmrCalculationUtils.evaluateForPatient(BloodPressureCalculation.class, null,patient);
-        if(bloodPressure != null){
-            patientSummary.setBloodPressure(bloodPressure.getValue().toString());
-        }
-        else {
-            patientSummary.setBloodPressure("");
-        }
-
-        //respitatory Rate/
-        CalculationResult respiratoryRate = EmrCalculationUtils.evaluateForPatient(RespitatoryRateCalculation.class, null,patient);
-        if(respiratoryRate != null){
-            patientSummary.setRespiratoryRate(respiratoryRate.getValue().toString());
-        }
-        else {
-            patientSummary.setRespiratoryRate("");
-        }
-
-        //LMP
-        CalculationResult lmp = EmrCalculationUtils.evaluateForPatient(LMPCalculation.class, null,patient);
-        if(lmp != null){
-            patientSummary.setLmp(lmp.getValue().toString());
-        }
-        else {
-            patientSummary.setLmp("");
-        }
-
-        //Oxygen Saturation/
-        CalculationResult oxygenSaturation = EmrCalculationUtils.evaluateForPatient(OxygenSaturationCalculation.class, null,patient);
-        if(oxygenSaturation != null){
-            patientSummary.setOxygenSaturation(oxygenSaturation.getValue().toString());
-        }
-        else {
-            patientSummary.setOxygenSaturation("");
-        }
-
-        //height at art initiation
-        CalculationResult heightAtArtStartResults = EmrCalculationUtils.evaluateForPatient(HeightAtArtInitiationCalculation.class, null,patient);
-        if(heightAtArtStartResults != null){
-            patientSummary.setHeightAtArtStart(heightAtArtStartResults.getValue().toString());
-        }
-        else {
-            patientSummary.setHeightAtArtStart("");
-        }
-
-        //first regimen for the patient
-        CalculationResult firstRegimenResults = EmrCalculationUtils.evaluateForPatient(InitialArtRegimenCalculation.class, null, patient);
-        String firstRegimen;
-        if(firstRegimenResults == null || firstRegimenResults.isEmpty()){
-            firstRegimen = "";
-        }
-        else {
-            firstRegimen = firstRegimenResults.getValue().toString();
-        }
-        //previous drugs/regimens and dates
-        String regimens = "";
-        String regimenDates = "";
-        CalculationResultMap pmtctRegimenHivEnroll = Calculations.lastObs(Dictionary.getConcept("966AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"), Arrays.asList(patient.getPatientId()), context);
-        CalculationResultMap pepAndHaartRegimenHivEnroll = Calculations.allObs(Dictionary.getConcept("1088AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"), Arrays.asList(patient.getPatientId()), context);
-
-        Obs obsPmtctHivEnroll = EmrCalculationUtils.obsResultForPatient(pmtctRegimenHivEnroll, patient.getPatientId());
-
-        ListResult listResults = (ListResult) pepAndHaartRegimenHivEnroll.get(patient.getPatientId());
-        List<Obs> pepAndHaartRegimenObsList = CalculationUtils.extractResultValues(listResults);
-        if(patientSummary.getPreviousArt().equals("None") || patientSummary.getPreviousArt().equals("No")){
-            regimens = "None";
-            regimenDates += "None";
-        }
-        if(obsPmtctHivEnroll != null){
 
             //pulse rate
             CalculationResult pulseRate = EmrCalculationUtils.evaluateForPatient(PulseRateCalculation.class, null,patient);
