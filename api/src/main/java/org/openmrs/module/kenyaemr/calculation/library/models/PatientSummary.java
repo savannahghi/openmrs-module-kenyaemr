@@ -84,6 +84,7 @@ public class PatientSummary {
     private String transferOutDate;
     private String deathDate;
     private String nextAppointmentDate;
+    private String familyProtection;
 
     public PatientSummary() {
     }

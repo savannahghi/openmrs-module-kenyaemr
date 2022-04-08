@@ -444,7 +444,7 @@ public class SummariesFragmentController {
             regimenDates += "None";
         }
         if(obsPmtctHivEnroll != null){
-=======
+
             //pulse rate
             CalculationResult pulseRate = EmrCalculationUtils.evaluateForPatient(PulseRateCalculation.class, null,patient);
             if(pulseRate != null){
