@@ -56,6 +56,7 @@
 				<ref bean="kenyaemr.hiv.report.artRegister" />
 				<ref bean="kenyaemr.hiv.report.scheduledDrugRefills"/>
 				<ref bean="kenyaemr.hiv.report.scheduledAppointment"/>
+				<ref bean="kenyaemr.hiv.report.covid19vaccination"/>
 			</set>
 		</property>
 		<property name="fragments">
@@ -261,6 +262,7 @@
 		<property name="apps">
 			<set>
 				<ref bean="kenyaemr.app.registration" />
+				<ref bean="kenyaemr.app.intake" />
 				<ref bean="kenyaemr.app.chart" />
 			</set>
 		</property>
