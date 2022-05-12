@@ -1,8 +1,8 @@
     <%
-        def kDoDNumber = patient.kDoDCadre
-        def kDoDCadre = patient.kDoDCadre
-        def kDoDRank = patient.kDoDRank
-        def kDoDUnit = patient.kDoDUnit
+        def kDoDNumber = serviceNumber
+        def kDoDCadre = kdodCadre
+        def kDoDRank = kdodRank
+        def kDoDUnit = kdodUnit
     %>
 
     <style type="text/css">
@@ -27,8 +27,6 @@
         <div class="ke-panel-heading">Patient Summary</div>
         <div class="ke-panel-content" style="background-color: #D9F4D3">
             <table id="tblDetails" class="moh257" align="center" border="1" cellpadding="0" cellspacing="0">
-
-
                 <tr>
                     <td>Date of report: ${patient.dateOfReport}</td>
                     <td>Clinic name: ${patient.clinicName}</td>
@@ -46,7 +44,14 @@
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Marital status: ${ patient.maritalStatus }
                     </td>
                 </tr>
-
+                <tr class="kdod-struct">
+                       <td >kDoD Number: ${serviceNumber}</td>
+                       <td colspan="2">KDoD Unit: ${kdodUnit}</td>
+                </tr>
+                <tr class="kdod-struct">
+                       <td>KDoD Cadre: ${kdodCadre}</td>
+                       <td colspan="2">KDoD Rank: ${kdodRank}</td>
+                </tr>
                 <tr>
                     <td colspan="3">&nbsp;&nbsp;</td>
                 </tr>
@@ -69,6 +74,46 @@
                 <tr>
                     <td colspan="3">&nbsp;</td>
                 </tr>
+                   <tr>
+                     <td>Weight (Kgs): ${weight}</td>
+                      <td colspan="2">TB Screening Outcome: ${patient.tbScreeningOutcome}</td>
+                   </tr>
+                 <tr>
+                    <td>Height (cm): ${height}</td>
+                    <td colspan="2">Chronic Illness:: ${chronicDisease}</td>
+                </tr>
+                 <tr>
+                    <td>BMI: ${patient.bmi}</td>
+                    <td colspan="2">OI History: ${iosResults}</td>
+                </tr>
+                 <tr>
+                    <td>Blood Pressure: ${bloodPressure}/${setBpDiastolic}</td>
+                    <td colspan="2">STI Screening: ${patient.stiScreeningOutcome}</td>
+                </tr>
+
+                 <tr>
+                   <td>Oxygen Saturation: ${oxygenSaturation}</td>
+                    <td colspan="2">CACX Screening: ${patient.caxcScreeningOutcome}</td>
+                </tr>
+
+                <tr>
+                   <td>Respiratory rate: ${patient.respiratoryRate}</td>
+                   <td colspan="2">TPT Start Date: ${tbStartDate}</td>
+                </tr>
+                <tr>
+                   <td>Pulse Rate: ${pulseRate}</td>
+                   <td colspan="2">TPT Completion Date: ${tbEndDate}</td>
+                </tr>
+                <tr >
+                    <td>FP Method: ${patient.familyProtection}</td>
+                     <td id = "lmp-struct" colspan="2">LMP (For Women): ${patient.lmp}</td>
+
+
+                </tr>
+
+                <tr>
+                     <td colspan="3">&nbsp;</td>
+                </tr>
                 <tr>
                     <td colspan="3">Treatment supporter details:</td>
                 </tr>
@@ -77,8 +122,6 @@
                     <td>Relationship: ${patient.relationshipToTreatmentSupporter}</td>
                     <td>Contact details: ${patient.contactOfTreatmentSupporter}</td>
                 </tr>
-
-
                 <tr>
                     <td colspan="3">&nbsp;</td>
                 </tr>
@@ -88,17 +131,6 @@
                 <tr>
                     <td colspan="3">&nbsp;</td>
                 </tr>
-                <tr>
-                    <td colspan="3">Chronic Illness: ${chronicDisease}</td>
-                </tr>
-                  <tr>
-                      <td>Respiratory Rate: ${patient.respiratoryRate}</td>
-                      <td>Blood Pressure: ${patient.bloodPressure}</td>
-                  </tr>
-                  <tr>
-                   <td>Oxygen Saturation: ${patient.oxygenSaturation}</td>
-                  <td>Pulse Rate: ${patient.pulseRate}</td>
-                  </tr>
                 <tr>
                     <td colspan="3">&nbsp;</td>
                 </tr>
@@ -114,53 +146,13 @@
                 <tr>
                     <td>Drugs/Regimen: ${patient.purposeDrugs}</td>
                 </tr>
-                 <tr>
-                    <td>Family Protection: ${patient.familyProtection}</td>
+
+                <tr>
                 </tr>
                 <tr>
-                <td>Weight: ${patient.weightAtArtStart}</td>
-                          <td>Height: ${patient.heightAtArtStart}</td>
-                <td>BMI: ${patient.bmi}</td>
-                </tr>
-
-                    <tr id="kdod-struct">
-                        <td>kDoD Cadre: ${patient.kDoDCadre}</td>
-                         <td>kDoD Unit: ${patient.kDoDUnit}</td>
-                        <td>kDoD Rank: ${patient.kDoDRank}</td>
-                    </tr>
-
-                    <tr id="kdod-service-no">
-                        <td >kDoD Number: ${patient.kDoDNumber}</td>
-
-                    </tr>
-                <tr>
-                  <includeIf velocityTest="$patient.gender == 'F' ">
-                   <td>LMP: ${patient.lmp}</td>
-                   </includeIf>
-                </tr>
-                 <tr>
-
-                    <td>TPT Start Date: ${patient.dateEnrolledInTb}</td>
-                    <td>TPT Completion Date: ${patient.dateCompletedInTb}</td>
-
-                </tr>
-
-                    <td colspan="3">TB Screening: ${patient.tbScreeningOutcome}</td>
-                </tr>
-                <tr>
-                    <td colspan="3">STI Screening: ${patient.stiScreeningOutcome}</td>
-                </tr>
-                <tr>
-                    <td colspan="3">CACX Screening: ${patient.caxcScreeningOutcome}</td>
-                </tr>
-
-                 <tr>
 
                     <td>Date: ${patient.purposeDate}</td>
                     <td colspan="2">First regimen: ${firstRegimen}</td>
-                </tr>
-                <tr>
-                    <td colspan="3">Past or current OI: ${iosResults}</td>
                 </tr>
                 <tr>
                     <td colspan="3">&nbsp;</td>
@@ -258,6 +250,7 @@
                     <tr>
 
 
+
                 </tr>
                 <tr>
                     <td colspan="2">
@@ -272,6 +265,77 @@
                         Next appointment: ${returnVisitDate}
                     </td>
                 </tr>
+                <tr>
+                  <td colspan="3">&nbsp;</td>
+                </tr>
+                                <tr>
+                                   <td colspan="2">Viral Load Trends</td>
+                                    <td colspan="2">CD4 Trends</td>
+                                </tr>
+                                <tr>
+
+                                </tr>
+                                <tr>
+                                   <% if(allVlResults) { %>
+                                      <td colspan="2">
+                                         <table width="75%">
+                                            <tr>
+                                                 <td> VL Dates</td>
+                                                 <td> Result</td>
+                                            </tr>
+                                            <tr>
+                                                <td><% allVlResults.each { allVl -> %>
+                                                      <div class="column-four">${allVl.vlDate ?: ""}</div>
+                                                      <% } %>
+                                                   </td>
+                                                   <td><% allVlResults.each { allVl -> %>
+                                                      <div class="column-four"> ${allVl.vl ?: ""}</div>
+                                                    <% } %>
+                                                   </td>
+                                            </tr>
+                                        </table>
+                                      </td>
+                                <% } %>
+
+                                <% if(allCd4CountResults) { %>
+                                 <td colspan="2">
+                                    <table width="75%">
+                                       <tr>
+                                         <td> CD4 Dates</td>
+                                         <td> Result</td>
+                                       </tr>
+                                        <tr>
+                                          <td><% allCd4CountResults.each { allCd4 -> %>
+                                                <div class="column-four">${allCd4.cd4CountDate ?: ""}</div>
+                                          <% } %>
+                                          </td>
+                                           <td><% allCd4CountResults.each { allCd4 -> %>
+                                                <div class="column-four"> ${allCd4.cd4Count ?: ""}</div>
+                                           <% } %>
+                                           </td>
+                                       </tr>
+                                    </table>
+                                </td>
+                                <% } %>
+                                </tr>
+                <tr>
+                    <td>Clinical Notes: </td>
+                    <td colspan="2">
+
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Clinician Name: </td>
+                    <td colspan="2">
+
+                    </td>
+                </tr>
+                <tr>
+                   <td>Clinician Signature: </td>
+                   <td colspan="2">
+                   </td>
+                </tr>
 
             </table>
         </div>
@@ -282,47 +346,23 @@
     </div>
     <script type="text/javascript">
         jQuery(function(){
-
+          jQuery('#lmp-struct').hide();
+                if("${ patient.gender}" == "F") {
+                  jQuery('#lmp-struct').show();
+                }
+                else{
+                 jQuery('#lmp-struct').hide();
+                }
             if("${isKDoD}"=="false"){
-                jQuery('#kdod-struct').hide();
+
+                jQuery('.kdod-struct').hide();
                 jQuery('#kdod-service-no').hide();
             }
             else {
-                jQuery('#kdod-struct').show();
+                jQuery('.kdod-struct').show();
                 jQuery('#kdod-service-no').show();
 
-                jq("select[name='kDoDCadre']").change(function () {
-                    var cadre = jq(this).val();
-
-                    if (cadre === "Civilian") {
-                        jq('#rank').hide();
-                        jq('#unit').hide();
-
-                        jq(".kDoDUnit").val("");
-
-                        jq(".kDoDRank")[0].selectedIndex = 0;
-
-                        jq('.kDoDRank').removeAttr('required');
-                        jq('.kDoDUnit').removeAttr('required');
-
-                        jq('.kDoDRank').hide();
-                        jq('.kDoDUnit').hide();
-
-                    }
-                    else {
-                        jq('.kDoDRank').attr('required',1);
-                        jq('.kDoDUnit').attr('required',1);
-
-                        jq('#rank').show();
-                        jq('#unit').show();
-
-                        jq('.kDoDRank').show();
-                        jq('.kDoDUnit').show();
-
-                    }
-                });
             }
-
 
             jQuery('#print').click(function(){
                 var disp_setting="toolbar=yes,location=yes,directories=yes,menubar=yes,";
