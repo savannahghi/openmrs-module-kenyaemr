@@ -303,6 +303,7 @@
 
             <table>
                 <tr>
+                    <td class="ke-field-label" style="width: 265px">Country</td>
                     <td class="ke-field-label" style="width: 265px">County</td>
                     <td class="ke-field-label" style="width: 260px">Sub-County</td>
                     <td class="ke-field-label" style="width: 260px">Ward</td>
@@ -958,6 +959,73 @@ ${ui.includeFragment("kenyaui", "widget/dialogForm", [
         }
 
     }
+
+    function postRegistrationDetailsToCR(firstName,middleName,lastName,dateOfBirth,gender,maritalStatus,occupation,religion,educationLevel,country,countyOfBirth,county,subCounty,ward,village,landMark,address,identificationType,identificationValue,primaryPhone,secondaryPhone,emailAddress,name,relationship,residence,nokPrimaryPhone,nokSecondaryPhone,nokEmailAddress,isAlive) {
+        // connect to CR server
+
+        var params = identificationValue
+
+
+//        var params = {"firstName":firstName,
+//            "middleName":middleName,
+//            "lastName":lastName,
+//            "dateOfBirth":dateOfBirth,
+//            "gender":gender,
+//            "maritalStatus":maritalStatus,
+//            "occupation":occupation,
+//            "religion":religion,
+//            "educationLevel":educationLevel,
+//            "country": country,
+//            "countyOfBirth": countyOfBirth,
+//            "residence": {
+//                "county": county,
+//                "subCounty": subCounty,
+//                "ward": ward,
+//                "village": village,
+//                "landmark": landMark,
+//                "address": address
+//            },
+//            "identifications": {
+//                "IdentificationType": identificationType,
+//                "IdentificationNumber": identificationValue
+//            },
+//            "contact": {
+//                "primaryPhone": primaryPhone,
+//                "secondaryPhone": secondaryPhone,
+//                "emailAddress": emailAddress,
+//            },
+//            "nextOfKins": [{
+//                "name": name,
+//                "relationship": relationship,
+//                "residence": residence,
+//                "contact": {
+//                    "primaryPhone": nokPrimaryPhone,
+//                    "secondaryPhone": nokSecondaryPhone,
+//                    "emailAddress": nokEmailAddress,
+//                }
+//            }],
+//            "isAlive":isAlive,
+//
+//        };
+
+
+        //Using fragment action to post
+        jQuery.getJSON('${ ui.actionLink("kenyaemr", "upi/upiDataExchange", "postUpiClientRegistrationInfoToCR")}',
+            {
+                'postParams': params
+            })
+            .success(function (data) {
+                console.log("Response from CR  ==> ");
+                console.log("Response from CR  ==> ");
+            })
+            .fail(function (err) {
+                    console.log(err)
+                }
+            )
+        console.log("Payload ==> "+JSON.stringify(params));
+
+    }
+
 
 </script>
 
