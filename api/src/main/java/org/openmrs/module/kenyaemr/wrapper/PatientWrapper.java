@@ -423,4 +423,22 @@ public class PatientWrapper extends AbstractPatientWrapper {
 		setAsAttribute(CommonMetadata._PersonAttributeType.KDOD_UNIT, KDoDUnit);
 	}
 
+	/**
+	 * Gets the patient NUPI
+	 * @return the identifier value
+	 */
+	public String getNationalUniquePatientNumber() {
+		return getAsIdentifier(CommonMetadata._PatientIdentifierType.NATIONAL_UNIQUE_PATIENT_IDENTIFIER);
+	}
+
+
+	/**
+	 * Sets the patient NUPI number
+	 * @param value the identifier value
+	 * @param location the identifier location
+	 */
+	public void setNationalUniquePatientNumber(String value, Location location) {
+		setAsIdentifier(CommonMetadata._PatientIdentifierType.NATIONAL_UNIQUE_PATIENT_IDENTIFIER, value, location);
+	}
+
 }

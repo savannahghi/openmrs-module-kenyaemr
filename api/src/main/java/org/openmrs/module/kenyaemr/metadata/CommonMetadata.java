@@ -10,7 +10,6 @@
 package org.openmrs.module.kenyaemr.metadata;
 
 import org.openmrs.Form;
-import org.openmrs.OpenmrsObject;
 import org.openmrs.PatientIdentifierType.LocationBehavior;
 import org.openmrs.PersonAttributeType;
 import org.openmrs.module.idgen.validator.LuhnMod25IdentifierValidator;

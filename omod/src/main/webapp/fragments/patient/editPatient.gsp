@@ -241,6 +241,15 @@
                 <td>${ui.includeFragment("kenyaui", "widget/field", [object: command, property: "kDoDServiceNumber"])}</td>
                 <td class="ke-field-instructions"><% if (!command.kDoDServiceNumber) { %>(5-6 digits for service officer or 5-6 digits followed by / and 2 digits for dependant(eg.12345/01))<%} %></td>
             </tr>
+            <tr id="upi-no">
+                <td class="ke-field-label">NUPI</td>
+                <td>${ui.includeFragment("kenyaui", "widget/field", [object: command, property: "nationalUniquePatientNumber"])}</td>
+                <td class="ke-field-instructions"><% if (!command.nationalUniquePatientNumber) { %>(If available)<%} %></td>
+            </tr>
+            <tr>
+                <td> <input type="checkbox" name="other-identifiers" value="Y"
+                            id="other-identifiers" /> More identifiers </td>
+            </tr>
         </table>
 
     </fieldset>
