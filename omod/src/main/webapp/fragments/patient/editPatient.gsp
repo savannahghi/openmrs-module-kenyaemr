@@ -109,7 +109,7 @@
                     </td>
                     <td class="ke-field-instructions">
                         <button type="button" class="ke-verify-button" id="validate-identifier">Validate Identifier</button>
-                        <button type="button" class="ke-verify-button" id="show-cr-info-dialog">Show CR info</button>
+                        <button type="button" class="ke-verify-button" id="show-cr-info-dialog">View Registry info</button>
                         &nbsp;&nbsp;
                         <label id="msgBox"></label>
                     </td>
@@ -169,7 +169,7 @@
                     <tr id="upi-no">
                         <td class="ke-field-label">NUPI</td>
                         <td>${ui.includeFragment("kenyaui", "widget/field", [object: command, property: "nationalUniquePatientNumber"])}</td>
-                        <td class="ke-field-instructions"><% if (!command.nationalUniquePatientNumber) { %>(If available)<%} %></td>
+                        <td class="ke-field-instructions"> This will be populated from MOH Client Registry</td>
                     </tr>
                     <tr></tr>
                     <tr>
@@ -393,6 +393,105 @@
     </div>
 
 </form>
+
+<div id="cr-dialog" title="Patient Overview" style="display: none; background-color: white; padding: 10px;">
+	<div id="client-registry-info">
+
+	<fieldset>
+	    <legend>Client name</legend>
+	    <table>
+	        <tr>
+	            <td width="250px">Full name</td>
+	            <td id="cr-full-name" width="200px"></td>
+                <td><button id="use-full-name" type="button">use in form</button></td>
+	        </tr>
+            <tr>
+                <td>Sex</td>
+                <td id="cr-sex"></td>
+                <td><button type="button">use in form</button></td>
+            </tr>
+            <tr>
+                <td>Primary phone Number</td>
+                <td id="cr-primary-contact"></td>
+                <td><button type="button" onclick="useContact('telephoneContact','primaryPhone')">use in form</button></td>
+            </tr>
+            <tr>
+                <td>Secondary phone</td>
+                <td id="cr-secondary-contact"></td>
+                <td><button type="button" onclick="useContact('alternatePhoneContact','secondaryPhone')">use in form</button></td>
+            </tr>
+            <tr>
+                <td>Email address</td>
+                <td id="cr-email"></td>
+                <td><button type="button" onclick="useContact('emailAddress','emailAddress')">use in form</button></td>
+            </tr>
+	    </table>
+	</fieldset>
+    <fieldset>
+    <legend>Client identifiers</legend>
+        <table>
+            <tr>
+                <td width="250px">UPI</td>
+                <td id="cr-upi" width="200px"></td>
+                <td><button type="button" onclick="useIdentifiers()">use all identifiers in form</button></td>
+            </tr>
+            <tr>
+                <td>National ID</td>
+                <td id="cr-national-id"></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Passport Number</td>
+                <td id="cr-passport"></td>
+                <td></td>
+            </tr>
+        </table>
+    </fieldset>
+    <fieldset>
+    <legend>Address</legend>
+        <table>
+            <tr>
+                <td width="250px">County</td>
+                <td id="cr-county" width="200px"></td>
+                <td><button type="button">use in form</button></td>
+            </tr>
+            <tr>
+                <td>Sub county</td>
+                <td id="cr-sub-county"></td>
+                <td><button type="button">use in form</button></td>
+            </tr>
+            <tr>
+                <td>Ward</td>
+                <td id="cr-ward"></td>
+                <td><button type="button">use in form</button></td>
+            </tr>
+        </table>
+    </fieldset>
+    <fieldset>
+    <legend>Next of kin</legend>
+        <table>
+            <tr>
+                <td width="250px">Name</td>
+                <td id="cr-kin-name" width="200px"></td>
+                <td><button type="button" onclick="useNextofKin()">use all values in form</button></td>
+            </tr>
+            <tr>
+                <td>Relationship</td>
+                <td id="cr-kin-relation"></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Phone number</td>
+                <td id="cr-kin-contact"></td>
+                <td></td>
+            </tr>
+        </table>
+    </fieldset>
+	</div>
+	<div align="center">
+		<button type="button" onclick="kenyaui.closeDialog();"><img src="${ ui.resourceLink("kenyaui", "images/glyphs/cancel.png") }" /> Close</button>
+	</div>
+</div>
 
 <!-- You can't nest forms in HTML, so keep the dialog box form down here -->
 ${ui.includeFragment("kenyaui", "widget/dialogForm", [
@@ -775,6 +874,219 @@ ${ui.includeFragment("kenyaui", "widget/dialogForm", [
            }
         }
     }
+    //Ckeckbox to populate the other identifiers
+    var otherIdentifiersChange = function () {
+
+        var val = jq(this).val();
+        var selectedDob = jQuery('#patient-birthdate').val();
+        if (jq(this).is(':checked')){
+            jQuery('#alien-no').show();
+            jQuery('#huduma-no').show();
+            jQuery('#passport-no').show();
+            jQuery('#birth-cert-no').show();
+            var age = Math.floor((new Date() - new Date(selectedDob)) / 1000 / 60 / 60 / 24 / 365.25);
+            if(age > 17){
+                jQuery('#driving-license').show();
+                jQuery('#other-child-identifiers').hide();
+            }
+        }else{
+            jQuery('#alien-no').hide();
+            jQuery('#huduma-no').hide();
+            jQuery('#passport-no').hide();
+            jQuery('#driving-license').hide();
+        }
+    }
+
+    function showDataFromCR() {
+            kenyaui.openPanelDialog({ templateId: 'cr-dialog', width: 55, height: 80, scrolling: true });
+    }
+
+    // re-use name from client registry
+    function useFullName(){
+            if (crResponseData.client.firstName != '') {
+                jQuery('input[name="personName.givenName"]').val(crResponseData.client.firstName);
+            }
+
+            if (crResponseData.client.middleName != '') {
+                jQuery('input[name="personName.middleName"]').val(crResponseData.client.middleName);
+            }
+
+            if (crResponseData.client.lastName != '') {
+                jQuery('input[name="personName.familyName"]').val(crResponseData.client.lastName);
+            }
+
+    }
+
+    // uses crResponseData.client as base. Doesn't work for nested objects
+    function updateClientVariable(formInputName, responseVariablePath) {
+        if (crResponseData.client[responseVariablePath] != '') {
+            jQuery("input[name='" + formInputName +"']").val(crResponseData.client[responseVariablePath]);
+        }
+    }
+
+    // use client.contact as base
+    function useContact(formInputName, responseVariablePath){
+        if (crResponseData.client.contact[responseVariablePath] != '') {
+            jQuery("input[name='" + formInputName +"']").val(crResponseData.client.contact[responseVariablePath]);
+        }
+
+    }
+
+    // use client.identifications as base
+    function useIdentifier(formInputName, identificationType){
+
+        if (data.client.identifications.length > 0) {
+            for (i = 0; i < data.client.identifications.length; i++) {
+                var identifierObj = data.client.identifications[i];
+                if (identifierObj.identificationType == identificationType) {
+                    jQuery("input[name='" + formInputName +"']").val(identifierObj.identificationNumber);
+                }
+            }
+        }
+
+    }
+
+     // use client.identifications as base
+        function useIdentifiers(){
+
+            if (data.client.identifications.length > 0) {
+                var nationalIdType = 'Identification Number';
+                var passportIdType = 'passport-no';
+                var birthCertificateIdType = 'birth-certificate';
+
+                for (i = 0; i < data.client.identifications.length; i++) {
+                    var identifierObj = data.client.identifications[i];
+                    if (identifierObj.identificationType == nationalIdType) {
+                        jQuery("input[name='nationalIdNumber']").val(identifierObj.identificationNumber);
+                    } else if (identifierObj.identificationType == passportIdType) {
+                       jQuery("input[name='passPortNumber']").val(identifierObj.identificationNumber);
+                    } else if (identifierObj.identificationType == birthCertificateIdType) {
+                       jQuery("input[name='birthCertificateNumber']").val(identifierObj.identificationNumber);
+                    }
+                }
+
+                // update NUPI
+                jQuery("input[name='nationalUniquePatientNumber']").val(data.client.clientNumber);
+
+            }
+
+        }
+
+    // use client.nextOfKins as base
+    function useNextofKin(){
+
+        var firstNok = crResponseData.client.nextOfKins[0];
+
+        if (firstNok.name != '') {
+            jQuery('input[name="nameOfNextOfKin"]').val(firstNok.name);
+        }
+
+        if (firstNok.contact.primaryPhone != '') {
+            jQuery('input[name="nextOfKinContact"]').val(firstNok.contact.primaryPhone);
+        }
+
+        if (firstNok.residence != '') {
+            jQuery('input[name="nextOfKinAddress"]').val(firstNok.residence);
+        }
+
+    }
+
+    function postRegistrationDetailsToCR(firstName,middleName,lastName,dateOfBirth,gender,maritalStatus,occupation,religion,educationLevel,country,countyOfBirth,county,subCounty,ward,village,landMark,address,identificationType,identificationValue,primaryPhone,secondaryPhone,emailAddress,name,relationship,residence,nokPrimaryPhone,nokSecondaryPhone,nokEmailAddress,isAlive) {
+        // connect to CR server
+        var params = {"firstName":firstName,
+            "middleName":middleName,
+            "lastName":lastName,
+            "dateOfBirth":dateOfBirth,
+            "gender":gender,
+            "maritalStatus":maritalStatus,
+            "occupation":occupation,
+            "religion":religion,
+            "educationLevel":educationLevel,
+            "residence": {
+                "country": country,
+                "countyOfBirth": countyOfBirth,
+                "county": county,
+                "subCounty": subCounty,
+                "ward": ward,
+                "village": village,
+                "landMark": landMark,
+                "address": address
+            },
+            "identification": {
+                "identificationType": identificationType,
+                "identificationNumber": identificationValue
+            },
+            "contact": {
+                "primaryPhone": primaryPhone,
+                "secondaryPhone": secondaryPhone,
+                "emailAddress": emailAddress,
+            },
+            "nextOfKins": [{
+                "name": name,
+                "relationship": relationship,
+                "residence": residence,
+                "contact": {
+                    "primaryPhone": nokPrimaryPhone,
+                    "secondaryPhone": nokSecondaryPhone,
+                    "emailAddress": nokEmailAddress,
+                }
+            }],
+            "isAlive":isAlive,
+
+        };
+        //Using fragment action to post
+        jQuery.getJSON('${ ui.actionLink("kenyaemr", "upi/upiDataExchange", "postUpiClientRegistrationInfoToCR")}',
+            {
+                'postParams': params.toString()
+            })
+            .success(function (data) {
+                console.log("Response from CR  ==> ");
+                console.log("Response from CR  ==> ");
+            })
+            .fail(function (err) {
+                    console.log(err)
+                }
+            )
+
+        var authToken = "eyJhbGciOiJSUzI1NiIsImtpZCI6IkU0MUU1QUM5RUIxNTlBMjc1NTY4NjM0MzIxMUJDQzAzMDMyMEUzMTZSUzI1NiIsIng1dCI6IjVCNWF5ZXNWbWlkVmFHTkRJUnZNQXdNZzR4WSIsInR5cCI6ImF0K2p3dCJ9.eyJpc3MiOiJodHRwczovL2RocGlkZW50aXR5c3RhZ2luZ2FwaS5oZWFsdGguZ28ua2UiLCJuYmYiOjE2NTIxODUyMzQsImlhdCI6MTY1MjE4NTIzNCwiZXhwIjoxNjUyMjcxNjM0LCJhdWQiOlsiREhQLkdhdGV3YXkiLCJESFAuVmlzaXRhdGlvbiJdLCJzY29wZSI6WyJESFAuR2F0ZXdheSIsIkRIUC5WaXNpdGF0aW9uIl0sImNsaWVudF9pZCI6InBhcnRuZXIudGVzdC5jbGllbnQiLCJqdGkiOiJENjUyOTUwNDQ1RDYyMjg2NDc1OTE3NjkxQzMwMzM4MyJ9.tey01umz34GOZv1ewpafpyiuj3Y0-lUO0ufww5nPEQ89Gl3QG73j6AjuU-mvnupCEt5hrPePuwTXt2gQ6CSgP9C82gVsdboF8pwbcr3eBZQ8Q9jNxPzKSOFoI6FuThnig_YDg6uHEcykgMnGBcM1OJIJnEnJcvc01mcfHi6J2IRlfI_wlG5__oeKKbvt2DjGygjuwBVUb4nGyEmqhjg8VRB0LZsD83h1bB2Z0FCU7IKyqUMC5dzZxGpWLYCtABdxG_YvPAP2tkzFD7SXdJKu7GT4UMJwh5CvNmQ4BVSWfcLOEk4d_8YblHjVXDy110Zk-qmPl5vv7NNRX1lv69N-gQ";
+        var idType = 'identification-number';
+        var idValue = jQuery('input[name=nationalIdNumber]').val();
+        var postUrl = 'https://dhpstaging.health.go.ke/visit/registry';
+        console.log("Payload ==> "+JSON.stringify(params));
+//        jQuery.ajax({
+//            url: postUrl,
+//            crossDomain:true,
+//            type: "POST",
+//            headers: { Authorization: 'Bearer ' + authToken },
+//            error: function(err) {
+//                switch (err.status) {
+//                    case "400":
+//                        // bad request
+//                        break;
+//                    case "401":
+//                        // expired or invalid token
+//                        break;
+//                    case "403":
+//                        // forbidden
+//                        break;
+//                    default:
+//                        //Something bad happened
+//                        break;
+//                }
+//            },
+//            data:params,
+//            success: function(data) {
+//                if(data.clientExists) {
+//                    console.log("Client Number ==> "+data.client.clientNumber);
+//
+//                } else {
+//                    jQuery('#msgBox').text('Unable to post successfully to CR ');
+//                }
+//            }
+//        });
+
+    }
+
 
 </script>
 
