@@ -8,6 +8,10 @@
     def kDoDRank = command.kDoDRank
     def kDoDUnit = command.kDoDUnit
     def ward = command.personAddress.address4
+
+    def nationalIdType = "49af6cdc-7968-4abb-bf46-de10d7f4859f"
+    def birthCertificateNumberType = "68449e5a-8829-44dd-bfef-c9c8cf2cb9b2"
+    def passportNumberType = "be9beef6-aacc-4e1f-ac4e-5babeaa1e303"
     def nameFields = [
             [
                     [object: command, property: "personName.familyName", label: "Surname *"],
@@ -85,6 +89,35 @@
 
     <div class="ke-panel-content">
 
+        <fieldset>
+        <legend>Client verification with Client Registry</legend>
+            <table>
+                <tr>
+                    <td>Identifier Type</td>
+                    <td>
+                        <select id="idType" name="idtype">
+                            <option value="">Select a valid identifier type</option>
+                            <% idTypes.each {%>
+                                <% if(it.uuid == nationalIdType || it.uuid == birthCertificateNumberType || it.uuid == passportNumberType) { %>
+                                    <option value="${it.uuid}">${it.name}</option>
+                                <% } %>
+                            <%}%>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" id="idValue" name="idValue" />
+                    </td>
+                    <td class="ke-field-instructions">
+                        <button type="button" class="ke-verify-button" id="validate-identifier">Validate Identifier</button>
+                        <button type="button" class="ke-verify-button" id="show-cr-info-dialog">Show CR info</button>
+                        &nbsp;&nbsp;
+                        <label id="msgBox"></label>
+                    </td>
+                </tr>
+                <tr></tr>
+
+            </table>
+        </fieldset>
         <div class="ke-form-globalerrors" style="display: none"></div>
 
         <div class="ke-form-instructions">
@@ -382,6 +415,187 @@ ${ui.includeFragment("kenyaui", "widget/dialogForm", [
         jQuery('#identifiers').hide();
         jQuery('#national-id').hide();
         jQuery('#driving-license').hide();
+
+        jQuery('#show-cr-info-dialog').hide();
+        jQuery('#other-identifiers').click(otherIdentifiersChange);
+        jQuery('#show-cr-info-dialog').click(showDataFromCR);
+        jQuery('#use-full-name').click(useFullName);
+        jQuery('#validate-identifier').click(function(event){
+
+            // connect to dhp server
+            var authToken = '${clientVerificationApiToken}';
+            var idType = jQuery('#idType').val();
+            var idValue = jQuery('input[name=idValue]').val();
+            var idTypeParam = '';
+
+            if (authToken == '') {
+                jQuery('#show-cr-info-dialog').hide();
+                var className = jQuery('#msgBox').attr("class");
+                jQuery('#msgBox').removeClass(className);
+                //jQuery('#msgBox').addClass('ke-cr-client-not-found');
+                jQuery('#msgBox').text('Please notify the system admin to enable verification process');
+                return;
+            }
+
+            if (idType == '' || idValue == '') {
+                jQuery('#show-cr-info-dialog').hide();
+                var className = jQuery('#msgBox').attr("class");
+                jQuery('#msgBox').removeClass(className);
+                //jQuery('#msgBox').addClass('ke-cr-client-not-found');
+                jQuery('#msgBox').text('Please specify identifier type and value for verification');
+                return;
+            }
+
+
+            if(idType == '${nationalIdType}') {
+                idTypeParam = 'national-id';
+            } else if (idType == '${passportNumberType}') {
+                idTypeParam = 'passport-id';
+            } else if (idType == '${birthCertificateNumberType}') {
+                idTypeParam = 'birthcertificate-id';
+            }
+
+            var baseVerificationUrl = '${clientVerificationApi}';
+            var getUrl = baseVerificationUrl + idTypeParam + '/' +  idValue;
+            jq.ajax({
+                 url: getUrl,
+                 type: "GET",
+                 headers: { Authorization: 'Bearer ' + authToken},
+                 error: function(err) {
+                   switch (err.status) {
+                     case "400":
+                       // bad request
+                       break;
+                     case "401":
+                       // expired or invalid token
+                       break;
+                     case "403":
+                       // forbidden
+                       break;
+                     default:
+                       //Something bad happened
+                       break;
+                   }
+                 },
+                 success: function(data) {
+                   crResponseData = data;
+                   if(data.clientExists) {
+                        var className = jQuery('#msgBox').attr("class");
+                        jQuery('#msgBox').removeClass(className);
+                        jQuery('#msgBox').addClass('ke-cr-client-exists');
+                        jQuery('#msgBox').text('Client exists in the registry. UPI number:  ' + data.client.clientNumber);
+
+                        // unset vars
+                        jQuery('#cr-full-name').text("");
+                        jQuery('#cr-sex').text("");
+                        jQuery('#cr-primary-contact').text("");
+                        jQuery('#cr-secondary-contact').text("");
+                        jQuery('#cr-email').text("");
+
+                        jQuery('#cr-county').text("");
+                        jQuery('#cr-sub-county').text("");
+                        jQuery('#cr-ward').text("");
+
+                        jQuery('#cr-kin-name').text("");
+                        jQuery('#cr-kin-relation').text("");
+                        jQuery('#cr-kin-contact').text("");
+                        jQuery('#cr-national-id').text("");
+                        jQuery('#cr-upi').text("");
+
+                        //
+                        jQuery('#cr-full-name').text(data.client.firstName + ' ' + data.client.middleName + ' ' + data.client.lastName);
+                        jQuery('#cr-sex').text(data.client.gender);
+                        jQuery('#cr-primary-contact').text(data.client.contact.primaryPhone);
+                        jQuery('#cr-secondary-contact').text(data.client.contact.secondaryPhone);
+                        jQuery('#cr-email').text(data.client.contact.emailAddress);
+
+                        // residence
+                        jQuery('#cr-county').text(data.client.residence.county);
+                        jQuery('#cr-sub-county').text(data.client.residence.subCounty);
+                        jQuery('#cr-ward').text(data.client.residence.ward);
+
+                        // next of kin
+
+                          if(data.client.nextOfKins.length > 0) {
+                            var nextOfKin = data.client.nextOfKins[0];
+                            jQuery('#cr-kin-name').text(nextOfKin.name);
+                            jQuery('#cr-kin-relation').text(nextOfKin.relationship);
+                            jQuery('#cr-kin-contact').text(nextOfKin.contact.primaryPhone);
+
+                          }
+
+                         // identifiers
+                         jQuery('#cr-upi').text(data.client.clientNumber); // update UPI field
+                         if (data.client.identifications.length > 0) {
+                            for (i = 0; i < data.client.identifications.length; i++) {
+                                var identifierObj = data.client.identifications[i];
+                                if (identifierObj.identificationType == 'Identification Number') {
+                                    jQuery('#cr-national-id').text(identifierObj.identificationNumber);
+                                }
+                            }
+                         }
+
+                         jQuery('#show-cr-info-dialog').show();
+
+                   } else {
+                        jQuery('#show-cr-info-dialog').hide();
+                        var className = jQuery('#msgBox').attr("class");
+                        jQuery('#msgBox').removeClass(className);
+                        jQuery('#msgBox').addClass('ke-cr-client-not-found');
+                        jQuery('#msgBox').text('Client not found in the registry. Please enter registration data and post to CR ');
+                   }
+                 }
+               });
+
+            //
+        });
+
+        //Prepare UPI payload
+        var identifierType;
+        var identifierValue;
+        if(jQuery('input[name=nationalIdNumber]').val() !=""){
+            identifierType = "national-id";
+            identifierValue = jQuery('input[name=nationalIdNumber]').val();
+        }
+        if(jQuery('#birth-cert-no').val() !=""){
+            identifierType = "birth-certificate";
+            identifierValue = jQuery('#birthCertificateNo').val();
+        }
+
+        jQuery('#post-registrations').click(function(){
+            postRegistrationDetailsToCR(
+                jQuery('input[name="personName.familyName"]').val(),
+                jQuery('input[name="personName.givenName"]').val(),
+                jQuery('input[name="personName.middleName"]').val(),
+                jQuery('#patient-birthdate_date').val(),
+                jQuery('input[name=gender]').val(),
+                jQuery('input[name=maritalStatus]').val(),
+                jQuery('input[name=occupation]').val(),
+                "",   //  Religeon we do not collect
+                jQuery('input[name=education]').val(),
+                "",   //Country variable not collected
+                "",   //CountryOfBirth variable not collected
+                jQuery('input[name="personAddress.countyDistrict"]').val(),
+                jQuery('input[name="personAddress.stateProvince"]').val(),
+                jQuery('input[name="personAddress.address4"]').val(),
+                jQuery('input[name="personAddress.cityVillage"]').val(),
+                jQuery('input[name="personAddress.address2"]').val(),    //landmark
+                jQuery('input[name="personAddress.address1"]').val(),   //address
+                identifierType,
+                identifierValue,
+                jQuery('input[name="telephoneContact"]').val(),
+                jQuery('input[name="alternatePhoneContact"]').val(),
+                jQuery('input[name="emailAddress"]').val(),
+                jQuery('input[name="nameOfNextOfKin"]').val(),
+                jQuery('input[name="nextOfKinRelationship"]').val(),
+                "", //Next of kin residence not collected
+                jQuery('input[name="nextOfKinContact"]').val(),
+                "", //Next of kin secondary phone not collected
+                "", //Next of kin email address not collected
+                jQuery('input[name="dead"]').val()
+
+            ) });
+
 
         //On Edit prepopulate patient Identifiers
         var savedAge = jQuery('#patient-birthdate').val();
