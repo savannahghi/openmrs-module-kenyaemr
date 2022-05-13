@@ -94,6 +94,7 @@ public class EditPatientFragmentController {
 		model.addAttribute("educationConcept", Dictionary.getConcept(Dictionary.EDUCATION));
 		model.addAttribute("enableClientNumberField", (StringUtils.isBlank(clientNumberFieldEnabled) || clientNumberFieldEnabled.equalsIgnoreCase("false")) ? false : true);
 		model.addAttribute("clientNumberLabel", clientNumberPreferredLabel);
+		model.addAttribute("countryConcept", Dictionary.getConcept(Dictionary.COUNTRY));
 
 		// create list of counties
 
@@ -262,6 +263,15 @@ public class EditPatientFragmentController {
 		private Boolean birthdateEstimated;
 		private String gender;
 		private PersonAddress personAddress;
+
+		public Concept getCountry() {
+			return country;
+		}
+
+		public void setCountry(Concept country) {
+			this.country = country;
+		}
+
 		private Concept maritalStatus;
 		private Concept occupation;
 		private Concept education;
@@ -300,6 +310,8 @@ public class EditPatientFragmentController {
 		private String alienIdNumber;
 		private String drivingLicenseNumber;
 		private String CRVerificationStatus;
+		private Concept country;
+		private Obs savedCountry;
 
 
 		public String getNationalUniquePatientNumber() {
@@ -413,6 +425,11 @@ public class EditPatientFragmentController {
 				orphan = savedOrphan.getValueCoded();
 			}
 			nationalUniquePatientNumber = wrapper.getNationalUniquePatientNumber();
+
+			savedCountry = getLatestObs(patient, Dictionary.COUNTRY);
+			if(savedCountry != null) {
+				country = savedCountry.getValueCoded();
+			}
 
 		}
 
@@ -637,6 +654,7 @@ public class EditPatientFragmentController {
 			handleOncePerPatientObs(ret, obsToSave, obsToVoid, Dictionary.getConcept(Dictionary.EDUCATION), savedEducation, education);
 			handleOncePerPatientObs(ret, obsToSave, obsToVoid, Dictionary.getConcept(Dictionary.IN_SCHOOL), savedInSchool, inSchool);
 			handleOncePerPatientObs(ret, obsToSave, obsToVoid, Dictionary.getConcept(Dictionary.ORPHAN), savedOrphan, orphan);
+			handleOncePerPatientObs(ret, obsToSave, obsToVoid, Dictionary.getConcept(Dictionary.COUNTRY), savedCountry, country);
 
 			for (Obs o : obsToVoid) {
 				Context.getObsService().voidObs(o, "KenyaEMR edit patient");
