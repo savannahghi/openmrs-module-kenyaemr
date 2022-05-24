@@ -666,9 +666,6 @@ ${ui.includeFragment("kenyaui", "widget/dialogForm", [
 
     jQuery(function () {
 
-        //var loadingImageURL = ui.resourceLink("kenyaemr", "images/loading.gif");
-        //var showLoadingImage = '<span style="padding:2px; display:inline-block;"> <img src="' + loadingImageURL + '" /> </span>';
-
         function display_loading_validate_identifier(status) {
             if(status) {
                 jq('.wait-loading').empty();
@@ -2195,9 +2192,6 @@ ${ui.includeFragment("kenyaui", "widget/dialogForm", [
         }
 
     }
-
-    //var loadingImageURL = ui.resourceLink("kenyaemr", "images/loading.gif");
-    //var showLoadingImage = '<span style="padding:2px; display:inline-block;"> <img src="' + loadingImageURL + '" /> </span>';
 
     function display_loading_post_registration(status) {
         if(status) {
