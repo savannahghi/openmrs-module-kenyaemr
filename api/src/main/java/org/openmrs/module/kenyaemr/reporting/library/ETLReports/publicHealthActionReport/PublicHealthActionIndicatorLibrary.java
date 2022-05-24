@@ -138,4 +138,12 @@ public class PublicHealthActionIndicatorLibrary {
     public CohortIndicator clientsWithoutNUPI() {
         return cohortIndicator("Clients without NUPI", ReportUtils.map(cohortLibrary.clientsWithoutNUPI(), "endDate=${endDate}"));
     }
+
+    /**
+     * Number of TX_CURR clients without NUPI
+     * @return the indicator
+     */
+    public CohortIndicator txCurrclientsWithoutNUPI() {
+        return cohortIndicator("TX_Curr Clients without NUPI", ReportUtils.map(cohortLibrary.txCurrclientsWithoutNUPI(), "endDate=${endDate}"));
+    }
 }
