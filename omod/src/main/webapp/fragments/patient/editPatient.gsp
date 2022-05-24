@@ -661,10 +661,14 @@ ${ui.includeFragment("kenyaui", "widget/dialogForm", [
 </style>
 <script type="text/javascript">
     //On ready
+    crResponseData = ""; // response from client registry
+    var loadingImageURL = ui.resourceLink("kenyaemr", "images/loading.gif");
+    var showLoadingImage = '<span style="padding:2px; display:inline-block;"> <img src="' + loadingImageURL + '" /> </span>';
+
     jQuery(function () {
 
-        var loadingImageURL = ui.resourceLink("kenyaemrml", "images/loading.gif");
-        var showLoadingImage = '<span style="padding:2px; display:inline-block;"> <img src="' + loadingImageURL + '" /> </span>';
+        //var loadingImageURL = ui.resourceLink("kenyaemr", "images/loading.gif");
+        //var showLoadingImage = '<span style="padding:2px; display:inline-block;"> <img src="' + loadingImageURL + '" /> </span>';
 
         function display_loading_validate_identifier(status) {
             if(status) {
@@ -2194,8 +2198,8 @@ ${ui.includeFragment("kenyaui", "widget/dialogForm", [
 
     }
 
-    var loadingImageURL = ui.resourceLink("kenyaemrml", "images/loading.gif");
-    var showLoadingImage = '<span style="padding:2px; display:inline-block;"> <img src="' + loadingImageURL + '" /> </span>';
+    //var loadingImageURL = ui.resourceLink("kenyaemr", "images/loading.gif");
+    //var showLoadingImage = '<span style="padding:2px; display:inline-block;"> <img src="' + loadingImageURL + '" /> </span>';
 
     function display_loading_post_registration(status) {
         if(status) {
