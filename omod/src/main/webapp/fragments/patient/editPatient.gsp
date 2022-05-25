@@ -1377,6 +1377,8 @@ ${ui.includeFragment("kenyaui", "widget/dialogForm", [
         // Show spinner
         display_loading_post_registration(true);
 
+        responseData = "";
+
         var params = params
 
         var params = {
@@ -1422,6 +1424,8 @@ ${ui.includeFragment("kenyaui", "widget/dialogForm", [
             .success(function (data) {
                 // Hide spinner
                 display_loading_post_registration(false);
+
+                responseData = data;
                 
                 if(data.status == 200) {
                     if(data.clientNumber) {
