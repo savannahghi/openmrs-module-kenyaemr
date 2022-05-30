@@ -359,7 +359,7 @@
             this.nameOfTreatmentSupporter = nameOfTreatmentSupporter;
         }
 
-        public String getTbScreeningOutcome() {
+        public String getNameTbScreeningOutcome() {
             return tbScreeningOutcome;
         }
 

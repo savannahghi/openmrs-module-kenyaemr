@@ -93,8 +93,7 @@
 
                  <tr>
                    <td>Oxygen Saturation: ${oxygenSaturation}</td>
-                    <td id = "cacx-struct" colspan="2">CACX Screening: ${patient.caxcScreeningOutcome}</td>
-
+                    <td colspan="2">CACX Screening: ${patient.caxcScreeningOutcome}</td>
                 </tr>
 
                 <tr>
@@ -347,13 +346,6 @@
     </div>
     <script type="text/javascript">
         jQuery(function(){
-          jQuery('#cacx-struct').hide();
-            if("${ patient.gender}" == "F") {
-               jQuery('#cacx-struct').show();
-            }
-            else{
-               jQuery('#cacx-struct').hide();
-            }
           jQuery('#lmp-struct').hide();
                 if("${ patient.gender}" == "F") {
                   jQuery('#lmp-struct').show();
