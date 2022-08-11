@@ -1938,7 +1938,7 @@ var kenyaAddressHierarchy = {
             "Kibwezi East":
                 [
                     {"facility":"Masongaleni","id":"Masongaleni"},
-                    {"facility":"Mtitu Andei","id":"Mtitu Andei"},
+                    {"facility":"Mtito Andei","id":"Mtito Andei"},
                     {"facility":"Thange","id":"Thange"},
                     {"facility":"Ivingoni/Nzambani","id":"Ivingoni/Nzambani"}
                 ]
@@ -2101,7 +2101,7 @@ var kenyaAddressHierarchy = {
                     {"facility":"Megun","id":"Megun"},
                     {"facility":"Langas","id":"Langas"}
                 ],
-            "Kasses":
+            "Kesses":
                 [
                     {"facility":"Racecourse","id":"Racecourse"},
                     {"facility":"Cheptiret/Kipchamo","id":"Cheptiret/Kipchamo"},

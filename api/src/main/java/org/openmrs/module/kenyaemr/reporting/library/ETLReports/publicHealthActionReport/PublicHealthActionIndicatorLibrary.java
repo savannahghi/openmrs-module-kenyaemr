@@ -30,7 +30,7 @@ public class PublicHealthActionIndicatorLibrary {
      * @return the indicator
      */
     public CohortIndicator notLinked() {
-        return cohortIndicator("HIV+ patients not linked to care", ReportUtils.map(cohortLibrary.notLinked(), ""));
+        return cohortIndicator("HIV+ patients not linked to care", ReportUtils.map(cohortLibrary.notLinked(), "startDate=${startDate},endDate=${endDate}"));
     }
 
     /**
@@ -38,7 +38,7 @@ public class PublicHealthActionIndicatorLibrary {
      * @return
      */
     public CohortIndicator undocumentedHEIStatus() {
-        return cohortIndicator("HEIs with undocumented status", ReportUtils.map(cohortLibrary.undocumentedHEIStatus(), ""));
+        return cohortIndicator("HEIs with undocumented status", ReportUtils.map(cohortLibrary.undocumentedHEIStatus(), "startDate=${startDate},endDate=${endDate}"));
     }
 
     /**
@@ -47,7 +47,7 @@ public class PublicHealthActionIndicatorLibrary {
      * @return the indicator
      */
     public CohortIndicator invalidVL() {
-        return cohortIndicator("No Current VL Results", ReportUtils.map(cohortLibrary.invalidVL(), ""));
+        return cohortIndicator("No Current VL Results", ReportUtils.map(cohortLibrary.invalidVL(), "startDate=${startDate},endDate=${endDate}"));
     }
 
     /**
@@ -56,7 +56,7 @@ public class PublicHealthActionIndicatorLibrary {
      * @return the indicator
      */
     public CohortIndicator unsuppressedWithValidVL() {
-        return cohortIndicator("Unsuppressed VL result", ReportUtils.map(cohortLibrary.unsuppressedWithValidVL(), ""));
+        return cohortIndicator("Unsuppressed VL result", ReportUtils.map(cohortLibrary.unsuppressedWithValidVL(), "startDate=${startDate},endDate=${endDate}"));
     }
 
     /**
@@ -65,7 +65,7 @@ public class PublicHealthActionIndicatorLibrary {
      * @return the indicator
      */
     public CohortIndicator unsuppressedWithoutValidVL() {
-        return cohortIndicator("Unsuppressed VL result", ReportUtils.map(cohortLibrary.unsuppressedWithoutValidVL(), ""));
+        return cohortIndicator("Unsuppressed VL result", ReportUtils.map(cohortLibrary.unsuppressedWithoutValidVL(), "startDate=${startDate},endDate=${endDate}"));
     }
 
     /**
@@ -73,7 +73,7 @@ public class PublicHealthActionIndicatorLibrary {
      * @return the indicator
      */
     public CohortIndicator undocumentedLTFU() {
-        return cohortIndicator("Undocumented LTFU patients", ReportUtils.map(cohortLibrary.undocumentedLTFU(), ""));
+        return cohortIndicator("Undocumented LTFU patients", ReportUtils.map(cohortLibrary.undocumentedLTFU(), "startDate=${startDate},endDate=${endDate}"));
     }
 
     /**
@@ -81,7 +81,7 @@ public class PublicHealthActionIndicatorLibrary {
      * @return the indicator
      */
     public CohortIndicator recentDefaulters() {
-        return cohortIndicator("Missed appointments", ReportUtils.map(cohortLibrary.recentDefaulters(), ""));
+        return cohortIndicator("Missed appointments", ReportUtils.map(cohortLibrary.recentDefaulters(), "startDate=${startDate},endDate=${endDate}"));
     }
 
     /**
@@ -89,7 +89,7 @@ public class PublicHealthActionIndicatorLibrary {
      * @return the indicator
      */
     public CohortIndicator unlinkedHEI() {
-        return cohortIndicator("HEIs not linked to Mothers", ReportUtils.map(cohortLibrary.unlinkedHEI(), ""));
+        return cohortIndicator("HEIs not linked to Mothers", ReportUtils.map(cohortLibrary.unlinkedHEI(), "startDate=${startDate},endDate=${endDate}"));
     }
 
     /**
@@ -97,23 +97,37 @@ public class PublicHealthActionIndicatorLibrary {
      * @return the indicator
      */
     public CohortIndicator adolescentsNotInOTZ() {
-        return cohortIndicator("Adolescents not in OTZ", ReportUtils.map(cohortLibrary.adolescentsNotInOTZ(), ""));
+        return cohortIndicator("Adolescents not in OTZ", ReportUtils.map(cohortLibrary.adolescentsNotInOTZ(), "startDate=${startDate},endDate=${endDate}"));
     }
 
     /**
-     * Number of children not in OVC
+     * Number of children and adolescents living with HIV not in OVC
      * @return the indicator
      */
-    public CohortIndicator childrenNotInOVC() {
-        return cohortIndicator("Children not in OVC", ReportUtils.map(cohortLibrary.childrenNotInOVC(), ""));
+    public CohortIndicator calhivNotInOVC() {
+        return cohortIndicator("Children not in OVC", ReportUtils.map(cohortLibrary.calhivNotInOVC(), "startDate=${startDate},endDate=${endDate}"));
     }
 
+    /**
+     * Number of children and adolescents living with HIV not on DTG regimen
+     * @return the indicator
+     */
+    public CohortIndicator calhivNotOnDTGRegimen() {
+        return cohortIndicator("Number of CALHIV not on DTG regimen", ReportUtils.map(cohortLibrary.calhivNotOnDTGRegimen(), "startDate=${startDate},endDate=${endDate}"));
+    }
     /**
      * Number of contacts with undocumented HIV status
      * @return the indicator
      */
     public CohortIndicator contactsUndocumentedHIVStatus() {
-        return cohortIndicator("Contacts with undocumented HIV status", ReportUtils.map(cohortLibrary.contactsUndocumentedHIVStatus(), ""));
+        return cohortIndicator("Contacts with undocumented HIV status", ReportUtils.map(cohortLibrary.contactsUndocumentedHIVStatus(), "startDate=${startDate},endDate=${endDate}"));
+    }
+    /**
+     * Number of children contacts with undocumented HIV status
+     * @return the indicator
+     */
+    public CohortIndicator childrenContactsUndocumentedHIVStatus() {
+        return cohortIndicator("Children Contacts with undocumented HIV status", ReportUtils.map(cohortLibrary.childrenContactsUndocumentedHIVStatus(), "startDate=${startDate},endDate=${endDate}"));
     }
 
     /**
@@ -121,7 +135,7 @@ public class PublicHealthActionIndicatorLibrary {
      * @return the indicator
      */
     public CohortIndicator snsContactsUndocumentedHIVStatus() {
-        return cohortIndicator("SNS Contacts with undocumented HIV status", ReportUtils.map(cohortLibrary.snsContactsUndocumentedHIVStatus(), ""));
+        return cohortIndicator("SNS Contacts with undocumented HIV status", ReportUtils.map(cohortLibrary.snsContactsUndocumentedHIVStatus(), "startDate=${startDate},endDate=${endDate}"));
     }
 
     /**
@@ -129,6 +143,31 @@ public class PublicHealthActionIndicatorLibrary {
      * @return the indicator
      */
     public CohortIndicator txCurrclientsWithoutNUPI() {
-        return cohortIndicator("TX_Curr Clients without NUPI", ReportUtils.map(cohortLibrary.txCurrclientsWithoutNUPI(), ""));
+        return cohortIndicator("TX_Curr Clients without NUPI", ReportUtils.map(cohortLibrary.txCurrclientsWithoutNUPI(), "startDate=${startDate},endDate=${endDate}"));
     }
+
+    /**
+     * Number of patients died
+     * @return the indicator
+     */
+    public CohortIndicator numberOfDeaths() {
+        return cohortIndicator("Number of deaths", ReportUtils.map(cohortLibrary.numberOfDeaths(), "startDate=${startDate},endDate=${endDate}"));
+    }
+
+    /**
+     * Number of patients not vaccinated for Covid-19
+     * @return the indicator
+     */
+    public CohortIndicator notVaccinatedForCovid19() {
+        return cohortIndicator("Number of patients not vaccinated for Covid-19", ReportUtils.map(cohortLibrary.notVaccinatedForCovid19(), "startDate=${startDate},endDate=${endDate}"));
+    }
+
+    /**
+     * Number of patients not assessed for Covid-19
+     * @return the indicator
+     */
+    public CohortIndicator notAssessedForCovid19() {
+        return cohortIndicator("Number of patients not assessed for Covid-19", ReportUtils.map(cohortLibrary.notAssessedForCovid19(), "startDate=${startDate},endDate=${endDate}"));
+    }
+
 }

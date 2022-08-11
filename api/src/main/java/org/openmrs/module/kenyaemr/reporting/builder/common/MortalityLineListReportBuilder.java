@@ -27,10 +27,12 @@ import org.openmrs.module.kenyaemr.calculation.library.ovc.OnOVCProgramCalculati
 import org.openmrs.module.kenyaemr.calculation.library.tb.InTbProgramCalculation;
 import org.openmrs.module.kenyaemr.metadata.CommonMetadata;
 import org.openmrs.module.kenyaemr.metadata.HivMetadata;
-import org.openmrs.module.kenyaemr.reporting.calculation.converter.*;
-import org.openmrs.module.kenyaemr.reporting.cohort.definition.ActivePatientsSnapshotCohortDefinition;
+import org.openmrs.module.kenyaemr.reporting.calculation.converter.DateArtStartDateConverter;
+import org.openmrs.module.kenyaemr.reporting.calculation.converter.IPTOutcomeDataConverter;
+import org.openmrs.module.kenyaemr.reporting.calculation.converter.SimpleResultDateConverter;
+import org.openmrs.module.kenyaemr.reporting.cohort.definition.MortalityLineListCohortDefinition;
 import org.openmrs.module.kenyaemr.reporting.data.converter.CalculationResultConverter;
-import org.openmrs.module.kenyaemr.reporting.data.converter.definition.ActivePatientsPopulationTypeDataDefinition;
+import org.openmrs.module.kenyaemr.reporting.data.converter.definition.*;
 import org.openmrs.module.kenyaemr.reporting.data.converter.definition.art.*;
 import org.openmrs.module.metadatadeploy.MetadataUtils;
 import org.openmrs.module.reporting.cohort.definition.CohortDefinition;
@@ -54,8 +56,8 @@ import java.util.Date;
 import java.util.List;
 
 @Component
-@Builds({"kenyaemr.common.report.activePatientsLinelist"})
-public class ActivePatientSnapshotReportBuilder extends AbstractHybridReportBuilder {
+@Builds({"kenyaemr.common.report.mortalityLineList"})
+public class MortalityLineListReportBuilder extends AbstractHybridReportBuilder {
     public static final String DATE_FORMAT = "dd/MM/yyyy";
 
     @Override
@@ -76,33 +78,31 @@ public class ActivePatientSnapshotReportBuilder extends AbstractHybridReportBuil
         return null;
     }
 
-
-    protected Mapped<CohortDefinition> allPatientsCohort() {
-        CohortDefinition cd = new ActivePatientsSnapshotCohortDefinition();
+    protected Mapped<CohortDefinition> deathCohort() {
+        CohortDefinition cd = new MortalityLineListCohortDefinition();
         cd.addParameter(new Parameter("startDate", "Start Date", Date.class));
         cd.addParameter(new Parameter("endDate", "End Date", Date.class));
-        cd.setName("Active Patients");
+        cd.setName("Deceased patients");
         return ReportUtils.map(cd, "startDate=${startDate},endDate=${endDate}");
     }
 
     @Override
     protected List<Mapped<DataSetDefinition>> buildDataSets(ReportDescriptor descriptor, ReportDefinition report) {
 
-        PatientDataSetDefinition allVisits = activePatientsDataSetDefinition("activePatients");
-        allVisits.addRowFilter(allPatientsCohort());
-        DataSetDefinition allPatientsDSD = allVisits;
+        PatientDataSetDefinition allVisits = deceasedPatientsDataSetDefinition("deceasedPatients");
+        allVisits.addRowFilter(deathCohort());
+        DataSetDefinition deceasedPatientsDSD = allVisits;
 
         return Arrays.asList(
-                ReportUtils.map(allPatientsDSD, "startDate=${startDate},endDate=${endDate}")
+                ReportUtils.map(deceasedPatientsDSD, "startDate=${startDate},endDate=${endDate}")
         );
     }
 
-    protected PatientDataSetDefinition activePatientsDataSetDefinition(String datasetName) {
+    protected PatientDataSetDefinition deceasedPatientsDataSetDefinition(String datasetName) {
 
         PatientDataSetDefinition dsd = new PatientDataSetDefinition(datasetName);
         dsd.addParameter(new Parameter("startDate", "Start Date", Date.class));
         dsd.addParameter(new Parameter("endDate", "End Date", Date.class));
-        String defParam = "startDate=${startDate},endDate=${endDate}";
 
         PatientIdentifierType upn = MetadataUtils.existing(PatientIdentifierType.class, HivMetadata._PatientIdentifierType.UNIQUE_PATIENT_NUMBER);
         PatientIdentifierType nupi = MetadataUtils.existing(PatientIdentifierType.class, CommonMetadata._PatientIdentifierType.NATIONAL_UNIQUE_PATIENT_IDENTIFIER);
@@ -111,6 +111,10 @@ public class ActivePatientSnapshotReportBuilder extends AbstractHybridReportBuil
         DataDefinition nupiDef = new ConvertedPatientDataDefinition("identifier", new PatientIdentifierDataDefinition(nupi.getName(), nupi), identifierFormatter);
         AgeAtReportingDataDefinition ageAtReportingDataDefinition = new AgeAtReportingDataDefinition();
         ageAtReportingDataDefinition.addParameter(new Parameter("endDate", "End Date", Date.class));
+
+        ComorbiditiesDataDefinition comorbiditiesDataDefinition = new ComorbiditiesDataDefinition();
+        comorbiditiesDataDefinition.addParameter(new Parameter("startDate", "Start Date", Date.class));
+
         DataConverter formatter = new ObjectFormatter("{familyName}, {givenName}");
         DataDefinition nameDef = new ConvertedPersonDataDefinition("name", new PreferredNameDataDefinition(), formatter);
         dsd.addColumn("id", new PersonIdDataDefinition(), "");
@@ -120,7 +124,10 @@ public class ActivePatientSnapshotReportBuilder extends AbstractHybridReportBuil
         dsd.addColumn("Sex", new GenderDataDefinition(), "", null);
         dsd.addColumn("DOB", new BirthdateDataDefinition(), "", new BirthdateConverter(DATE_FORMAT));
         dsd.addColumn("Age at reporting", ageAtReportingDataDefinition, "endDate=${endDate}");
-        //dsd.addColumn("Age", new AgeDataDefinition(), "", new DataConverter[0]);
+        dsd.addColumn("Cause of Death", new CauseOfDeathDataDefinition(),"");
+        dsd.addColumn("Specific Cause of Death", new SpecificCauseOfDeathDataDefinition(), "");
+        dsd.addColumn("Co-morbidities", new ComorbiditiesDataDefinition(),"");
+        dsd.addColumn("Date of Death", new DateOfDeathDataDefinition(), "", new DateConverter());
         dsd.addColumn("Weight", new WeightAtArtDataDefinition(), "");
         dsd.addColumn("Height", new HeightAtArtDataDefinition(), "");
         dsd.addColumn("Population Type", new ActivePatientsPopulationTypeDataDefinition(), "");
@@ -128,7 +135,7 @@ public class ActivePatientSnapshotReportBuilder extends AbstractHybridReportBuil
         dsd.addColumn("Enrollment Date", new CalculationDataDefinition("Enrollment Date", new DateOfEnrollmentArtCalculation()), "", new DateArtStartDateConverter());
         dsd.addColumn("Art Start Date", new ETLArtStartDateDataDefinition(), "", new DateConverter(DATE_FORMAT));
         dsd.addColumn("First Regimen", new ETLFirstRegimenDataDefinition(), "");
-        //dsd.addColumn("First Substitution Date", new ETLFirstSubstitutionDateDataDefinition(), "", new DateConverter(DATE_FORMAT));
+        dsd.addColumn("First Substitution Date", new ETLFirstSubstitutionDateDataDefinition(), "", new DateConverter(DATE_FORMAT));
         dsd.addColumn("Current Regimen", new ETLCurrentRegimenDataDefinition(), "");
         dsd.addColumn("Current Regimen Line", new ETLCurrentRegLineDataDefinition(), "");
         dsd.addColumn("Last WHO Stage", new WHOStageArtDataDefinition(), "");
