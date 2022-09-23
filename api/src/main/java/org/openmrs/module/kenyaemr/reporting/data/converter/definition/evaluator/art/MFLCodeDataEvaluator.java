@@ -10,7 +10,8 @@
 package org.openmrs.module.kenyaemr.reporting.data.converter.definition.evaluator.art;
 
 import org.openmrs.annotation.Handler;
-import org.openmrs.module.kenyaemr.reporting.data.converter.definition.art.ETLLastVisitDateDataDefinition;
+import org.openmrs.module.kenyaemr.reporting.data.converter.definition.MFLCodeDataDefinition;
+import org.openmrs.module.kenyaemr.reporting.data.converter.definition.art.ARTBenefitsDataDefinition;
 import org.openmrs.module.reporting.data.person.EvaluatedPersonData;
 import org.openmrs.module.reporting.data.person.definition.PersonDataDefinition;
 import org.openmrs.module.reporting.data.person.evaluator.PersonDataEvaluator;
@@ -20,14 +21,13 @@ import org.openmrs.module.reporting.evaluation.querybuilder.SqlQueryBuilder;
 import org.openmrs.module.reporting.evaluation.service.EvaluationService;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Date;
 import java.util.Map;
 
 /**
- * Evaluates Last Visit Date DataDefinition
+ * Evaluates a PersonDataDefinition
  */
-@Handler(supports= ETLLastVisitDateDataDefinition.class, order=50)
-public class ETLLastVisitDateDataEvaluator implements PersonDataEvaluator {
+@Handler(supports = MFLCodeDataDefinition.class, order = 50)
+public class MFLCodeDataEvaluator implements PersonDataEvaluator {
 
     @Autowired
     private EvaluationService evaluationService;
@@ -35,18 +35,10 @@ public class ETLLastVisitDateDataEvaluator implements PersonDataEvaluator {
     public EvaluatedPersonData evaluate(PersonDataDefinition definition, EvaluationContext context) throws EvaluationException {
         EvaluatedPersonData c = new EvaluatedPersonData(definition, context);
 
-        String qry = "select patient_id,\n" +
-                "max(visit_date) as last_visit_date from kenyaemr_etl.etl_patient_hiv_followup\n" +
-                "where  date(visit_date) <= date(:endDate)\n" +
-                "GROUP BY patient_id;";
+        String qry = "select d.patient_id,f.siteCode from kenyaemr_etl.etl_patient_demographics d join kenyaemr_etl.etl_default_facility_info f;";
 
         SqlQueryBuilder queryBuilder = new SqlQueryBuilder();
         queryBuilder.append(qry);
-        Date startDate = (Date)context.getParameterValue("startDate");
-        Date endDate = (Date)context.getParameterValue("endDate");
-        queryBuilder.addParameter("endDate", endDate);
-        queryBuilder.addParameter("startDate", startDate);
-
         Map<Integer, Object> data = evaluationService.evaluateToMap(queryBuilder, Integer.class, Object.class, context);
         c.setData(data);
         return c;
